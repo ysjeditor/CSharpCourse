@@ -1,0 +1,15 @@
+C:\게임개발계좌제\CSharpCourse\src\Todo\bin\Debug\net9.0\Todo.exe
+C:\게임개발계좌제\CSharpCourse\src\Todo\bin\Debug\net9.0\Todo.deps.json
+C:\게임개발계좌제\CSharpCourse\src\Todo\bin\Debug\net9.0\Todo.runtimeconfig.json
+C:\게임개발계좌제\CSharpCourse\src\Todo\bin\Debug\net9.0\Todo.dll
+C:\게임개발계좌제\CSharpCourse\src\Todo\bin\Debug\net9.0\Todo.pdb
+C:\게임개발계좌제\CSharpCourse\src\Todo\obj\Debug\net9.0\Todo.GeneratedMSBuildEditorConfig.editorconfig
+C:\게임개발계좌제\CSharpCourse\src\Todo\obj\Debug\net9.0\Todo.AssemblyInfoInputs.cache
+C:\게임개발계좌제\CSharpCourse\src\Todo\obj\Debug\net9.0\Todo.AssemblyInfo.cs
+C:\게임개발계좌제\CSharpCourse\src\Todo\obj\Debug\net9.0\Todo.csproj.CoreCompileInputs.cache
+C:\게임개발계좌제\CSharpCourse\src\Todo\obj\Debug\net9.0\Todo.sourcelink.json
+C:\게임개발계좌제\CSharpCourse\src\Todo\obj\Debug\net9.0\Todo.dll
+C:\게임개발계좌제\CSharpCourse\src\Todo\obj\Debug\net9.0\refint\Todo.dll
+C:\게임개발계좌제\CSharpCourse\src\Todo\obj\Debug\net9.0\Todo.pdb
+C:\게임개발계좌제\CSharpCourse\src\Todo\obj\Debug\net9.0\Todo.genruntimeconfig.cache
+C:\게임개발계좌제\CSharpCourse\src\Todo\obj\Debug\net9.0\ref\Todo.dll
