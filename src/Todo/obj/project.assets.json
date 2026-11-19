@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\게임개발계좌제\\CSharpCourse\\src\\Todo\\Todo.csproj",
+      "projectUniqueName": "C:\\윤성진게임개발계좌제\\@CSharpCourse\\src\\Todo\\Todo.csproj",
       "projectName": "Todo",
-      "projectPath": "C:\\게임개발계좌제\\CSharpCourse\\src\\Todo\\Todo.csproj",
+      "projectPath": "C:\\윤성진게임개발계좌제\\@CSharpCourse\\src\\Todo\\Todo.csproj",
       "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-      "outputPath": "C:\\게임개발계좌제\\CSharpCourse\\src\\Todo\\obj\\",
+      "outputPath": "C:\\윤성진게임개발계좌제\\@CSharpCourse\\src\\Todo\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config",
