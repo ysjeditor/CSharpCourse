@@ -1,0 +1,154 @@
+﻿<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>UpgradeLoop · 실습가이드 — 반복 흐름을 SVG로 직접 만들기</title>
+<style>
+  :root{
+    --paper:#ffffff; --bg:#f6f8fc; --line:#e1e7ef;
+    --ink:#263b51; --muted:#5b6b7c; --accent:#235b91; --soft:#e8f2ff;
+  }
+  *{box-sizing:border-box}
+  body{margin:0; background:var(--bg); color:var(--ink); font-family:'Segoe UI','Malgun Gothic',sans-serif; line-height:1.65}
+  .shell{max-width:880px; margin:0 auto; padding:32px 24px 80px}
+  header.top{background:var(--paper); border:1px solid var(--line); border-radius:14px; padding:28px 32px; margin-bottom:28px}
+  header.top .label{font-size:12px; letter-spacing:.08em; color:var(--accent); font-weight:700}
+  header.top h1{margin:8px 0 6px; font-size:26px}
+  header.top .sub{color:var(--muted); font-size:14px}
+  section.step{background:var(--paper); border:1px solid var(--line); border-radius:14px; padding:26px 30px; margin-bottom:20px}
+  section.step h2{margin-top:0; font-size:18px; padding-bottom:8px; border-bottom:2px solid var(--soft)}
+  section.step h2 .num{display:inline-block; background:var(--accent); color:#fff; border-radius:8px; padding:2px 10px; font-size:14px; margin-right:8px}
+  table{width:100%; border-collapse:collapse; margin:12px 0; font-size:14px}
+  th,td{border:1px solid var(--line); padding:8px 12px; text-align:left; vertical-align:top}
+  th{background:var(--soft); color:var(--accent)}
+  code{background:var(--soft); padding:1px 6px; border-radius:4px; font-size:.92em}
+  pre{background:#101620; color:#dbe4ef; padding:16px 18px; border-radius:10px; overflow:auto; font-size:13px; line-height:1.6}
+  pre code{background:none; color:inherit; padding:0}
+  .blank{color:#a44232; font-weight:700}
+  .swatch{display:inline-block; width:12px; height:12px; border-radius:3px; margin-right:6px; vertical-align:-1px}
+  ul.check{list-style:none; padding-left:0; font-size:14px}
+  ul.check li{padding:6px 0 6px 28px; position:relative}
+  ul.check li::before{content:"\2610"; position:absolute; left:0; top:6px; color:var(--accent); font-size:16px}
+  .note{font-size:13px; color:var(--muted)}
+  details{background:var(--soft); border-radius:10px; padding:10px 16px; margin-top:10px}
+  details summary{cursor:pointer; font-weight:700; color:var(--accent)}
+  footer.bottom{text-align:center; color:var(--muted); font-size:13px; margin-top:20px}
+  footer.bottom a{color:var(--accent)}
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <header class="top">
+    <div class="label">실습가이드 · SVG 이미지</div>
+    <h1>강화 → 팔기 → 종료 반복 흐름을 직접 만드세요</h1>
+    <div class="sub">대상 문서: <a href="./설계/게임기획.html">게임기획.html</a> 03장 · 저장 위치: 프로젝트 루트의 <code>assets/flow-loop.svg</code> · 적용 문서: <code>README.md</code></div>
+  </header>
+
+  <section class="step">
+    <h2><span class="num">할 일</span>게임기획.html 03장의 반복 흐름 다이어그램을, 보지 않고 직접 분석해서 같은 그림을 SVG로 다시 만드세요.</h2>
+    <p>박스(노드)와 화살표(간선)를 직접 적어 본 다음, 그 목록을 AI에게 입력값으로 주어 SVG를 받으세요. 완성한 SVG는 프로젝트의 assets 폴더에 저장하고 README.md에 삽입하세요. 미리보기에서 원본과 흐름을 비교하세요.</p>
+  </section>
+
+  <section class="step">
+    <h2><span class="num">1</span>박스(노드) 6개를 확인하세요</h2>
+    <p>게임기획.html 03장과 <a href="./설계/시스템문서.html">시스템문서.html</a> 03장을 읽고 아래 6개 박스가 각각 어떤 단계인지 확인하세요. 이름은 바꾸지 말고 그대로 쓰세요.</p>
+    <table>
+      <tr><th>ID</th><th>박스 안 문구</th><th>색상</th></tr>
+      <tr><td>B1</td><td>while (running) 검사</td><td><span class="swatch" style="background:#875818"></span>amber</td></tr>
+      <tr><td>B2</td><td>① Render — 화면 출력</td><td><span class="swatch" style="background:#235b91"></span>blue</td></tr>
+      <tr><td>B3</td><td>② 종료 조건 검사</td><td><span class="swatch" style="background:#a44232"></span>red</td></tr>
+      <tr><td>B4</td><td>③ Input — 메뉴 입력</td><td><span class="swatch" style="background:#694595"></span>purple</td></tr>
+      <tr><td>B5</td><td>④ Update — 조건문 분기</td><td><span class="swatch" style="background:#246e50"></span>green</td></tr>
+      <tr><td>Exit</td><td>승리/파산 메시지 출력 후 break</td><td><span class="swatch" style="background:#a44232"></span>red(B3과 동일)</td></tr>
+    </table>
+  </section>
+
+  <section class="step">
+    <h2><span class="num">2</span>화살표(간선) 6개를 확인하세요</h2>
+    <p>게임기획.html 03장의 글(강화를 고르면/팔기를 고르면/종료를 고르면 문단)과 시스템문서.html 03장 표가 설명하는 흐름을 아래 표로 정리했습니다. 각 줄을 두 문서와 맞춰 보며 왜 이렇게 연결되는지 확인하세요.</p>
+    <table>
+      <tr><th>출발</th><th>도착</th><th>조건(라벨)</th></tr>
+      <tr><td>B1</td><td>B2</td><td>—</td></tr>
+      <tr><td>B2</td><td>B3</td><td>—</td></tr>
+      <tr><td>B3</td><td>B4</td><td>계속</td></tr>
+      <tr><td>B3</td><td>Exit</td><td>승리/파산</td></tr>
+      <tr><td>B4</td><td>B5</td><td>—</td></tr>
+      <tr><td>B5</td><td>B1</td><td>다음 반복</td></tr>
+    </table>
+  </section>
+
+  <section class="step">
+    <h2><span class="num">3</span>AI에게 줄 입력값을 이 표대로 정하세요</h2>
+    <p>아래 값은 고정값입니다. 그대로 쓰세요 — 값을 바꾸면 기획 문서 03장의 원본 다이어그램과 크기·배치가 어긋납니다.</p>
+    <table>
+      <tr><th>항목</th><th>값</th></tr>
+      <tr><td>형식</td><td>SVG 코드만 (PNG·JPG 금지)</td></tr>
+      <tr><td>viewBox</td><td><code>0 0 900 540</code></td></tr>
+      <tr><td>배경</td><td><code>&lt;rect&gt;</code> 하나로 전체 채움, 배경색 <code>#f6f8fc</code></td></tr>
+      <tr><td>박스 모양</td><td>둥근 사각형(<code>rx="12"</code>) + 왼쪽에 4px 두께 색상 바</td></tr>
+      <tr><td>박스 색상</td><td>1단계 표의 "색상" 그대로 (배경은 옅은 톤, 색상 바와 글자는 진한 톤)</td></tr>
+      <tr><td>박스 내용</td><td>1단계 표의 "박스 안 문구"를 그대로 적은 글자 1줄</td></tr>
+      <tr><td>화살표</td><td><code>&lt;path&gt;</code> + <code>&lt;marker&gt;</code> 화살표머리, 2단계 표의 간선 6개를 전부 연결</td></tr>
+      <tr><td>분기 라벨</td><td>B3→B4, B3→Exit, B5→B1 화살표 옆에 2단계 표의 "조건(라벨)" 글자를 작게 표시</td></tr>
+      <tr><td>도형 개수</td><td>박스 7개(B1~B5, Exit, 분기 라벨 텍스트 제외) 고정 — 더 추가하거나 빼지 않음</td></tr>
+      <tr><td>금지 사항</td><td>사진·래스터 이미지 삽입 금지, 그라디언트·필터 금지</td></tr>
+    </table>
+  </section>
+
+  <section class="step">
+    <h2><span class="num">4</span>아래 프롬프트의 빈칸을 채워서 AI에게 그대로 보내세요</h2>
+    <pre><code>SVG 코드만 출력해 주세요. 설명 문장 없이 &lt;svg&gt;...&lt;/svg&gt; 전체를 코드블록 하나로 주세요.
+
+viewBox: 0 0 900 540
+배경: #f6f8fc 를 채운 사각형 1개
+박스 모양: 둥근 사각형(rx=12) + 왼쪽 4px 색상 바, 세로로 배치
+박스 목록(ID · 문구 · 색상):
+<span class="blank">____(1단계 표를 그대로 옮겨 적기: B1~B5, Exit 6줄)</span>
+
+화살표 목록(출발 → 도착, 조건):
+<span class="blank">____(2단계 표의 간선 6줄을 그대로 옮겨 적기)</span>
+
+도형 개수: 박스 7개 고정, 화살표 6개 고정
+금지: 사진, 그라디언트, 필터
+스타일: 깔끔한 플로우차트, 화살표머리는 marker로, 글자는 16px(제목)/13px(라벨)</code></pre>
+    <p class="note">[힌트: AI가 박스나 화살표 개수를 다르게 그리면 "박스 7개, 화살표 6개로 다시 그려 달라"고 재요청하세요.]</p>
+  </section>
+
+  <section class="step">
+    <h2><span class="num">5</span>받은 SVG 코드를 파일로 저장하세요</h2>
+    <p>받은 코드를 그대로 복사해서 <code>assets/flow-loop.svg</code>로 저장하세요(코드블록 바깥의 설명 문장은 지우세요).</p>
+  </section>
+
+  <section class="step">
+    <h2><span class="num">6</span>README에 이미지를 넣고 표시 크기를 조절하세요</h2>
+    <ol>
+      <li>VS Code에서 프로젝트 루트의 <code>README.md</code>를 열고, 이미지를 넣을 위치에 커서를 놓으세요.</li>
+      <li>탐색기의 <code>assets/flow-loop.svg</code>를 편집 영역으로 드래그한 뒤, <strong>Shift 키를 누른 상태로 놓으세요.</strong> 생성된 Markdown 이미지 링크의 경로를 확인하세요.</li>
+    </ol>
+    <pre><code>![게임의 턴 진행 흐름](assets/flow-loop.svg)</code></pre>
+    <p>위 이미지 링크를 아래 <code>&lt;img&gt;</code> 태그로 변경하세요. <code>src</code>에는 생성된 경로, <code>alt</code>에는 그림 설명, <code>width</code>에는 표시할 너비를 넣습니다.</p>
+    <pre><code>&lt;img src="assets/flow-loop.svg" alt="게임의 턴 진행 흐름" width="480"&gt;</code></pre>
+    <p>README 미리보기(<code>Ctrl+Shift+V</code>)를 열어 이미지가 보이는지 확인하세요. 너무 크거나 작으면 <code>width="400"</code> 또는 <code>width="600"</code>처럼 너비를 조절하세요. 높이는 원본 비율에 맞춰집니다.</p>
+    <p class="note">SVG의 <code>viewBox</code>는 그대로 유지하고 README의 <code>width</code>로 표시 크기만 조절하세요. 위 경로는 프로젝트 루트의 README.md를 기준으로 합니다. 다른 폴더의 문서에 넣을 때는 드래그로 생성된 상대 경로를 유지하세요.</p>
+    <p>기획 문서에 이미지를 추가하지 않아도 됩니다. README 미리보기의 그림과 게임기획.html 03장의 원본을 나란히 열어 박스 순서·화살표 방향·조건 라벨을 비교하세요.</p>  </section>
+
+  <section class="step">
+    <h2>체크리스트</h2>
+    <ul class="check">
+      <li>박스가 정확히 7개(B1~B5, Exit)인가요?</li>
+      <li>화살표가 정확히 6개이고, 2단계 표와 같은 방향인가요?</li>
+      <li>B3→B4·B3→Exit·B5→B1 세 화살표에 조건 라벨이 붙어 있나요?</li>
+      <li>viewBox가 <code>0 0 900 540</code>인가요?</li>
+      <li>파일을 <code>assets/flow-loop.svg</code>로 저장했나요?</li>
+      <li>Shift+드래그로 만든 이미지 링크를 <code>&lt;img src="assets/flow-loop.svg" alt="게임의 턴 진행 흐름" width="480"&gt;</code> 형태로 변경했나요?</li>
+      <li>README 미리보기에서 이미지가 깨지지 않고 적절한 크기로 보이며, 원본과 흐름이 일치하나요?</li>
+    </ul>
+  </section>
+
+  <footer class="bottom"><a href="./설계/게임기획.html">← 게임기획.html로 돌아가기</a></footer>
+</div>
+</body>
+</html>
+

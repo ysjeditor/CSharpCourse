@@ -7,4 +7,23 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Day3\**" />
+    <EmbeddedResource Remove="Day3\**" />
+    <None Remove="Day3\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="02-1-1\02-1-1-csharp_basic.cs" />
+    <Compile Remove="Program.cs" />
+    <Compile Remove="Utility.cs" />
+    <Compile Remove="데이터의흐름제어.cs" />
+    <Compile Remove="데이터의흐름제어_조건문.cs" />
+    <Compile Remove="반복문.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="02-1-1\02-1-1-csharp_basic.md" />
+  </ItemGroup>
+
 </Project>
