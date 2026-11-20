@@ -1,0 +1,21 @@
+{
+  "verified_at": "2026-11-19T14:28:15",
+  "scope": "기초편 1~8장 및 개요 원문 전체",
+  "source_byte_equality": "passed: 8 chapters and overview",
+  "source_bytes": 466432,
+  "source_subheadings": 188,
+  "source_code_blocks": 414,
+  "reference_display": "passed: all subheadings and code contents",
+  "reference_code_execution": "원문 전체의 독립 실행 검증 대상은 아님: 설명용 조각·오류 예시 포함",
+  "supplement_complete_examples": 8,
+  "supplement_basic_structures": 14,
+  "exercise_count": 8,
+  "exercise_cases": 39,
+  "python_tests": 18,
+  "python_test_status": "passed",
+  "python_test_seconds": 143.596,
+  "dom_test_status": "passed: chapter navigation/search/source-code-to-editor/drafts/progress/live HTTP grading",
+  "browser_visual_check": "not performed: browser control not approved",
+  "framework": "net10.0",
+  "html_sha256": "0f8339c3ce5b5f7ad02111b2eb20076319f931601ebd1fb8af7f018d5a786639"
+}

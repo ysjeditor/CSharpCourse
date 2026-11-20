@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Todo": {
+      "commandName": "Project",
+      "commandLineArgs": "apple banana -windowed \"hello world\""
+    }
+  }
+}

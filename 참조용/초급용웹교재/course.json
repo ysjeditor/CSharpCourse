@@ -1,0 +1,82 @@
+{
+  "title": "C# 프로그래밍 · 기초편",
+  "groups": [
+    "시작하기",
+    "데이터 구조와 컬렉션",
+    "함수와 메서드"
+  ],
+  "chapters": [
+    {
+      "number": 1,
+      "title": "1장. 개발 환경 구축",
+      "file": "docs/part1-basics/01-setup-environment.md",
+      "source": "templates/csharp-book-main/docs/part1-basics/01-setup-environment.md",
+      "sha256": "cab9874f61520123d12d9a6859605b607093b65c05f29f8f9d777642ba6e4997",
+      "group": 0,
+      "supplement": "docs/supplements/01-setup-environment.md"
+    },
+    {
+      "number": 2,
+      "title": "2장. C# 기초 문법",
+      "file": "docs/part1-basics/02-csharp-basics.md",
+      "source": "templates/csharp-book-main/docs/part1-basics/02-csharp-basics.md",
+      "sha256": "51b7b890f1c5d2a68ab343677b15a99c9b1245088cd9a26f23ff8e165c81aa45",
+      "group": 0,
+      "supplement": "docs/supplements/02-csharp-basics.md"
+    },
+    {
+      "number": 3,
+      "title": "3장. 제어문",
+      "file": "docs/part1-basics/03-control-flow.md",
+      "source": "templates/csharp-book-main/docs/part1-basics/03-control-flow.md",
+      "sha256": "460395156f10a6b39f7aacb062d809307c5e3d4df4238e50d34f370d9f50675f",
+      "group": 0,
+      "supplement": "docs/supplements/03-control-flow.md"
+    },
+    {
+      "number": 4,
+      "title": "4장. 배열",
+      "file": "docs/part1-basics/04-arrays.md",
+      "source": "templates/csharp-book-main/docs/part1-basics/04-arrays.md",
+      "sha256": "0d3b0c49d4a9dad6c7c90b68d0b46d914063c4454da59fafd44d9f81a157140d",
+      "group": 1,
+      "supplement": "docs/supplements/04-arrays.md"
+    },
+    {
+      "number": 5,
+      "title": "5장. 컬렉션",
+      "file": "docs/part1-basics/05-collections.md",
+      "source": "templates/csharp-book-main/docs/part1-basics/05-collections.md",
+      "sha256": "316840714979813ac9cdbe2396e72feed6bc4d942d1465489c86066f95c0ad14",
+      "group": 1,
+      "supplement": "docs/supplements/05-collections.md"
+    },
+    {
+      "number": 6,
+      "title": "6장. 문자열 처리",
+      "file": "docs/part1-basics/06-string-handling.md",
+      "source": "templates/csharp-book-main/docs/part1-basics/06-string-handling.md",
+      "sha256": "864eed78704b4542457d18b191ab2f04dd4ab1c6b7aa44d52e0e58994533b21e",
+      "group": 1,
+      "supplement": "docs/supplements/06-string-handling.md"
+    },
+    {
+      "number": 7,
+      "title": "7장. 메서드 기초",
+      "file": "docs/part1-basics/07-methods-basics.md",
+      "source": "templates/csharp-book-main/docs/part1-basics/07-methods-basics.md",
+      "sha256": "74d2f3040bb780bebe05d0181aa9b8033266a4e8fa0736300e1ce8291f166977",
+      "group": 2,
+      "supplement": "docs/supplements/07-methods-basics.md"
+    },
+    {
+      "number": 8,
+      "title": "8장. 고급 메서드 활용",
+      "file": "docs/part1-basics/08-advanced-methods.md",
+      "source": "templates/csharp-book-main/docs/part1-basics/08-advanced-methods.md",
+      "sha256": "3e6ea8b5215490f48f549472dd57ab02622665a809eadc8fc48b4e109ee466c6",
+      "group": 2,
+      "supplement": "docs/supplements/08-advanced-methods.md"
+    }
+  ]
+}

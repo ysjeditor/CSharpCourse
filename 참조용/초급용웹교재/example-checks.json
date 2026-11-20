@@ -1,0 +1,42 @@
+[
+  {
+    "lesson": 1,
+    "status": "ok",
+    "output": "C# 기초편\n실행 성공"
+  },
+  {
+    "lesson": 2,
+    "status": "ok",
+    "output": "공책: 2400원\n2\nTrue"
+  },
+  {
+    "lesson": 3,
+    "status": "ok",
+    "output": "12\n통과"
+  },
+  {
+    "lesson": 4,
+    "status": "ok",
+    "output": "10,20,30\n30,10,20\n-1\n2\n2"
+  },
+  {
+    "lesson": 5,
+    "status": "ok",
+    "output": "2\nFalse\n지수"
+  },
+  {
+    "lesson": 6,
+    "status": "ok",
+    "output": "APPLE/BANANA\nTrue"
+  },
+  {
+    "lesson": 7,
+    "status": "ok",
+    "output": "100\n300\n3"
+  },
+  {
+    "lesson": 8,
+    "status": "ok",
+    "output": "8\nTrue\n120"
+  }
+]

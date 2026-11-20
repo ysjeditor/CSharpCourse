@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>C# 메모리 이해하기 · 스택에서 GC까지</title>
+<style>
+:root{--accent:#6454b4;--ink:#26313e;--muted:#606b7d;--line:#e3e6ed;--soft:#f1effb;--paper:#fff;--bg:#fff;color-scheme:light}*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:100px}body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.95 'Segoe UI','Malgun Gothic',sans-serif;word-break:keep-all}a{color:var(--accent)}header{background:#514397;color:#fff;padding:17px 5%;position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:20px}header strong{margin-right:auto}button{font:inherit;font-size:15px;border:1px solid var(--line);border-radius:6px;background:var(--paper);color:var(--ink);padding:7px 14px;cursor:pointer}header button{background:transparent;color:#fff;border-color:#ffffff77}button:hover{filter:brightness(.94)}button:disabled{opacity:.4;cursor:default}:focus-visible{outline:3px solid #e9a12a;outline-offset:4px}.layout{max-width:1350px;margin:auto;display:grid;grid-template-columns:230px minmax(0,850px);gap:62px;padding:42px 30px}aside{position:sticky;top:100px;align-self:start;max-height:calc(100vh - 120px);overflow:auto;font-size:15px}aside a{display:block;text-decoration:none;color:var(--muted);padding:7px 10px;border-left:2px solid var(--line)}aside a:hover,aside a.active{background:var(--soft);color:var(--accent);border-color:var(--accent)}main{min-width:0}h1{font-size:40px;line-height:1.4;font-weight:600;letter-spacing:-1px;margin:16px 0 25px}h2{font-size:27px;line-height:1.5;border-bottom:1px solid var(--line);padding-bottom:12px;margin:0 0 22px}h3{font-size:21px;color:var(--accent);margin-top:30px}.eyebrow{color:var(--accent);font-size:15px;font-weight:bold}.lead{font-size:20px;line-height:1.8}.meta{color:var(--muted);font-size:15px}section{padding:40px 0;border-bottom:1px solid var(--line)}.note{background:var(--soft);padding:18px 23px;border-left:4px solid var(--accent);margin:24px 0;border-radius:0 8px 8px 0}.note p{margin:6px 0}.flow{display:flex;gap:10px;flex-wrap:wrap;margin:22px 0}.flow span{background:var(--soft);border:1px solid var(--line);padding:14px 18px;border-radius:7px}.flow b{align-self:center;color:var(--accent)}pre{background:#192335;color:#e6edf5;padding:22px;border-radius:8px;overflow:auto;font:15px/1.85 Consolas,'Malgun Gothic',monospace}p code,li code,td code{background:var(--soft);padding:2px 5px;border-radius:4px;font:.92em Consolas,monospace;color:var(--accent)}.table{overflow:auto;border:1px solid var(--line);border-radius:8px;margin:23px 0}table{border-collapse:collapse;width:100%;min-width:570px;font-size:16px}th,td{text-align:left;padding:13px 16px;border-bottom:1px solid var(--line);vertical-align:top}th{background:var(--soft)}tr:last-child td{border-bottom:0}details{padding:15px 20px;background:var(--soft);margin:16px 0;border-radius:7px}summary{cursor:pointer;font-weight:bold;color:var(--accent)}li{margin:8px 0}.lab{border:1px solid var(--line);border-radius:10px;padding:24px;margin:25px 0}.lab h3{margin-top:0}.controls{display:flex;flex-wrap:wrap;gap:10px}.memory{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:20px 0}.region{border:2px solid var(--accent);border-radius:8px;overflow:hidden}.region h4{background:var(--soft);margin:0;padding:9px 16px;font-size:16px}.slots{min-height:130px;padding:16px;white-space:pre-line;font-family:Consolas,'Malgun Gothic',monospace}.steptext{min-height:100px}.skip{position:absolute;left:-9999px}.skip:focus{left:12px;top:12px;z-index:10;background:#fff;padding:8px}.quiz fieldset{border:1px solid var(--line);border-radius:8px;margin:20px 0;padding:20px}.quiz button{display:block;margin:10px 0;text-align:left;width:100%}.feedback{font-weight:bold;color:var(--accent);min-height:35px}footer{padding:30px 0;color:var(--muted);font-size:15px}body.dark{--accent:#c2b3ff;--ink:#e0e5ee;--muted:#b3bdce;--line:#394055;--soft:#29283e;--paper:#1a1d29;--bg:#1a1d29;color-scheme:dark}@media(max-width:850px){.layout{display:block;padding:25px 22px}aside{position:static;max-height:none;margin-bottom:30px}aside nav{display:grid;grid-template-columns:1fr 1fr;gap:4px}h1{font-size:32px}header{padding:13px 20px}header strong{font-size:16px}header button{font-size:14px;padding:5px 8px}}@media(max-width:500px){.memory{grid-template-columns:1fr}aside nav{grid-template-columns:1fr}h2{font-size:24px}}@media print{header,aside,.controls,.quiz button{display:none}.layout{display:block;padding:0}body{font-size:11pt;color:#000;background:#fff}pre{white-space:pre-wrap;color:#000;background:#eee}.lab{break-inside:avoid}a{color:#000}}
+</style></head><body><a class="skip" href="#content">본문으로 건너뛰기</a><header><strong>C# 프로그래밍 교재 · 메모리</strong><button id="theme" aria-pressed="false">어두운 화면</button></header><div class="layout"><aside><strong>학습 순서</strong><nav aria-label="장 목차"></nav></aside><main id="content">
+<div class="eyebrow">실행 흐름으로 배우는 메모리</div><h1>변수는 어디에 살고,<br>언제 사라질까요?</h1><p class="lead">게임 속 체력 하나가 화면에 나타나기까지.<br>저장장치에서 출발해 스택, 힙, 가비지 컬렉터까지 연결해 봅니다.</p><div class="note"><strong>이 교재의 도착점</strong><p>무엇이 복사되고, 누가 데이터를 계속 사용할 수 있으며, 언제 공간을 회수할 수 있는지 설명할 수 있습니다.</p></div>
+<section id="hardware" data-title="1. 저장에서 화면까지"><h2>1. SSD에 있던 코드가 화면에 나타나기까지</h2><p>SSD와 HDD는 전원을 꺼도 파일을 보관하는 <strong>저장장치</strong>입니다. RAM은 실행 중인 코드와 데이터를 담는 작업 공간입니다. 일반적인 RAM의 내용은 전원이 끊기면 유지되지 않습니다. CPU는 명령을 실행하고 계산합니다.</p><div class="flow" aria-label="실행과 출력의 큰 흐름"><span>SSD / HDD<br>프로그램 파일</span><b>→</b><span>RAM<br>필요한 코드·데이터</span><b>↔</b><span>CPU<br>명령 실행·계산</span><b>→</b><span>출력 시스템<br>화면 갱신</span></div><ol><li><strong>실행 요청:</strong> 운영체제가 프로세스를 준비하고 필요한 실행 파일과 라이브러리를 메모리에 연결합니다. 파일 전체를 한 번에 RAM에 복사해야 하는 것은 아닙니다.</li><li><strong>실행 준비:</strong> 일반적인 C# 실행에서는 .NET 런타임이 동작하며, IL이라는 중간 코드를 JIT 컴파일러가 필요한 시점에 CPU용 기계어로 바꿉니다. 미리 기계어로 만드는 AOT 방식도 있습니다.</li><li><strong>계산:</strong> 운영체제가 스레드에 CPU 실행 기회를 주면 CPU가 명령을 처리합니다. 데이터는 RAM뿐 아니라 CPU 캐시와 레지스터를 거쳐 사용됩니다.</li><li><strong>출력 요청:</strong> 계산 결과로 문자열을 만들거나 UI·그래픽 시스템에 그리기를 요청합니다.</li><li><strong>화면 갱신:</strong> 터미널이나 UI 시스템, 운영체제의 화면 합성, 그래픽 장치와 디스플레이 등이 협력해 결과를 표시합니다. 세부 경로는 환경마다 다릅니다.</li></ol><pre><code>int hp = 100;
+hp -= 20;
+Console.WriteLine(hp); // 80이라는 문자를 터미널에 출력하도록 요청</code></pre><p><code>hp -= 20</code>은 데이터를 바꾸는 계산입니다. 이 줄만으로 화면의 체력 표시가 저절로 바뀌지는 않습니다. 화면을 바꾸는 출력 코드나 UI 연결이 필요합니다. 파일에 저장하는 코드가 없다면 SSD의 저장 데이터도 자동으로 바뀌지 않습니다.</p><details><summary>RAM이 부족하면 SSD를 RAM처럼 쓰나요?</summary><p>운영체제는 일부 메모리 페이지를 저장장치로 내보냈다가 필요할 때 다시 가져올 수 있습니다. 이를 페이징과 연결해 이해하면 됩니다. SSD가 RAM으로 바뀌는 것은 아니며, 저장장치 접근이 잦으면 실행이 느려질 수 있습니다.</p></details><p class="meta">더 읽기: <a href="https://learn.microsoft.com/en-us/windows/win32/memory/virtual-address-space-and-physical-storage">가상 주소 공간과 물리 저장 공간</a></p></section>
+<section id="process" data-title="2. 프로세스의 작업 공간"><h2>2. 프로세스는 실행 중인 프로그램의 작업 환경</h2><p>디스크의 실행 파일은 보관된 프로그램입니다. 그 프로그램을 실행하면 운영체제가 <strong>프로세스(process)</strong>를 만듭니다. 프로세스에는 주소 공간, 실행에 필요한 자원, 하나 이상의 스레드가 있습니다. <strong>스레드(thread)</strong>는 그 안에서 명령을 실행하는 흐름입니다.</p><p>프로그램은 보통 <strong>가상 주소</strong>로 메모리에 접근합니다. 운영체제와 하드웨어가 이 주소를 실제 RAM 등의 저장 공간과 연결합니다. 프로세스마다 독립된 주소 공간이 있어서 같은 숫자의 주소라도 서로 다른 데이터를 가리킬 수 있습니다.</p><div class="table"><table><tr><th>공간</th><th>주요 역할</th><th>기억할 점</th></tr><tr><td>코드·정적 데이터 등</td><td>실행할 명령, 정적 수명을 가진 데이터 등</td><td>스택과 힙 이외의 공간도 있음</td></tr><tr><td>스레드 스택</td><td>메서드 호출과 복귀에 필요한 정보</td><td>스레드마다 별도의 스택을 가짐</td></tr><tr><td>힙</td><td>개별적으로 할당하고 수명을 관리하는 데이터</td><td>같은 프로세스의 스레드들이 접근 가능</td></tr></table></div><div class="note">스택과 힙은 RAM 칩 두 개의 이름이 아닙니다. 프로세스의 메모리를 <strong>어떤 규칙으로 사용하고 회수하는지</strong>에 따른 구분입니다. 그림의 칸은 개념 모형이며 실제 메모리 배치를 그대로 그린 것은 아닙니다.</div><p class="meta">더 읽기: <a href="https://learn.microsoft.com/en-us/windows/win32/procthread/about-processes-and-threads">프로세스와 스레드</a> · <a href="https://learn.microsoft.com/en-us/windows/win32/memory/virtual-address-space">가상 주소 공간</a></p></section>
+<section id="lifetime" data-title="3. 왜 스택과 힙을 나눌까"><h2>3. 호출의 수명과 데이터의 수명이 다르기 때문</h2><h3>스택: 마지막에 시작한 호출이 먼저 끝난다</h3><p><code>Main → Play → Damage</code> 순서로 호출하면 보통 <code>Damage → Play → Main</code> 순서로 돌아옵니다. 이 규칙은 접시를 쌓고 위에서부터 꺼내는 것과 같습니다. 호출마다 필요한 정보를 묶은 <strong>스택 프레임</strong>을 쌓고, 호출이 끝나면 해당 프레임을 되돌릴 수 있습니다.</p><p>프레임에는 복귀에 필요한 정보와 일부 인수·지역 변수 등을 둘 수 있습니다. 실제 저장 위치는 최적화에 따라 레지스터 등이 될 수도 있습니다. 프레임이 사라진다는 것은 그 공간을 다시 쓸 수 있다는 뜻이지, 모든 바이트를 즉시 0으로 지운다는 뜻은 아닙니다.</p><h3>힙: 만든 메서드가 끝나도 남아야 하는 데이터</h3><pre><code>static Player CreatePlayer()
+{
+    Player p = new Player();
+    p.Hp = 100;
+    return p;
+}
+
+Player hero = CreatePlayer();
+Console.WriteLine(hero.Hp); // 메서드가 끝나도 플레이어는 필요함
+
+class Player { public int Hp; }</code></pre><p><code>CreatePlayer</code> 호출은 끝났지만 호출자에게 전달된 플레이어는 계속 필요합니다. 데이터의 수명이 호출의 수명보다 길어진 것입니다. 이처럼 자유로운 수명을 다루기 위해 힙을 사용합니다.</p><div class="table"><table><tr><th>질문</th><th>스택</th><th>힙</th></tr><tr><td>어떤 수명에 어울릴까?</td><td>호출 순서와 함께 끝나는 작업</td><td>호출과 독립적으로 살아야 하는 데이터</td></tr><tr><td>공간 회수 규칙은?</td><td>호출 복귀에 따라 프레임을 되돌림</td><td>소유권 규칙이나 GC 등으로 수명을 관리</td></tr><tr><td>대가와 제약은?</td><td>크기가 제한적이며 깊은 재귀로 넘칠 수 있음</td><td>수명 추적·회수 비용, 단편화 등을 고려</td></tr></table></div><p>두 영역을 나누는 이유는 단순히 “스택은 빠르고 힙은 느리다”가 아닙니다. <strong>규칙적인 호출에는 간단한 회수 규칙을, 자유로운 수명에는 별도의 관리 규칙을 적용</strong>하기 위해서입니다. .NET의 일반적인 작은 객체 할당도 매우 빠를 수 있습니다.</p></section>
+<section id="types" data-title="4. 값과 참조의 복사"><h2>4. 값 타입과 참조 타입: 무엇이 복사될까?</h2><p><strong>값 타입(value type)</strong> 변수에는 그 타입의 값이 들어갑니다. 일반적인 대입은 그 값을 복사합니다. <strong>참조 타입(reference type)</strong> 변수에는 객체에 연결되는 참조 값이 들어갑니다. 일반적인 대입은 객체 전체 대신 이 참조 값을 복사합니다.</p><div class="table"><table><tr><th>구분</th><th>예</th><th>대입 후의 관계</th></tr><tr><td>값 타입</td><td>int, bool, double, enum, struct</td><td>복사된 값을 각각 가짐</td></tr><tr><td>참조 타입</td><td>class, 배열, string, delegate</td><td>같은 객체를 가리킬 수 있음</td></tr></table></div><pre><code>int a = 10;
+int b = a;
+b = 20;
+Console.WriteLine(a); // 10
+
+Player first = new Player { Hp = 100 };
+Player second = first;
+second.Hp = 80;
+Console.WriteLine(first.Hp); // 80
+second = new Player { Hp = 50 };
+Console.WriteLine(first.Hp); // 여전히 80
+
+class Player { public int Hp; }</code></pre><p><code>second.Hp = 80</code>은 함께 가리키는 객체를 변경합니다. <code>second = new Player ...</code>는 second의 연결만 바꿉니다. <strong>변수의 참조를 바꾸는 것</strong>과 <strong>객체의 내용을 바꾸는 것</strong>은 다른 행동입니다.</p><div class="note"><strong>타입과 위치를 한 문장으로 묶지 마세요.</strong><p>값 타입인 필드도 클래스 객체나 배열의 일부라면 일반적인 모형에서 힙 안에 함께 저장됩니다. 지역 참조 변수는 스택이나 레지스터에 있을 수 있습니다. 타입의 의미를 판단할 때는 위치보다 복사 규칙이 먼저입니다.</p></div><pre><code>Player hero = new Player();
+int[] scores = new int[3];
+object boxed = 42; // int 값을 박싱한 객체에 복사
+
+class Player
+{
+    public int Hp = 100; // 값 타입 필드가 Player 객체 안에 포함됨
+}</code></pre><p>배열 객체에는 값 타입인 int 요소가 포함됩니다. 박싱에서는 값의 복사본을 담는 객체가 생깁니다. <code>new</code>라는 단어만 보고 무조건 힙이라고 판단해서도 안 됩니다. <code>new</code>로 struct를 초기화할 수도 있기 때문입니다.</p><details><summary>값 타입 안에 참조 타입 필드가 있으면요?</summary><p>struct를 복사하면 각 필드의 값이 복사됩니다. 그 필드가 참조라면 참조 값이 복사되므로 두 struct가 같은 객체를 가리킬 수 있습니다. 따라서 값 타입 복사가 내부의 모든 객체까지 새로 만드는 ‘깊은 복사’는 아닙니다.</p></details><details><summary>string은 왜 값을 바꿔도 다른 변수가 안 바뀔까요?</summary><pre><code>string a = "안녕";
+string b = a;
+b += "!";
+Console.WriteLine(a); // 안녕</code></pre><p>string은 참조 타입이지만 불변입니다. 기존 문자열 객체의 내용을 바꾸지 않고, 결과 문자열을 b가 가리키게 합니다. 참조 타입이라는 사실만으로 모든 객체가 수정 가능한 것은 아닙니다.</p></details><p class="meta">더 읽기: <a href="https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/value-types">값 타입</a> · <a href="https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/reference-types">참조 타입</a></p></section>
+<section id="trace" data-title="5. 실행을 한 단계씩"><h2>5. 호출과 객체의 수명을 따라가 보기</h2><p>아래 버튼으로 호출 흐름을 넘겨 보세요. 객체 이름 A는 학습용 식별자이며 실제 메모리 주소가 아닙니다. 지역 변수는 설명을 위해 스택 칸에 표시합니다.</p><pre><code>static Player Create()
+{
+    Player p = new Player { Hp = 100 };
+    return p;
+}
+Player? hero = Create();
+Player? ally = hero;
+ally.Hp = 80;
+hero = null;
+ally = null;
+// 이후 적절한 시점에 GC가 실행될 수 있음
+
+class Player { public int Hp; }</code></pre><p class="meta"><code>Player?</code>는 null을 담을 수 있음을 나타내는 표기입니다. 이 예제는 nullable 참조 타입 검사를 사용하는 프로젝트를 기준으로 합니다.</p><div class="lab"><h3>실행 흐름 모형</h3><div class="controls"><button id="back">이전 단계</button><button id="forward">다음 단계</button><button id="reset">처음부터</button></div><div class="memory"><div class="region"><h4>호출 / 지역 변수</h4><div class="slots" id="stack"></div></div><div class="region"><h4>관리 힙</h4><div class="slots" id="heap"></div></div></div><div class="steptext" aria-live="polite"><strong id="stepTitle"></strong><p id="stepBody"></p></div></div><div class="note">이 모형은 마지막 단계에서 수집이 일어난 상황을 선택해 보여 줍니다. 실제 JIT는 마지막 사용 이후 변수를 더 일찍 GC 루트에서 제외할 수도 있습니다. <strong>코드의 중괄호 위치나 null 대입만으로 실제 수집 시점을 확정할 수는 없습니다.</strong></div></section>
+<section id="parameters" data-title="6. 메서드 인수와 ref"><h2>6. 참조 타입 전달과 ref는 다릅니다</h2><p>C#은 기본적으로 인수를 <strong>값으로 전달</strong>합니다. int라면 정수 값이, Player라면 참조 값이 복사됩니다. 참조 타입을 인수로 넘겼다고 해서 호출자의 변수 자체가 연결되는 것은 아닙니다.</p><pre><code>static void Change(Player p)
+{
+    p.Hp = 80;                   // 같은 객체를 수정
+    p = new Player { Hp = 1 };    // 메서드 안의 p만 다른 객체를 가리킴
+}
+
+Player hero = new Player { Hp = 100 };
+Change(hero);
+Console.WriteLine(hero.Hp); // 80
+
+class Player { public int Hp; }</code></pre><p><code>ref</code>를 사용하면 호출자의 변수 저장 위치를 통해 접근할 수 있습니다. 따라서 메서드 안의 재대입으로 호출자의 연결을 바꿀 수 있습니다.</p><pre><code>static void Replace(ref Player p)
+{
+    p = new Player { Hp = 1 };
+}
+// 위 예제의 hero에 Replace(ref hero)를 호출하면 hero.Hp는 1</code></pre><details><summary>직접 예상하기</summary><p>int 매개변수에 10을 전달하고 메서드 안에서 20을 대입하면 호출자의 변수도 바뀔까요?</p><p><strong>기본 전달이면 바뀌지 않습니다.</strong> 정수 값의 복사본을 바꾸기 때문입니다. ref를 사용해 호출자의 변수를 변경하는 경우와 구분하세요.</p></details></section>
+<section id="languages" data-title="7. C++과 C#의 관리 방식"><h2>7. 같은 메모리 문제를 다른 규칙으로 다룹니다</h2><p>스택과 힙은 C#만의 개념이 아닙니다. 언어와 런타임마다 객체의 수명을 결정하고 공간을 회수하는 방법이 다릅니다.</p><div class="table"><table><tr><th>항목</th><th>일반적인 현대 C++</th><th>일반적인 C# / .NET</th></tr><tr><td>호출과 함께 끝나는 객체</td><td>자동 저장 기간의 지역 객체는 범위를 벗어나면 소멸자가 실행됨</td><td>호출 프레임은 복귀하지만 참조 객체의 수집 시점은 별개</td></tr><tr><td>동적 객체의 소유권</td><td>RAII와 unique_ptr 등으로 소유권과 해제를 연결</td><td>관리 객체는 GC가 도달 가능성을 추적</td></tr><tr><td>직접 할당·해제</td><td>new/delete도 가능하지만 일반 코드에서는 소유권 도구를 우선 사용</td><td>일반적인 관리 객체에 delete를 호출하지 않음</td></tr><tr><td>주요 주의점</td><td>댕글링 포인터, 이중 해제, 누수 등</td><td>불필요한 참조 유지, 할당 부담, 수집 일시 정지 등</td></tr><tr><td>파일·소켓 등</td><td>RAII로 객체 소멸 시 자원을 반환</td><td>IDisposable과 using으로 적절한 시점에 반환</td></tr></table></div><h3>C++: 소유자가 사라질 때 정리하기</h3><pre><code>#include &lt;memory&gt;
+struct Player { int hp = 100; };
+
+int main()
+{
+    Player local; // 자동 저장 기간의 객체
+    auto owner = std::make_unique&lt;Player&gt;(); // 동적 객체의 소유자
+} // owner 소멸: 소유한 객체 삭제. local도 소멸.</code></pre><p><strong>RAII</strong>는 자원의 획득과 반환을 객체의 수명에 묶는 관용구입니다. C++을 “개발자가 모든 메모리를 매번 수동 해제하는 언어”로만 이해하면 현대적인 사용법을 놓칩니다. shared_ptr는 공유 소유권을 참조 횟수로 관리하지만 순환 소유권은 별도 대책이 필요합니다. C++ 표준이 모든 지역 객체의 물리적 스택 배치를 보장하는 것도 아닙니다.</p><h3>C#: 메모리 회수와 자원 반환을 구분하기</h3><pre><code>using System.IO;
+
+using (var writer = new StreamWriter("score.txt"))
+{
+    writer.WriteLine(80);
+} // Dispose: 파일 관련 자원을 적절한 시점에 반환
+// writer가 가리키던 관리 객체의 메모리는 이후 GC가 회수</code></pre><p><code>using</code>은 GC를 강제 실행하는 문법이 아닙니다. 예외가 나더라도 블록을 벗어날 때 Dispose를 호출하도록 돕습니다. Dispose와 GC는 서로 다른 책임입니다.</p><p class="meta">더 읽기: <a href="https://learn.microsoft.com/en-us/cpp/cpp/object-lifetime-and-resource-management-modern-cpp?view=msvc-170">C++ 객체 수명과 RAII</a> · <a href="https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/statements/using">C# using 문</a></p></section>
+<section id="typing" data-title="8. 정적·동적 타입 구분"><h2>8. 정적 타입과 동적 타입은 별개의 축입니다</h2><p>“정적 언어”라는 표현은 여기서는 <strong>정적 타입 언어</strong>라는 뜻으로 사용합니다. 이는 static 필드나 정적 메모리 할당을 뜻하지 않습니다.</p><div class="table"><table><tr><th>구분</th><th>정적 타입: C#, C++</th><th>동적 타입: Python 등의 일반적인 사용</th></tr><tr><td>타입 검사</td><td>많은 타입 규칙을 실행 전에 검사</td><td>많은 연산의 타입 적합성을 실행 중 검사</td></tr><tr><td>변수 사용</td><td>선언·추론된 타입에 맞게 사용</td><td>이름을 다른 타입의 객체에 다시 연결할 수 있음</td></tr><tr><td>장점</td><td>일부 오류를 일찍 발견, 도구의 분석에 유리</td><td>유연한 표현과 빠른 시도에 유리</td></tr><tr><td>기억할 한계</td><td>컴파일 성공이 모든 오류의 부재를 보장하지 않음</td><td>객체에 타입이 없는 것은 아님</td></tr></table></div><pre><code>// C#: var도 정적 타입 추론입니다.
+var score = 10;   // score의 타입은 int
+// score = "열"; // 컴파일 오류
+
+// dynamic은 해당 연산의 바인딩·검사를 실행 시점으로 미룹니다.
+dynamic value = 10;
+value = "열";</code></pre><pre><code># Python
+score = 10
+score = "열"  # 이름 score를 문자열 객체에 다시 연결</code></pre><p><strong>타입 검사 시점, 컴파일/JIT/해석 방식, 메모리 회수 방식은 구분해서 보세요.</strong> C++과 C#은 모두 정적 타입이지만 대표적인 메모리 관리 방식은 다릅니다. 정적 타입이라고 GC가 없거나, 동적 타입이라고 반드시 같은 GC를 쓰는 것은 아닙니다.</p><p class="meta">더 읽기: <a href="https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/types/">C# 타입 시스템</a> · <a href="https://docs.python.org/3/tutorial/">Python 튜토리얼</a></p></section>
+<section id="gc" data-title="9. GC는 어떻게 판단할까"><h2>9. GC는 ‘사용할 수 있는 연결’을 따라갑니다</h2><p><strong>가비지 컬렉터(Garbage Collector)</strong>는 .NET 런타임의 메모리 관리 구성 요소입니다. 코드에서 하나 생성하는 청소용 객체라기보다, 관리 힙의 공간을 회수하는 실행 체계로 이해하세요. 핵심 질문은 “이 객체로 다시 도달할 수 있을까?”입니다.</p><h3>출발점: GC 루트</h3><p>실행 중인 코드에서 살아 있는 지역 참조·매개변수, 레지스터의 참조, 정적 필드, 일부 런타임 핸들 등이 출발점이 됩니다. 이를 <strong>GC 루트(root)</strong>라고 부릅니다. GC는 루트에서 시작해 객체의 참조 필드를 따라 연결된 객체를 찾아갑니다.</p><ol><li><strong>도달 가능한 객체 찾기:</strong> 루트에서 연결을 따라가며 살아 있는 객체를 표시합니다.</li><li><strong>도달하지 못한 객체 판별:</strong> 수집 대상 범위에서 더 이상 도달할 수 없는 객체의 공간을 회수 대상으로 삼습니다.</li><li><strong>공간 회수와 정리:</strong> 공간을 재사용할 수 있게 합니다. 압축하는 수집에서는 살아 있는 객체를 옮겨 빈틈을 줄이고 참조도 갱신합니다. 모든 영역이 매번 압축되지는 않습니다.</li></ol><div class="lab"><h3>순환 참조도 수집할 수 있을까요?</h3><div class="flow"><span id="rootLabel">루트 → A</span><b>→</b><span>A → B → A<br>서로 참조하는 두 객체</span></div><button id="rootToggle" aria-pressed="false">루트 연결 끊기</button><p id="rootResult" aria-live="polite">루트에서 A와 B로 도달할 수 있으므로 둘 다 살아 있습니다.</p></div><p>.NET GC는 단순히 참조 개수를 세는 방식이 아닙니다. A와 B가 서로를 참조해도 루트로부터 연결이 끊기면 둘 다 수집 대상이 될 수 있습니다. 반대로 정적 컬렉션이나 이벤트 구독 등이 객체를 계속 붙잡으면, 개발자가 더는 쓸 생각이 없어도 살아남을 수 있습니다.</p><h3>세대: 오래 사는 객체를 매번 모두 살펴보지 않기</h3><p>일반적인 작은 객체는 0세대에서 출발합니다. 수집에서 살아남은 객체는 보통 1세대, 이후 2세대로 승격됩니다. 짧게 쓰는 객체가 많다는 경향을 활용해 젊은 세대를 더 자주 수집합니다. 1세대 수집은 0·1세대를, 2세대 수집은 0·1·2세대를 포함합니다.</p><p>오래된 객체가 새 객체를 가리키는 연결도 놓치면 안 됩니다. 런타임은 <strong>쓰기 장벽(write barrier)</strong>과 관련 기록을 이용해 이런 연결이 있는 영역을 추적합니다. 따라서 젊은 세대만 수집할 때도 필요한 참조를 확인할 수 있습니다.</p><h3>언제 실행되고, 왜 멈칫할까요?</h3><p>할당량과 메모리 압박 등 런타임의 판단에 따라 수집이 시작될 수 있습니다. GC는 사용자의 “이제 안 쓸게요”라는 의도를 직접 알지 못합니다. <code>x = null</code>은 참조 하나를 끊을 뿐 즉시 수집을 명령하지 않습니다.</p><p>수집의 일부 단계에서는 안전하게 참조를 조사하거나 갱신하기 위해 관리 코드 실행을 잠시 멈춥니다. 백그라운드 GC는 작업 일부를 프로그램과 함께 진행하지만 모든 정지를 없애지는 않습니다. 필요 없는 임시 객체를 아주 많이 만들면 할당과 수집 부담이 커질 수 있습니다.</p><details><summary>조금 더: 큰 객체와 finalizer</summary><p>큰 객체는 별도의 대형 객체 힙(LOH)에서 다루며 2세대 수집과 함께 회수됩니다. 이 영역은 일반적으로 매번 압축되지 않습니다. 고정된 객체 등도 이동을 제한할 수 있습니다.</p><p>finalizer가 있는 일부 객체는 별도의 마무리 절차 때문에 메모리 회수가 늦어질 수 있습니다. 실행 시점과 순서를 믿고 파일을 닫는 설계를 하지 마세요. 일반적인 자원 반환에는 using/Dispose를 사용합니다.</p></details><div class="note"><strong>GC가 해결하는 범위</strong><p>GC는 도달할 수 없는 관리 객체의 공간을 회수합니다. 불필요하게 유지한 참조의 의도, 파일을 닫아야 하는 시점, 네이티브 메모리의 모든 수명까지 자동으로 해결하지는 않습니다. 일반적인 코드에서 GC.Collect를 반복 호출하는 것을 기본 해결책으로 삼지 마세요.</p></div><p class="meta">더 읽기: <a href="https://learn.microsoft.com/en-us/dotnet/standard/garbage-collection/fundamentals">.NET GC의 기본 원리</a> · <a href="https://learn.microsoft.com/en-us/dotnet/standard/garbage-collection/background-gc">백그라운드 GC</a></p></section>
+<section id="practice" data-title="10. 예상하고 확인하기"><h2>10. 예상하고, 실행하고, 설명해 보기</h2><p>먼저 결과를 종이에 적고 콘솔 프로젝트에서 실행해 보세요. 화면 출력만 맞히지 말고, 변수와 객체를 각각 상자로 그린 뒤 연결선을 표시해 봅니다.</p><pre><code>using System;
+
+class Player { public int Hp; }
+struct Point { public int X; }
+
+class Program
+{
+    static void Update(Player p, Point point)
+    {
+        p.Hp = 30;
+        point.X = 30;
+        p = new Player { Hp = 999 };
+    }
+
+    static void Main()
+    {
+        Player hero = new Player { Hp = 100 };
+        Point position = new Point { X = 10 };
+        Update(hero, position);
+        Console.WriteLine(hero.Hp);
+        Console.WriteLine(position.X);
+    }
+}</code></pre><details><summary>출력과 이유 확인</summary><pre><code>30
+10</code></pre><p>Player의 참조 값이 복사되어 같은 객체를 수정하므로 Hp는 30입니다. 메서드 안의 p 재대입은 hero의 연결을 바꾸지 않습니다. Point는 값이 복사되어 메서드 안에서 수정한 X가 호출자의 position에 영향을 주지 않습니다.</p><p>변형 과제: point 매개변수와 호출부에 ref를 추가하고 결과를 예상하세요. 다음으로 Player 매개변수와 호출부에 ref를 추가해 재대입 결과를 비교하세요.</p></details><div class="quiz"><h3>오개념 점검</h3><fieldset data-correct="1" data-explain="int는 값 타입이지만 클래스 객체의 필드나 배열 요소로 힙 안에 포함될 수 있습니다."><legend>1. int의 저장 위치에 대한 설명은?</legend><button>항상 스택에 있다</button><button>값 타입이지만 포함된 위치에 따라 달라진다</button><p class="feedback" aria-live="polite"></p></fieldset><fieldset data-correct="0" data-explain="다른 루트 경로가 남아 있을 수 있고, 끊겼더라도 실제 회수 시점은 런타임이 결정합니다."><legend>2. hero = null 직후 객체는?</legend><button>즉시 회수된다고 보장할 수 없다</button><button>반드시 즉시 삭제된다</button><p class="feedback" aria-live="polite"></p></fieldset><fieldset data-correct="1" data-explain="using은 Dispose 호출을 보장하는 데 사용합니다. 관리 객체의 메모리 회수는 GC의 별도 책임입니다."><legend>3. using 블록을 벗어나면?</legend><button>관리 힙 전체에 GC가 실행된다</button><button>해당 자원의 Dispose가 호출된다</button><p class="feedback" aria-live="polite"></p></fieldset></div><h3>말로 설명할 수 있으면 완료</h3><ul><li>SSD의 파일, 프로세스의 메모리, CPU의 계산, 화면 출력을 구분할 수 있다.</li><li>호출이 끝나도 객체가 남아야 하는 예를 들 수 있다.</li><li>값 복사, 참조 값 복사, ref 전달의 차이를 설명할 수 있다.</li><li>GC 루트에서 도달 가능성을 판단하고, 순환 참조의 수집 가능성을 설명할 수 있다.</li><li>타입 검사 방식과 메모리 관리 방식을 별개의 기준으로 비교할 수 있다.</li></ul></section><footer>학습의 기준: 타입은 복사 규칙으로, 메모리는 수명으로, GC는 도달 가능성으로 이해합니다.</footer></main></div>
+<script>
+const sections=[...document.querySelectorAll('section[data-title]')];
+const nav=document.querySelector('aside nav');
+sections.forEach(s=>{const a=document.createElement('a');a.href='#'+s.id;a.textContent=s.dataset.title;nav.append(a)});
+const observer=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){nav.querySelectorAll('a').forEach(a=>a.classList.toggle('active',a.hash==='#'+e.target.id))}})},{rootMargin:'-10% 0px -65% 0px'});sections.forEach(s=>observer.observe(s));
+document.getElementById('theme').onclick=function(){const on=document.body.classList.toggle('dark');this.setAttribute('aria-pressed',String(on));this.textContent=on?'밝은 화면':'어두운 화면'};
+
+const steps=[
+['Main 시작','Main: Create 호출 직전','아직 없음','호출할 준비만 했습니다. 객체는 아직 만들지 않았습니다.'],
+['Create 진입','Main: 결과 대기\nCreate: p → A','A: Player { Hp = 100 }','Create 프레임에서 p가 새 객체 A를 가리킵니다.'],
+['Create 반환','Main: hero → A','A: Player { Hp = 100 }','Create 프레임은 끝났지만 반환된 참조로 hero가 A를 가리킵니다.'],
+['참조 값 복사','Main: hero → A\nMain: ally → A','A: Player { Hp = 100 }','ally = hero는 객체를 복제하지 않습니다. 두 참조가 A를 가리킵니다.'],
+['객체 수정','Main: hero → A\nMain: ally → A','A: Player { Hp = 80 }','ally.Hp = 80은 공유하는 객체를 수정합니다. hero.Hp로도 80을 읽습니다.'],
+['hero 연결 끊기','Main: hero = null\nMain: ally → A','A: Player { Hp = 80 }','ally로 계속 도달할 수 있으므로 A는 아직 필요합니다.'],
+['마지막 연결 끊기','Main: hero = null\nMain: ally = null','A: 도달 불가능 · 수집 후보','다른 연결이 없다고 가정하면 수집 대상이 됩니다. 아직 회수되었다는 뜻은 아닙니다.'],
+['이후 수집이 실행된 상황','Main: hero = null\nMain: ally = null','A의 공간을 재사용 가능','이 모형에서는 이제 GC가 실행되어 A의 공간을 회수했습니다. 실제 시점은 다를 수 있습니다.']];
+let step=0;function render(){const s=steps[step];document.getElementById('stepTitle').textContent=(step+1)+' / '+steps.length+' · '+s[0];document.getElementById('stack').textContent=s[1];document.getElementById('heap').textContent=s[2];document.getElementById('stepBody').textContent=s[3];document.getElementById('back').disabled=step===0;document.getElementById('forward').disabled=step===steps.length-1}
+document.getElementById('back').onclick=()=>{if(step>0)step--;render()};document.getElementById('forward').onclick=()=>{if(step<steps.length-1)step++;render()};document.getElementById('reset').onclick=()=>{step=0;render()};render();
+let detached=false;document.getElementById('rootToggle').onclick=function(){detached=!detached;this.setAttribute('aria-pressed',String(detached));this.textContent=detached?'루트 연결 복원':'루트 연결 끊기';document.getElementById('rootLabel').textContent=detached?'루트 연결 없음':'루트 → A';document.getElementById('rootResult').textContent=detached?'A와 B끼리 연결되어도 루트에서 도달하지 못합니다. 둘 다 수집 대상이 될 수 있습니다.':'루트에서 A와 B로 도달할 수 있으므로 둘 다 살아 있습니다.'};
+document.querySelectorAll('.quiz fieldset').forEach(f=>{f.querySelectorAll('button').forEach((b,i)=>b.onclick=()=>{f.querySelector('.feedback').textContent=(i===Number(f.dataset.correct)?'맞았습니다. ':'다시 생각해 보세요. ')+f.dataset.explain})});
+</script></body></html>

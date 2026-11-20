@@ -1,0 +1,17 @@
+{
+  "01-setup-environment.md": {
+    "565": "remove-extra-fence"
+  },
+  "02-csharp-basics.md": {
+    "877": "escape-inline-table-pipes"
+  },
+  "05-collections.md": {
+    "964": "open-csharp-fence",
+    "1197": "open-csharp-fence"
+  },
+  "07-methods-basics.md": {
+    "897": "open-csharp-fence",
+    "1191": "open-csharp-fence",
+    "1558": "open-csharp-fence"
+  }
+}

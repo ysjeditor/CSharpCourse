@@ -1,0 +1,66 @@
+[
+  {
+    "chapter": 1,
+    "source_bytes": 50741,
+    "sha256": "cab9874f61520123d12d9a6859605b607093b65c05f29f8f9d777642ba6e4997",
+    "headings": 67,
+    "code_blocks": 38,
+    "status": "passed"
+  },
+  {
+    "chapter": 2,
+    "source_bytes": 57859,
+    "sha256": "51b7b890f1c5d2a68ab343677b15a99c9b1245088cd9a26f23ff8e165c81aa45",
+    "headings": 31,
+    "code_blocks": 67,
+    "status": "passed"
+  },
+  {
+    "chapter": 3,
+    "source_bytes": 55281,
+    "sha256": "460395156f10a6b39f7aacb062d809307c5e3d4df4238e50d34f370d9f50675f",
+    "headings": 16,
+    "code_blocks": 55,
+    "status": "passed"
+  },
+  {
+    "chapter": 4,
+    "source_bytes": 51619,
+    "sha256": "0d3b0c49d4a9dad6c7c90b68d0b46d914063c4454da59fafd44d9f81a157140d",
+    "headings": 13,
+    "code_blocks": 48,
+    "status": "passed"
+  },
+  {
+    "chapter": 5,
+    "source_bytes": 63137,
+    "sha256": "316840714979813ac9cdbe2396e72feed6bc4d942d1465489c86066f95c0ad14",
+    "headings": 17,
+    "code_blocks": 48,
+    "status": "passed"
+  },
+  {
+    "chapter": 6,
+    "source_bytes": 60654,
+    "sha256": "864eed78704b4542457d18b191ab2f04dd4ab1c6b7aa44d52e0e58994533b21e",
+    "headings": 18,
+    "code_blocks": 49,
+    "status": "passed"
+  },
+  {
+    "chapter": 7,
+    "source_bytes": 66263,
+    "sha256": "74d2f3040bb780bebe05d0181aa9b8033266a4e8fa0736300e1ce8291f166977",
+    "headings": 19,
+    "code_blocks": 60,
+    "status": "passed"
+  },
+  {
+    "chapter": 8,
+    "source_bytes": 60878,
+    "sha256": "3e6ea8b5215490f48f549472dd57ab02622665a809eadc8fc48b4e109ee466c6",
+    "headings": 7,
+    "code_blocks": 49,
+    "status": "passed"
+  }
+]
