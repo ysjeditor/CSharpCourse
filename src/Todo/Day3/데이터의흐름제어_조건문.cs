@@ -1,4 +1,5 @@
 ﻿using System;
+using Todo;
 // 분기문
 // 코드를 원하는 부분만 실행하겠다.
 
@@ -40,26 +41,27 @@ Random rand = new Random();
 int otherChoice = rand.Next(1, 4);
 Console.WriteLine(otherChoice);
 
-if (choice == (int)Todo.Choice.ROCK)
-{
+//if (choice == (int)Todo.Choice.ROCK)
+//{
 
-    Console.WriteLine("주먹을 냈습니다.");
-}
-else if (choice == (int)Todo.AttackStyle.SCISSORS)
-{
-    Console.WriteLine("가위를 냈습니다");
-}
-else if (choice == (int)Todo.Choice.PAPER)
-{
-    Console.WriteLine("보를 냈습니다.");
-}
-else
-{
-    Console.WriteLine("잘못된 입력을 받았습니다.");
-}
+//    Console.WriteLine("주먹을 냈습니다.");
+//}
+//else if (choice == (int)Todo.AttackStyle.SCISSORS)
+//{
+//    Console.WriteLine("가위를 냈습니다");
+//}
+//else if (choice == (int)Todo.Choice.PAPER)
+//{
+//    Console.WriteLine("보를 냈습니다.");
+//}
+//else
+//{
+//    Console.WriteLine("잘못된 입력을 받았습니다.");
+//}
 
-Todo.Choice eChoice = Todo.Choice.ROCK;
-switch (eChoice)
+Choice choiceTransion = Todo.Choice.ROCK;
+
+switch (choiceTransion)
 {
     case Todo.Choice.ROCK:
         break;
