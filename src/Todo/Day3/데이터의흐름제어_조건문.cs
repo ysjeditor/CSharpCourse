@@ -32,32 +32,31 @@ else
 int choice = int.Parse(Console.ReadLine()); // 1약속> 주먹 2가위 3보
 
 
-//const int ROCK = 1;
-//const int SCISSORS = 2;
-//const int PAPER = 3;
+const int ROCK = 1;
+const int SCISSORS = 2;
+const int PAPER = 3;
 
 Random rand = new Random();
 
 int otherChoice = rand.Next(1, 4);
 Console.WriteLine(otherChoice);
 
-//if (choice == (int)Todo.Choice.ROCK)
-//{
-
-//    Console.WriteLine("주먹을 냈습니다.");
-//}
-//else if (choice == (int)Todo.AttackStyle.SCISSORS)
-//{
-//    Console.WriteLine("가위를 냈습니다");
-//}
-//else if (choice == (int)Todo.Choice.PAPER)
-//{
-//    Console.WriteLine("보를 냈습니다.");
-//}
-//else
-//{
-//    Console.WriteLine("잘못된 입력을 받았습니다.");
-//}
+if (choice == (int)Todo.Choice.ROCK)
+{
+   Console.WriteLine("주먹을 냈습니다.");
+}
+else if (choice == (int)Todo.AttackStyle.SCISSORS)
+{
+   Console.WriteLine("가위를 냈습니다");
+}
+else if (choice == (int)Todo.Choice.PAPER)
+{
+   Console.WriteLine("보를 냈습니다.");
+}
+else
+{
+   Console.WriteLine("잘못된 입력을 받았습니다.");
+}
 
 Choice choiceTransion = Todo.Choice.ROCK;
 
