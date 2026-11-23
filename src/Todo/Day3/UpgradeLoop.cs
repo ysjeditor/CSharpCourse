@@ -2,8 +2,7 @@
 int grade = 0;
 int bestGrade = 0;
 bool running = true;
-bool noneInput = false;
-bool start = true;
+bool exceptionInput = false;
 string message = "최고 등급 +10 무기를 만들어 보세요!";
 
 
@@ -20,12 +19,12 @@ while (running)
     int sellPrice = grade * 20;
 
     // Render
-        Console.Clear();
-    if (noneInput == true)
+    if(exceptionInput == false)
     {
-        continue;
+        Console.Clear();
     }
-        Console.WriteLine("=== 무기 강화 ===");
+
+    Console.WriteLine("=== 무기 강화 ===");
         Console.WriteLine($"골드: {gold} | 무기: +{grade} | 최고: +{bestGrade}");
         Console.WriteLine($"강화 비용: {cost} | 성공 확률: {chance}%");
         Console.WriteLine($"판매 가격: {sellPrice} | 실패하면 무기는 +0으로 돌아갑니다.");
@@ -87,13 +86,6 @@ while (running)
     else
     {
         Console.WriteLine("1, 2, 0 중 하나를 입력하세요");
-        noneInput = true;
+        exceptionInput = true;
     }
-
-    Console.WriteLine($"강화 성공! +{grade}");
-    Console.WriteLine("강화 실패! 새 +0 무기로 다시 시작합니다.");
-    Console.WriteLine("+0 무기는 팔 수 없습니다.");
-    Console.WriteLine($"{sellPrice}골드에 판매했습니다. 새 +0 무기를 받았습니다.");
-    Console.WriteLine("1, 2, 0 중 하나를 입력하세요.");
-
 }

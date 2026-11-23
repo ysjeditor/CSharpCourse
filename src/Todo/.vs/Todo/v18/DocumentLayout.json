@@ -3,12 +3,12 @@
   "WorkspaceRootPath": "C:\\\uC724\uC131\uC9C4\uAC8C\uC784\uAC1C\uBC1C\uACC4\uC88C\uC81C\\CSharpCourse\\src\\Todo\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{49BEB3FF-A2AD-44D5-AA95-8E7DC5996F01}|Todo.csproj|c:\\\uC724\uC131\uC9C4\uAC8C\uC784\uAC1C\uBC1C\uACC4\uC88C\uC81C\\csharpcourse\\src\\todo\\upgradeloop.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{49BEB3FF-A2AD-44D5-AA95-8E7DC5996F01}|Todo.csproj|solutionrelative:upgradeloop.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{49BEB3FF-A2AD-44D5-AA95-8E7DC5996F01}|Todo.csproj|c:\\\uC724\uC131\uC9C4\uAC8C\uC784\uAC1C\uBC1C\uACC4\uC88C\uC81C\\csharpcourse\\src\\todo\\day3\\upgradeloop.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{49BEB3FF-A2AD-44D5-AA95-8E7DC5996F01}|Todo.csproj|solutionrelative:day3\\upgradeloop.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{49BEB3FF-A2AD-44D5-AA95-8E7DC5996F01}|Todo.csproj|c:\\\uC724\uC131\uC9C4\uAC8C\uC784\uAC1C\uBC1C\uACC4\uC88C\uC81C\\csharpcourse\\src\\todo\\upgradeloop.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{49BEB3FF-A2AD-44D5-AA95-8E7DC5996F01}|Todo.csproj|solutionrelative:upgradeloop.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,30 +18,30 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "UpgradeLoop.cs",
               "DocumentMoniker": "C:\\\uC724\uC131\uC9C4\uAC8C\uC784\uAC1C\uBC1C\uACC4\uC88C\uC81C\\CSharpCourse\\src\\Todo\\UpgradeLoop.cs",
               "RelativeDocumentMoniker": "UpgradeLoop.cs",
               "ToolTip": "C:\\\uC724\uC131\uC9C4\uAC8C\uC784\uAC1C\uBC1C\uACC4\uC88C\uC81C\\CSharpCourse\\src\\Todo\\UpgradeLoop.cs",
               "RelativeToolTip": "UpgradeLoop.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAdAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-11-20T10:39:27.658Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "UpgradeLoop.cs",
               "DocumentMoniker": "C:\\\uC724\uC131\uC9C4\uAC8C\uC784\uAC1C\uBC1C\uACC4\uC88C\uC81C\\CSharpCourse\\src\\Todo\\Day3\\UpgradeLoop.cs",
               "RelativeDocumentMoniker": "Day3\\UpgradeLoop.cs",
               "ToolTip": "C:\\\uC724\uC131\uC9C4\uAC8C\uC784\uAC1C\uBC1C\uACC4\uC88C\uC81C\\CSharpCourse\\src\\Todo\\Day3\\UpgradeLoop.cs",
               "RelativeToolTip": "Day3\\UpgradeLoop.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAABcAAAAaAAAAAAAAAA==",
+              "ViewState": "AgIAADwAAAAAAAAAAAAAABcAAAAaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-11-20T10:34:45.514Z",
               "EditorCaption": ""
