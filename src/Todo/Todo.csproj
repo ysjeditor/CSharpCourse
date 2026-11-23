@@ -22,6 +22,7 @@
     <Compile Remove="데이터의흐름제어.cs" />
     <Compile Remove="반복문.cs" />
     <Compile Remove="클래스.cs" />
+    <Compile Remove="ref.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -16,6 +16,7 @@
 | 2026-11-19 | 프로그래밍 용어 정리 | [TIL](./docs/TodayILearn/20261119내가모르는프로그래밍용어.md) | [#3](____) |
 | 2026-11-20 | 업그레이드 게임 만들어보기 | [TIL](./src/Day4/UpgradeLoop.cs) | [#4](____) |
 | 2026-11-20 | Class 학습 및 AI로 콘솔게임 만들어보기 | [TIL](./docs/TodayILearn/20261123.md) | [#5](____) |
+| 2026-11-20 | Class 학습 및 AI로 콘솔게임 만들어보기 | [TIL](./docs/TodayILearn/20261123.md) | [#5](____) |
 
 ## 바로가기
 ![flow Chart](<assets/svg AI로 만들어본것.svg>)

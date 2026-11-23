@@ -17,7 +17,10 @@ class Program
 
         // 2번 사물함(Hp = 1)을 새로 만들고, '내 포스트잇(p)'의 번호만 2번으로 고쳐 씀
         // (밖에 있는 hero 포스트잇은 여전히 1번 사물함이라고 적혀 있음!)
-        p = new Player { Hp = 1 };
+        p = new Player();
+        p.Hp = 10000;
+        p = new Player();
+        p.Hp = 1;
     }
 
     // [상황 2] ref가 있을 때: 밖에 있는 '원본 포스트잇(hero)' 자체를 직접 빌려옴
@@ -49,7 +52,6 @@ class Program
         // ref 없이 전달 -> 1번 사물함 안의 내용물(80)만 바뀌고, 새 객체(1) 연결은 무시됨
         Change(hero);
         Console.WriteLine($"Change(hero) 실행 후 체력: {hero.Hp}"); // 80
-
         // ref 붙여서 전달 -> hero 포스트잇 자체가 새 객체(1)를 가리키도록 바뀜!
         Replace(ref hero);
         Console.WriteLine($"Replace(ref hero) 실행 후 체력: {hero.Hp}"); // 1
