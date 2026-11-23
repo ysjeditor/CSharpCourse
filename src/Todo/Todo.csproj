@@ -15,9 +15,13 @@
 
   <ItemGroup>
     <Compile Remove="02-1-1\02-1-1-csharp_basic.cs" />
+    <Compile Remove="Game.cs" />
+    <Compile Remove="Program.cs" />
+    <Compile Remove="Test.cs" />
     <Compile Remove="UpgradeLoop.cs" />
     <Compile Remove="데이터의흐름제어.cs" />
     <Compile Remove="반복문.cs" />
+    <Compile Remove="클래스.cs" />
   </ItemGroup>
 
   <ItemGroup>

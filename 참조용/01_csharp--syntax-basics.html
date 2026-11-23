@@ -1,0 +1,3249 @@
+<!doctype html>
+<html lang="ko" data-concept="csharp/syntax-basics" data-level="beginner">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>C# 문법 기초 — 게임 개발 개념 라이브러리</title>
+  <meta name="description" content="변수와 타입, 연산자, 조건문과 반복문, 배열 — 게임 코드를 읽고 쓰는 최소한의 문법">
+  <script>document.documentElement.classList.add('cp-js');try{var t=localStorage.getItem('gcl-theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}</script>
+  <style data-source="concept.css">
+/*
+ * Game Concept Library — concept page runtime styles.
+ * Inlined into every concept page at build time; keep it dependency-free.
+ * Reference: docs/AUTHORING.md
+ */
+
+/* ───────────────────────── Tokens ───────────────────────── */
+:root {
+  color-scheme: dark;
+  --accent: #7ea2f7;
+  --bg: #0d1015;
+  --bg-elev: #151a21;
+  --bg-soft: #1b212a;
+  --bg-sunken: #0a0c10;
+  --line: #2a313c;
+  --line-strong: #3a4350;
+  --fg: #e7eaf0;
+  --fg-muted: #a3adbb;
+  --fg-subtle: #6f7a89;
+  --good: #4ccb8f;
+  --bad: #f27a7a;
+  --warn: #e9c84f;
+  --viz-1: var(--accent);
+  --viz-2: #f5a454;
+  --viz-3: #4ccb8f;
+  --viz-4: #e683d3;
+  --viz-5: #52c2ea;
+  --viz-6: #e9c84f;
+  --accent-ink: var(--accent);
+  --accent-soft: color-mix(in oklab, var(--accent) 16%, transparent);
+  --accent-line: color-mix(in oklab, var(--accent) 45%, transparent);
+  --shadow: 0 10px 30px rgb(0 0 0 / 0.35);
+  --radius: 14px;
+  --radius-sm: 9px;
+  --bar-h: 56px;
+  --nav-h: 64px;
+  --content-w: 1120px;
+  --font-sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", "맑은 고딕", "Noto Sans KR", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", "D2Coding", "Cascadia Code", Consolas, "SF Mono", Menlo, monospace;
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+  --bg: #f6f7f9;
+  --bg-elev: #ffffff;
+  --bg-soft: #eef0f4;
+  --bg-sunken: #e7eaef;
+  --line: #dde1e8;
+  --line-strong: #c5ccd6;
+  --fg: #161a21;
+  --fg-muted: #4f5967;
+  --fg-subtle: #7d8796;
+  --good: #1f9a5e;
+  --bad: #d64545;
+  --warn: #b58a00;
+  --viz-2: #d97a1e;
+  --viz-3: #1f9a5e;
+  --viz-4: #b9469f;
+  --viz-5: #1f8fc0;
+  --viz-6: #b58a00;
+  --viz-1: color-mix(in oklab, var(--accent) 78%, #000);
+  --accent-ink: color-mix(in oklab, var(--accent) 62%, #000);
+  --accent-soft: color-mix(in oklab, var(--accent) 18%, transparent);
+  --shadow: 0 10px 30px rgb(20 30 50 / 0.12);
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) {
+    color-scheme: light;
+    --bg: #f6f7f9;
+    --bg-elev: #ffffff;
+    --bg-soft: #eef0f4;
+    --bg-sunken: #e7eaef;
+    --line: #dde1e8;
+    --line-strong: #c5ccd6;
+    --fg: #161a21;
+    --fg-muted: #4f5967;
+    --fg-subtle: #7d8796;
+    --good: #1f9a5e;
+    --bad: #d64545;
+    --warn: #b58a00;
+    --viz-2: #d97a1e;
+    --viz-3: #1f9a5e;
+    --viz-4: #b9469f;
+    --viz-5: #1f8fc0;
+    --viz-6: #b58a00;
+    --viz-1: color-mix(in oklab, var(--accent) 78%, #000);
+    --accent-ink: color-mix(in oklab, var(--accent) 62%, #000);
+    --accent-soft: color-mix(in oklab, var(--accent) 18%, transparent);
+    --shadow: 0 10px 30px rgb(20 30 50 / 0.12);
+  }
+}
+
+/* ───────────────────────── Base ───────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body { height: 100%; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  font-size: 17px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+.cp-js body { overflow: hidden; }
+
+::selection { background: var(--accent-soft); }
+
+a { color: var(--accent-ink); text-underline-offset: 3px; }
+
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+
+h1, h2, h3, h4 { line-height: 1.25; margin: 0 0 0.5em; letter-spacing: -0.01em; font-weight: 700; }
+h1 { font-size: clamp(2.2rem, 5vw, 3.6rem); letter-spacing: -0.02em; }
+h2 { font-size: clamp(1.55rem, 3vw, 2.15rem); }
+h3 { font-size: 1.15rem; }
+p { margin: 0 0 0.9em; }
+ul, ol { margin: 0 0 0.9em; padding-left: 1.3em; }
+li + li { margin-top: 0.3em; }
+strong { color: var(--fg); font-weight: 700; }
+em { font-style: normal; color: var(--accent-ink); font-weight: 600; }
+hr { border: 0; border-top: 1px solid var(--line); margin: 1.5em 0; }
+
+code, kbd, .mono { font-family: var(--font-mono); font-size: 0.88em; font-variant-ligatures: none; }
+pre, .formula, .readout, .stat__value { font-variant-ligatures: none; }
+:not(pre) > code {
+  padding: 0.12em 0.4em;
+  border-radius: 6px;
+  background: var(--bg-soft);
+  border: 1px solid var(--line);
+}
+
+/* ───────────────────────── Chrome: top bar ───────────────────────── */
+.cp-topbar {
+  position: fixed;
+  inset: 0 0 auto 0;
+  height: var(--bar-h);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 clamp(12px, 3vw, 28px);
+  background: color-mix(in oklab, var(--bg) 82%, transparent);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+  z-index: 20;
+  font-size: 0.9rem;
+}
+
+.cp-crumb { display: flex; align-items: center; gap: 8px; min-width: 0; flex: 1; }
+.cp-crumb__cat { color: var(--accent-ink); font-weight: 600; white-space: nowrap; }
+.cp-crumb__sep { color: var(--fg-subtle); }
+.cp-crumb__title { color: var(--fg); font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+.cp-lib {
+  display: inline-flex; align-items: center; gap: 6px;
+  color: var(--fg-muted); text-decoration: none; white-space: nowrap;
+  padding: 6px 10px; border-radius: 8px; border: 1px solid var(--line);
+}
+.cp-lib:hover { color: var(--fg); border-color: var(--line-strong); }
+.cp-lib svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.cp-topbar .cp-icon-btn { width: 36px; height: 36px; }
+
+.cp-progress {
+  position: fixed; inset: 0 0 auto 0; height: 3px; z-index: 30;
+  background: transparent;
+}
+.cp-progress__fill {
+  height: 100%; width: 0; background: var(--accent);
+  transition: width 0.35s var(--ease);
+}
+
+/* ───────────────────────── Chrome: bottom nav ───────────────────────── */
+.cp-nav {
+  position: fixed;
+  inset: auto 0 0 0;
+  height: var(--nav-h);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 clamp(10px, 3vw, 28px);
+  background: color-mix(in oklab, var(--bg) 86%, transparent);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid var(--line);
+  z-index: 20;
+}
+.cp-nav__status { flex: 1; min-width: 0; display: flex; align-items: baseline; gap: 10px; justify-content: center; }
+.cp-nav__title { color: var(--fg-muted); font-size: 0.9rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cp-nav__count { font-family: var(--font-mono); font-size: 0.85rem; color: var(--fg-subtle); white-space: nowrap; }
+.cp-nav__group { display: flex; gap: 6px; }
+.cp-steps { display: inline-flex; gap: 4px; align-items: center; align-self: center; }
+.cp-steps:empty { display: none; }
+.cp-steps > span { width: 6px; height: 6px; border-radius: 50%; background: var(--line-strong); transition: background 0.2s; }
+.cp-steps > span.is-on { background: var(--accent); }
+.cp-icon-btn--primary.has-steps { box-shadow: 0 0 0 3px var(--accent-soft); }
+
+.cp-icon-btn {
+  display: inline-grid; place-items: center;
+  width: 40px; height: 40px; padding: 0;
+  border-radius: 10px; border: 1px solid var(--line);
+  background: var(--bg-elev); color: var(--fg);
+  cursor: pointer; transition: background 0.15s, border-color 0.15s, opacity 0.15s;
+}
+.cp-icon-btn:hover:not(:disabled) { border-color: var(--line-strong); background: var(--bg-soft); }
+.cp-icon-btn:disabled { opacity: 0.35; cursor: default; }
+.cp-icon-btn svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.cp-icon-btn--primary { background: var(--accent); border-color: transparent; color: #0b0d12; }
+.cp-icon-btn--primary:hover:not(:disabled) { background: color-mix(in oklab, var(--accent) 85%, #fff); }
+
+/* ───────────────────────── Deck & slides ───────────────────────── */
+/* clip (not just hidden): the waiting next slide sits 28px to the right, and with
+   overflow:hidden a focus or scrollIntoView could still scroll the whole deck sideways. */
+.cp-js .deck { position: fixed; inset: 0; overflow: hidden; overflow: clip; }
+
+.slide {
+  padding: calc(var(--bar-h) + clamp(20px, 4vh, 48px)) clamp(18px, 5vw, 64px) calc(var(--nav-h) + clamp(20px, 4vh, 48px));
+  display: flex;
+  flex-direction: column;
+}
+.slide > * { width: 100%; max-width: var(--content-w); margin-inline: auto; }
+.slide > :first-child { margin-top: auto; }
+.slide > :last-child { margin-bottom: auto; }
+
+.cp-js .slide {
+  position: absolute;
+  inset: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(28px);
+  transition: opacity 0.4s var(--ease), transform 0.4s var(--ease), visibility 0s linear 0.4s;
+}
+.cp-js .slide.is-past { transform: translateX(-28px); }
+.cp-js .slide.is-active {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition: opacity 0.4s var(--ease), transform 0.4s var(--ease), visibility 0s;
+  z-index: 1;
+}
+
+/* Progressive reveal: [data-step="n"] */
+.cp-js .slide [data-step] { transition: opacity 0.35s var(--ease), transform 0.35s var(--ease); }
+.cp-js .slide [data-step]:not(.is-shown) { opacity: 0; transform: translateY(10px); pointer-events: none; }
+.cp-js .slide [data-step].is-current { }
+
+/* Slide typography */
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 0.8rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--accent-ink); margin-bottom: 0.9rem;
+}
+.eyebrow::before { content: ""; width: 18px; height: 2px; background: var(--accent); border-radius: 2px; }
+.lead { font-size: clamp(1.05rem, 1.6vw, 1.22rem); color: var(--fg-muted); max-width: 62ch; }
+.muted { color: var(--fg-muted); }
+.subtle { color: var(--fg-subtle); }
+.small { font-size: 0.88rem; }
+.center { text-align: center; }
+.en { color: var(--fg-subtle); font-weight: 500; }
+
+/* Title slide */
+.slide--title h1 { margin-bottom: 0.2em; }
+.slide--title .subtitle { font-size: clamp(1.1rem, 2vw, 1.5rem); color: var(--fg-subtle); font-weight: 500; margin-bottom: 1.4rem; letter-spacing: 0; }
+.slide--title .lead { margin-bottom: 1.8rem; }
+.title-meta { display: flex; flex-wrap: wrap; gap: 18px 36px; padding-top: 1.4rem; border-top: 1px solid var(--line); }
+.title-meta__item { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.title-meta__label { font-size: 0.76rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--fg-subtle); font-weight: 700; }
+.title-meta__value { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.start-hint { margin-top: 2rem; color: var(--fg-subtle); font-size: 0.9rem; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+
+/* ───────────────────────── Components ───────────────────────── */
+.cols { display: grid; gap: clamp(18px, 3vw, 36px); grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); align-items: start; }
+.cols > * { min-width: 0; } /* let wide children (code, tables) scroll inside instead of widening the slide */
+.cols--center { align-items: center; }
+.cols--3-2 { grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); }
+.cols--2-3 { grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); }
+@media (max-width: 860px) { .cols--3-2, .cols--2-3 { grid-template-columns: minmax(0, 1fr); } }
+
+.stack > * + * { margin-top: 14px; }
+
+.card {
+  background: var(--bg-elev);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: clamp(16px, 2vw, 22px);
+}
+.card > :last-child { margin-bottom: 0; }
+.card h3 { margin-bottom: 0.4em; }
+.card--accent { border-color: var(--accent-line); background: linear-gradient(180deg, var(--accent-soft), transparent 70%), var(--bg-elev); }
+
+.grid-cards { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); }
+
+.callout {
+  position: relative;
+  padding: 14px 18px 14px 18px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--accent);
+  background: var(--bg-elev);
+}
+.callout > :last-child { margin-bottom: 0; }
+.callout__title { display: block; font-weight: 700; margin-bottom: 4px; font-size: 0.92rem; }
+.callout--key { border-left-color: var(--accent); background: linear-gradient(90deg, var(--accent-soft), transparent 60%), var(--bg-elev); }
+.callout--tip { border-left-color: var(--good); }
+.callout--tip .callout__title { color: var(--good); }
+.callout--warn { border-left-color: var(--warn); }
+.callout--warn .callout__title { color: var(--warn); }
+.callout--bad { border-left-color: var(--bad); }
+.callout--bad .callout__title { color: var(--bad); }
+
+.badge, .tag {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 3px 10px; border-radius: 999px;
+  font-size: 0.8rem; font-weight: 600; line-height: 1.5;
+  border: 1px solid var(--line); background: var(--bg-soft); color: var(--fg-muted);
+  white-space: nowrap;
+}
+.badge--accent { color: var(--accent-ink); border-color: var(--accent-line); background: var(--accent-soft); }
+.badge--good { color: var(--good); border-color: color-mix(in oklab, var(--good) 40%, transparent); background: color-mix(in oklab, var(--good) 12%, transparent); }
+.badge--bad { color: var(--bad); border-color: color-mix(in oklab, var(--bad) 40%, transparent); background: color-mix(in oklab, var(--bad) 12%, transparent); }
+.badge--warn { color: var(--warn); border-color: color-mix(in oklab, var(--warn) 40%, transparent); background: color-mix(in oklab, var(--warn) 12%, transparent); }
+
+.concept-ref {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 3px 11px; border-radius: 999px; font-size: 0.85rem; font-weight: 600;
+  border: 1px dashed var(--line-strong); color: var(--fg-muted); text-decoration: none;
+}
+a.concept-ref { border-style: solid; border-color: var(--accent-line); color: var(--accent-ink); background: var(--accent-soft); }
+a.concept-ref::after { content: "→"; font-weight: 400; }
+a.concept-ref:hover { background: color-mix(in oklab, var(--accent) 26%, transparent); }
+a.concept-ref.is-planned { border-style: dashed; border-color: var(--line-strong); color: var(--fg-muted); background: transparent; }
+a.concept-ref.is-planned:hover { color: var(--fg); background: var(--bg-soft); }
+
+kbd, .kbd {
+  display: inline-block; min-width: 1.7em; padding: 0.1em 0.45em; text-align: center;
+  border-radius: 6px; border: 1px solid var(--line-strong); border-bottom-width: 2px;
+  background: var(--bg-elev); color: var(--fg); font-size: 0.8em; line-height: 1.5;
+}
+
+.formula {
+  display: block; text-align: center;
+  font-family: var(--font-mono); font-size: clamp(1rem, 1.8vw, 1.25rem);
+  padding: 16px 18px; margin: 0 0 1em; border-radius: var(--radius-sm);
+  background: var(--bg-sunken); border: 1px solid var(--line); color: var(--fg);
+  overflow-x: auto; white-space: nowrap;
+}
+.formula .var { color: var(--accent-ink); }
+.formula .op { color: var(--fg-subtle); }
+
+.def-list { display: grid; grid-template-columns: max-content 1fr; gap: 8px 18px; margin: 0 0 1em; }
+.def-list dt { font-weight: 700; color: var(--accent-ink); }
+.def-list dd { margin: 0; color: var(--fg-muted); }
+
+.steps { list-style: none; padding: 0; counter-reset: step; }
+.steps > li { counter-increment: step; position: relative; padding-left: 2.6em; min-height: 1.8em; }
+.steps > li + li { margin-top: 0.8em; }
+.steps > li::before {
+  content: counter(step); position: absolute; left: 0; top: 0.05em;
+  width: 1.8em; height: 1.8em; display: grid; place-items: center;
+  border-radius: 50%; background: var(--accent-soft); color: var(--accent-ink);
+  font-weight: 700; font-size: 0.85em; border: 1px solid var(--accent-line);
+}
+
+.checklist { list-style: none; padding: 0; }
+.checklist > li { position: relative; padding-left: 1.8em; }
+.checklist > li::before { content: "✓"; position: absolute; left: 0.2em; color: var(--good); font-weight: 700; }
+
+.table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--radius-sm); margin-bottom: 1em; }
+table { width: 100%; border-collapse: collapse; font-size: 0.93rem; }
+th, td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { background: var(--bg-soft); color: var(--fg-muted); font-weight: 700; font-size: 0.82rem; letter-spacing: 0.02em; }
+tr:last-child td { border-bottom: 0; }
+
+/* Figures & canvases */
+.figure {
+  position: relative;
+  margin: 0;
+  background: var(--bg-sunken);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.figure canvas, .figure svg.viz { display: block; width: 100%; height: auto; max-height: min(62vh, 560px); touch-action: manipulation; }
+canvas { -webkit-user-select: none; user-select: none; -webkit-tap-highlight-color: transparent; }
+.figure canvas.is-draggable { touch-action: none; }
+.figure figcaption, .figure .caption {
+  padding: 10px 14px; font-size: 0.85rem; color: var(--fg-muted);
+  border-top: 1px solid var(--line); background: var(--bg-elev);
+}
+.figure__overlay {
+  position: absolute; top: 10px; left: 10px; right: 10px;
+  display: flex; flex-wrap: wrap; gap: 6px; pointer-events: none;
+}
+.figure__overlay > * { pointer-events: auto; }
+.hint { font-size: 0.82rem; color: var(--fg-subtle); }
+
+.legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 0.85rem; color: var(--fg-muted); }
+.legend__item { display: inline-flex; align-items: center; gap: 7px; }
+.legend__swatch { width: 12px; height: 12px; border-radius: 3px; background: var(--c, var(--accent)); flex: none; }
+
+.readout {
+  font-family: var(--font-mono); font-size: 0.86rem;
+  background: var(--bg-sunken); border: 1px solid var(--line); border-radius: var(--radius-sm);
+  padding: 10px 14px; color: var(--fg-muted); white-space: pre-wrap; line-height: 1.6;
+}
+.readout b { color: var(--fg); font-weight: 600; }
+
+.stat-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; }
+.stat { background: var(--bg-elev); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 10px 14px; }
+.stat__label { font-size: 0.75rem; color: var(--fg-subtle); font-weight: 700; letter-spacing: 0.04em; }
+.stat__value { font-family: var(--font-mono); font-size: 1.25rem; color: var(--fg); font-variant-numeric: tabular-nums; }
+
+/* ───────────────────────── Controls ───────────────────────── */
+.controls {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 12px 18px;
+  padding: 12px 14px; margin-top: 12px;
+  background: var(--bg-elev); border: 1px solid var(--line); border-radius: var(--radius-sm);
+}
+.controls--stack { flex-direction: column; align-items: stretch; }
+
+.ctl { display: flex; align-items: center; gap: 10px; font-size: 0.88rem; color: var(--fg-muted); min-width: 0; }
+.ctl > span:first-child { white-space: nowrap; }
+.ctl output { font-family: var(--font-mono); color: var(--fg); min-width: 3.5em; font-variant-numeric: tabular-nums; font-size: 0.85rem; }
+.controls--stack .ctl { justify-content: space-between; }
+.controls--stack .ctl input[type="range"] { flex: 1; }
+
+input[type="range"] {
+  -webkit-appearance: none; appearance: none;
+  width: 150px; max-width: 100%; height: 22px; background: transparent; cursor: pointer; margin: 0;
+}
+input[type="range"]::-webkit-slider-runnable-track { height: 4px; border-radius: 4px; background: var(--line-strong); }
+input[type="range"]::-moz-range-track { height: 4px; border-radius: 4px; background: var(--line-strong); }
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none; width: 16px; height: 16px; margin-top: -6px; border-radius: 50%;
+  background: var(--accent); border: 2px solid var(--bg-elev); box-shadow: 0 0 0 1px var(--accent);
+}
+input[type="range"]::-moz-range-thumb { width: 14px; height: 14px; border-radius: 50%; background: var(--accent); border: 2px solid var(--bg-elev); }
+input[type="range"]:focus-visible { outline: none; }
+input[type="range"]:focus-visible::-webkit-slider-thumb { box-shadow: 0 0 0 4px var(--accent-soft), 0 0 0 1px var(--accent); }
+
+input[type="checkbox"] { accent-color: var(--accent); width: 16px; height: 16px; margin: 0; }
+label.check { display: inline-flex; align-items: center; gap: 8px; font-size: 0.88rem; color: var(--fg-muted); cursor: pointer; user-select: none; }
+
+select {
+  font: inherit; font-size: 0.88rem; color: var(--fg); background: var(--bg-soft);
+  border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px;
+}
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  font: inherit; font-size: 0.88rem; font-weight: 600;
+  padding: 8px 14px; border-radius: 9px; cursor: pointer;
+  border: 1px solid var(--line); background: var(--bg-soft); color: var(--fg);
+  transition: background 0.15s, border-color 0.15s, transform 0.05s;
+  white-space: nowrap;
+}
+.btn:hover:not(:disabled) { border-color: var(--line-strong); background: color-mix(in oklab, var(--bg-soft) 70%, var(--fg) 6%); }
+.btn:active:not(:disabled) { transform: translateY(1px); }
+.btn:disabled { opacity: 0.45; cursor: default; }
+.btn--primary { background: var(--accent); border-color: transparent; color: #0b0d12; }
+.btn--primary:hover:not(:disabled) { background: color-mix(in oklab, var(--accent) 85%, #fff); }
+.btn--ghost { background: transparent; }
+.btn--sm { padding: 5px 10px; font-size: 0.8rem; }
+
+.seg { display: inline-flex; padding: 3px; gap: 2px; border-radius: 10px; background: var(--bg-soft); border: 1px solid var(--line); flex-wrap: wrap; }
+.seg label { position: relative; cursor: pointer; }
+.seg input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+.seg span { display: block; padding: 5px 12px; border-radius: 7px; font-size: 0.84rem; font-weight: 600; color: var(--fg-muted); transition: background 0.15s, color 0.15s; }
+.seg input:checked + span { background: var(--bg-elev); color: var(--fg); box-shadow: 0 1px 0 var(--line-strong), 0 0 0 1px var(--line); }
+.seg input:focus-visible + span { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+/* ───────────────────────── Code ───────────────────────── */
+pre.code {
+  position: relative;
+  margin: 0 0 1em;
+  padding: 16px 0;
+  border-radius: var(--radius-sm);
+  background: var(--bg-sunken);
+  border: 1px solid var(--line);
+  overflow-x: auto;
+  font-family: var(--font-mono);
+  font-size: clamp(0.78rem, 1.1vw, 0.88rem);
+  line-height: 1.7;
+  tab-size: 4;
+}
+pre.code code { display: block; min-width: max-content; font-size: inherit; }
+pre.code .line { display: block; padding: 0 18px 0 14px; border-left: 3px solid transparent; transition: background 0.2s, border-color 0.2s, opacity 0.2s; }
+pre.code.has-active .line { opacity: 0.5; }
+pre.code .line.is-active { background: var(--accent-soft); border-left-color: var(--accent); opacity: 1; }
+pre.code[data-lang]::after {
+  content: attr(data-lang); position: absolute; top: 8px; right: 12px;
+  font-size: 0.7rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--fg-subtle);
+}
+pre.code[data-label]::after { content: attr(data-label); text-transform: none; }
+pre.code[data-label=""]::after { content: none; }
+.tok-k { color: #c792ea; }
+.tok-t { color: #82aaff; }
+.tok-f { color: #7fd6c2; }
+.tok-n { color: #f78c6c; }
+.tok-s { color: #c3e88d; }
+.tok-c { color: var(--fg-subtle); font-style: italic; }
+.tok-p { color: var(--fg-muted); }
+:root[data-theme="light"] .tok-k { color: #8839b8; }
+:root[data-theme="light"] .tok-t { color: #2f5fd0; }
+:root[data-theme="light"] .tok-f { color: #0f7a68; }
+:root[data-theme="light"] .tok-n { color: #c0521f; }
+:root[data-theme="light"] .tok-s { color: #4c7a12; }
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) .tok-k { color: #8839b8; }
+  :root:not([data-theme]) .tok-t { color: #2f5fd0; }
+  :root:not([data-theme]) .tok-f { color: #0f7a68; }
+  :root:not([data-theme]) .tok-n { color: #c0521f; }
+  :root:not([data-theme]) .tok-s { color: #4c7a12; }
+}
+
+/* ───────────────────────── Quiz ───────────────────────── */
+.quiz { background: var(--bg-elev); border: 1px solid var(--line); border-radius: var(--radius); padding: clamp(16px, 2vw, 22px); }
+.quiz + .quiz { margin-top: 16px; }
+.quiz__q { font-weight: 700; font-size: 1.05rem; margin-bottom: 12px; }
+.quiz__choices { display: grid; gap: 8px; }
+.quiz__choice {
+  display: flex; align-items: flex-start; gap: 12px; width: 100%; text-align: left;
+  font: inherit; font-size: 0.95rem; color: var(--fg);
+  padding: 10px 14px; border-radius: 10px; cursor: pointer;
+  border: 1px solid var(--line); background: var(--bg-soft);
+  transition: border-color 0.15s, background 0.15s;
+}
+.quiz__choice::before {
+  content: attr(data-choice); flex: none; text-transform: uppercase;
+  width: 1.6em; height: 1.6em; display: grid; place-items: center; margin-top: 0.05em;
+  border-radius: 6px; font-size: 0.8em; font-weight: 700; font-family: var(--font-mono);
+  border: 1px solid var(--line-strong); color: var(--fg-muted);
+}
+.quiz__choice:hover:not(:disabled) { border-color: var(--line-strong); }
+.quiz__choice.is-wrong { border-color: color-mix(in oklab, var(--bad) 60%, transparent); background: color-mix(in oklab, var(--bad) 10%, var(--bg-soft)); }
+.quiz__choice.is-wrong::before { content: "✕"; color: var(--bad); border-color: var(--bad); }
+.quiz__choice.is-correct { border-color: color-mix(in oklab, var(--good) 60%, transparent); background: color-mix(in oklab, var(--good) 12%, var(--bg-soft)); }
+.quiz__choice.is-correct::before { content: "✓"; color: var(--good); border-color: var(--good); }
+.quiz__choice:disabled { cursor: default; }
+.quiz.is-solved .quiz__choice:not(.is-correct) { opacity: 0.55; }
+.quiz__feedback { min-height: 1.5em; margin: 10px 0 0; font-size: 0.9rem; font-weight: 600; }
+.quiz__feedback:empty { min-height: 0; margin: 0; }
+.quiz__feedback.is-wrong { color: var(--bad); }
+.quiz__feedback.is-correct { color: var(--good); }
+.quiz__explain { display: none; margin-top: 8px; padding-top: 10px; border-top: 1px solid var(--line); color: var(--fg-muted); font-size: 0.92rem; }
+.quiz.is-solved .quiz__explain { display: block; }
+.quiz__explain > :last-child { margin-bottom: 0; }
+
+/* ───────────────────────── Summary slide ───────────────────────── */
+.next-list { display: flex; flex-wrap: wrap; gap: 8px; }
+
+/* ───────────────────────── TOC dialog ───────────────────────── */
+.cp-toc {
+  width: min(460px, calc(100vw - 32px));
+  max-height: min(78vh, 720px);
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--bg-elev);
+  color: var(--fg);
+  box-shadow: var(--shadow);
+}
+.cp-toc::backdrop { background: rgb(0 0 0 / 0.45); backdrop-filter: blur(2px); }
+.cp-toc__head { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px 10px 20px; border-bottom: 1px solid var(--line); }
+.cp-toc__head h2 { font-size: 1rem; margin: 0; }
+.cp-toc__list { list-style: none; margin: 0; padding: 8px; overflow-y: auto; max-height: calc(min(78vh, 720px) - 60px); counter-reset: toc; }
+.cp-toc__list li { margin: 0; counter-increment: toc; }
+.cp-toc__list button {
+  width: 100%; display: flex; gap: 12px; align-items: baseline; text-align: left;
+  font: inherit; font-size: 0.93rem; color: var(--fg-muted);
+  padding: 9px 12px; border: 0; border-radius: 8px; background: transparent; cursor: pointer;
+}
+.cp-toc__list button::before { content: counter(toc, decimal-leading-zero); font-family: var(--font-mono); font-size: 0.78rem; color: var(--fg-subtle); }
+.cp-toc__list button:hover { background: var(--bg-soft); color: var(--fg); }
+.cp-toc__list button[aria-current="step"] { background: var(--accent-soft); color: var(--fg); font-weight: 600; }
+.cp-toc__list button[aria-current="step"]::before { color: var(--accent-ink); }
+
+.cp-sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+
+/* ───────────────────────── Responsive ───────────────────────── */
+@media (max-width: 640px) {
+  :root { --bar-h: 50px; --nav-h: 58px; }
+  body { font-size: 16px; }
+  .cp-nav__title { display: none; }
+  .cp-icon-btn { width: 38px; height: 38px; }
+  .cp-crumb__cat, .cp-crumb__sep { display: none; }
+  .def-list { grid-template-columns: 1fr; gap: 2px; }
+  .def-list dd { margin-bottom: 8px; }
+  input[type="range"] { width: 120px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cp-js .slide, .cp-js .slide.is-active, .cp-js .slide [data-step], .cp-progress__fill { transition: none !important; }
+  .cp-js .slide, .cp-js .slide.is-past { transform: none; }
+}
+
+/* ───────────────────────── Print: every slide, stacked ───────────────────────── */
+@media print {
+  .cp-topbar, .cp-nav, .cp-progress, .cp-toc { display: none !important; }
+  .cp-js body { overflow: visible; }
+  .cp-js .deck { position: static; }
+  .cp-js .slide, .slide {
+    position: static !important; opacity: 1 !important; visibility: visible !important; transform: none !important;
+    overflow: visible; padding: 24px 0; break-after: page;
+  }
+  .cp-js .slide [data-step] { opacity: 1 !important; transform: none !important; }
+  .quiz__explain { display: block; }
+}
+
+</style>
+  <style>
+    :root { --accent: #b48cff; }
+    .cap-row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+    .cap-row + .cap-row { margin-top: 8px; }
+    .code-tight { font-size: clamp(0.72rem, 1vw, 0.82rem); }
+    .note { margin: 10px 0 0; min-height: 3em; }
+    .ops td:first-child { white-space: nowrap; font-family: var(--font-mono); font-variant-ligatures: none; color: var(--fg); }
+    .ops td, .ops th { padding: 7px 12px; }
+    .types td:nth-child(2), .types td:nth-child(4) { white-space: nowrap; }
+    .types td:first-child { font-family: var(--font-mono); color: var(--accent-ink); font-weight: 700; }
+    .types td, .types th { padding: 7px 12px; }
+    .trace {
+      font-family: var(--font-mono); font-size: clamp(0.76rem, 1.05vw, 0.86rem); line-height: 1.75;
+      background: var(--bg-sunken); border: 1px solid var(--line); border-radius: var(--radius-sm);
+      padding: 12px 0; margin: 12px 0 0; overflow-x: auto; white-space: pre; font-variant-ligatures: none;
+    }
+    .trace .tl { display: block; padding: 0 14px 0 10px; border-left: 3px solid transparent; min-width: max-content; }
+    .trace .tl__n { display: inline-block; width: 2em; color: var(--fg-subtle); user-select: none; }
+    .trace .tl.is-cur { background: var(--accent-soft); border-left-color: var(--accent); }
+    .trace .tl.is-cur .tl__n { color: var(--accent-ink); font-weight: 700; }
+    .cards-2 { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); margin-top: 14px; }
+    .pit code { white-space: nowrap; }
+    .mode-code[hidden] { display: none; }
+    .quiz pre.code { margin: 0 0 12px; }
+  </style>
+</head>
+<body>
+  <main class="deck" data-title="C# 문법 기초" data-category="C# 언어">
+
+    <!-- 1. 표지 -->
+    <section class="slide slide--title" data-title="C# 문법 기초">
+      <div>
+        <p class="eyebrow">C# 언어 · C# Language</p>
+        <h1>C# 문법 기초</h1>
+        <p class="subtitle">C# Syntax Basics</p>
+        <p class="lead">변수와 타입, 연산자, 조건문과 반복문, 배열 — 게임 코드를 읽고 쓰는 최소한의 문법. HP 바, 점수, 웨이브 같은 장면으로 컴퓨터가 코드를 <em>글자 그대로</em> 실행한다는 것을 직접 확인합니다.</p>
+        <div class="title-meta">
+          <div class="title-meta__item">
+            <span class="title-meta__label">난이도</span>
+            <span class="title-meta__value"><span class="badge badge--accent">입문</span></span>
+          </div>
+          <div class="title-meta__item">
+            <span class="title-meta__label">선수 개념</span>
+            <span class="title-meta__value">
+              <span class="muted">없음 — 바로 시작할 수 있어요</span>
+            </span>
+          </div>
+          <div class="title-meta__item">
+            <span class="title-meta__label">배우는 것</span>
+            <span class="title-meta__value"><span class="tag">타입과 범위</span><span class="tag">정수 나눗셈</span><span class="tag">형변환</span><span class="tag">if / switch</span><span class="tag">반복문</span><span class="tag">배열과 List</span></span>
+          </div>
+        </div>
+        <p class="start-hint"><kbd>→</kbd> 키나 아래 버튼으로 넘겨 보세요 · <kbd>T</kbd> 목차</p>
+      </div>
+    </section>
+
+    <!-- 2. 문제 -->
+    <section class="slide" data-title="HP 바가 줄지 않는다?">
+      <div class="cols cols--3-2 cols--center">
+        <figure class="figure">
+          <canvas id="hpbar" width="640" height="380" aria-label="같은 HP 값을 세 가지 C# 식으로 계산했을 때 HP 바가 어떻게 그려지는지 비교하는 그림"></canvas>
+          <figcaption>
+            <span class="cap-row">
+              <label class="ctl"><span>hp</span><input id="hp-val" type="range" min="0" max="120" step="1" value="75"><output>75</output></label>
+            </span>
+            <span class="cap-row">
+              <span class="seg" role="radiogroup" aria-label="퍼센트 계산식">
+                <label><input type="radio" name="hp-formula" value="div" checked><span>hp / maxHp * 100</span></label>
+                <label><input type="radio" name="hp-formula" value="mul"><span>hp * 100 / maxHp</span></label>
+                <label><input type="radio" name="hp-formula" value="float"><span>(float)hp / maxHp</span></label>
+              </span>
+            </span>
+            <span class="hint">hp를 움직여 보세요. 첫 번째 식은 체력이 꽉 찼을 때만 100%, 나머지는 전부 0%입니다.</span>
+          </figcaption>
+        </figure>
+        <div>
+          <p class="eyebrow">문제</p>
+          <h2>HP 바가 줄지 않는다?</h2>
+          <p>최대 체력 120인 캐릭터의 HP 바를 그리려고 퍼센트를 계산했습니다. 수학으로는 맞는 식인데, 맞을 때마다 바가 <strong>0%로 뚝 떨어집니다.</strong></p>
+          <pre class="code" data-lang="csharp"><code>
+            int hp = 75, maxHp = 120;
+            // 기대: 62, 실제: 0
+            int percent = hp / maxHp * 100;
+          </code></pre>
+          <div class="callout callout--key">
+            <span class="callout__title">컴퓨터는 눈치가 없다</span>
+            <p>C#에서 <code>int ÷ int</code>는 <strong>정수</strong>입니다. <code>75 / 120</code>은 0.625가 아니라 0이고, 0에 100을 곱해도 0입니다. 문법을 안다는 건 코드가 <em>글자 그대로</em> 무엇을 하는지 아는 것입니다.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. 프로그램의 뼈대 -->
+    <section class="slide" data-title="프로그램의 뼈대">
+      <div>
+        <p class="eyebrow">프로그램 구조</p>
+        <h2>문, 세미콜론, 블록, 주석</h2>
+        <div class="cols cols--3-2">
+          <div>
+            <pre class="code" data-lang="csharp" data-highlight="2|4-5|6-10|1,11|"><code>
+              // Program.cs — 최상위 문(top-level statements)
+              using System;               // 다른 곳에 있는 기능을 가져온다
+
+              int hp = 100;               // 문(statement)은 ;로 끝난다
+              int damage = 30;
+              if (damage &gt; 0)
+              {                           // { } 블록: 여러 문을 하나로
+                  hp -= damage;
+                  Console.WriteLine($"HP: {hp}");   // HP: 70
+              }
+              /* 여러 줄 주석은 이렇게 감싼다 */
+            </code></pre>
+            <pre class="code code-tight" data-lang="csharp" data-step="5"><code>
+              namespace MyGame;  // 이름 공간
+              public static class Program
+              {
+                  public static void Main()  // 시작점
+                  {
+                      Console.WriteLine("Hello");
+                  }
+              }
+            </code></pre>
+          </div>
+          <ol class="steps small">
+            <li data-step="1"><strong><code>using</code></strong> — <code>Console</code>은 <code>System</code> 이름 공간(namespace)에 있습니다. <code>using</code>으로 가져오면 <code>System.Console</code>을 줄여 쓸 수 있습니다.</li>
+            <li data-step="2"><strong>문(statement)</strong> — 컴퓨터에게 내리는 명령 하나. 끝에 <code>;</code>를 붙이고, 위에서 아래로 <em>순서대로</em> 실행됩니다.</li>
+            <li data-step="3"><strong>블록(block)</strong> — <code>{ }</code>는 여러 문을 한 덩어리로 묶습니다. 블록 안에서 만든 변수는 블록 밖에서 보이지 않습니다.</li>
+            <li data-step="4"><strong>주석(comment)</strong> — <code>//</code>부터 줄 끝까지, 또는 <code>/* */</code> 사이는 컴파일러가 무시하는 메모입니다.</li>
+            <li data-step="5"><strong><code>Main</code></strong> — 전통적인 프로그램 시작점. 최상위 문은 컴파일러가 이 <code>Main</code>을 대신 만들어 주는 C# 9 문법입니다. Unity 스크립트에는 <code>Main</code>이 없고 엔진이 메서드를 불러 줍니다.</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. 변수 = 크기가 정해진 상자 -->
+    <section class="slide" data-title="변수는 크기가 정해진 상자">
+      <div class="cols cols--3-2 cols--center">
+        <figure class="figure">
+          <canvas id="box" width="720" height="440" aria-label="byte, short, int 변수의 비트 칸과 값의 범위를 원으로 보여 주고, 값을 더하면 최댓값 다음에 최솟값으로 감기는 모습을 보여 주는 그림"></canvas>
+          <figcaption>
+            <span class="cap-row">
+              <button class="btn btn--sm btn--primary" id="box-add" type="button">+= delta</button>
+              <button class="btn btn--sm" id="box-sub" type="button">−= delta</button>
+              <button class="btn btn--sm btn--ghost" id="box-max" type="button">MaxValue로</button>
+              <button class="btn btn--sm btn--ghost" id="box-zero" type="button">0으로</button>
+            </span>
+            <span class="hint">“MaxValue로”를 누른 뒤 <strong>+= delta</strong>를 눌러 보세요. 값이 원의 맨 위 경계를 넘어 반대편 끝으로 감깁니다.</span>
+          </figcaption>
+        </figure>
+        <div>
+          <p class="eyebrow">핵심 아이디어</p>
+          <h2>변수는 크기가 정해진 상자</h2>
+          <p>변수(variable)는 <strong>이름 붙은 저장 공간</strong>이고, 타입(type)이 그 크기를 정합니다. <code>int</code>는 32비트라 약 ±21억까지만 담습니다. 넘치면 오류 없이 <strong>반대쪽 끝으로 감깁니다</strong>(wraparound).</p>
+          <div class="controls controls--stack">
+            <span class="seg" role="radiogroup" aria-label="변수 타입">
+              <label><input type="radio" name="box-type" value="byte"><span>byte</span></label>
+              <label><input type="radio" name="box-type" value="short"><span>short</span></label>
+              <label><input type="radio" name="box-type" value="int" checked><span>int</span></label>
+            </span>
+            <label class="ctl"><span>delta</span><input id="box-delta" type="range" min="1" max="100" step="1" value="1"><output>1</output></label>
+            <label class="check"><input id="box-checked" type="checkbox"> <code>checked</code>로 넘침 검사</label>
+          </div>
+          <table class="ops" style="margin-top:12px">
+            <tr><td>score += 10</td><td>score = score + 10 의 줄임 (<code>-=</code> <code>*=</code> <code>/=</code>도 같음)</td></tr>
+            <tr><td>score++</td><td>1 증가 (<code>score--</code>는 1 감소)</td></tr>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. 타입과 리터럴 -->
+    <section class="slide" data-title="기본 타입과 리터럴">
+      <div>
+        <p class="eyebrow">타입과 리터럴</p>
+        <h2>값마다 맞는 상자가 있다</h2>
+        <div class="cols">
+          <div class="table-wrap">
+            <table class="types">
+              <thead><tr><th>타입</th><th>크기</th><th>담는 값</th><th>리터럴 예</th></tr></thead>
+              <tbody>
+                <tr><td>int</td><td>4바이트</td><td>정수 −2,147,483,648 ~ 2,147,483,647</td><td><code>100</code></td></tr>
+                <tr><td>long</td><td>8바이트</td><td>정수 약 ±9.2×10<sup>18</sup></td><td><code>100L</code></td></tr>
+                <tr><td>float</td><td>4바이트</td><td>실수, 유효 숫자 약 7자리</td><td><code>5.5f</code></td></tr>
+                <tr><td>double</td><td>8바이트</td><td>실수, 유효 숫자 약 15~16자리</td><td><code>5.5</code></td></tr>
+                <tr><td>bool</td><td>1바이트</td><td><code>true</code> / <code>false</code></td><td><code>true</code></td></tr>
+                <tr><td>char</td><td>2바이트</td><td>문자 하나 (UTF-16)</td><td><code>'A'</code></td></tr>
+                <tr><td>string</td><td>가변</td><td>문자열 (글자 수만큼)</td><td><code>"Hero"</code></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div>
+            <pre class="code" data-lang="csharp" data-highlight="1-2|3-4|5-7|9-10"><code>
+              float speed = 5.5f;        // f가 없으면 double → 오류
+              double gravity = 9.81;     // 소수 리터럴의 기본은 double
+              var name = "Knight";       // 오른쪽 값을 보고 string으로 추론
+              const int MaxHp = 100;     // 절대 바뀌지 않는 상수
+              char grade = 'A';          // 문자 하나: 작은따옴표
+              bool isAlive = true;
+              long gold = 3_000_000_000L; // _는 자릿수 구분용
+              int hp = MaxHp;
+              string msg = $"{name} HP {hp}/{MaxHp}, {speed:F1} m/s";
+              Console.WriteLine(msg);    // Knight HP 100/100, 5.5 m/s
+            </code></pre>
+          </div>
+        </div>
+        <div class="grid-cards">
+          <div class="callout callout--warn" data-step="1"><span class="callout__title"><code>float speed = 5.5;</code>는 컴파일 오류</span><p class="small">소수점 리터럴은 기본이 <code>double</code>(8바이트)입니다. 4바이트 <code>float</code>에 넣으면 정밀도가 깎이므로 컴파일러가 막습니다(CS0664). <code>5.5f</code>처럼 <code>f</code>를 붙이세요. 게임 엔진은 대부분 <code>float</code>를 씁니다.</p></div>
+          <div class="callout callout--tip" data-step="2"><span class="callout__title"><code>var</code>와 <code>const</code></span><p class="small"><code>var</code>는 타입을 <em>생략</em>할 뿐, 타입이 없는 게 아닙니다. 한 번 <code>string</code>이면 끝까지 <code>string</code>입니다. <code>const</code>는 컴파일할 때 값이 정해지고 다시 대입할 수 없습니다.</p></div>
+          <div class="callout callout--key" data-step="4"><span class="callout__title">문자열 보간 <code>$"..."</code></span><p class="small">앞에 <code>$</code>를 붙이면 <code>{ }</code> 안의 식이 값으로 바뀝니다. <code>{speed:F1}</code>은 소수 한 자리로 표시하라는 서식입니다.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. 나눗셈과 형변환 실험실 -->
+    <section class="slide" data-title="나눗셈과 형변환 실험실">
+      <div class="cols cols--3-2 cols--center">
+        <figure class="figure">
+          <canvas id="lab" width="720" height="470" aria-label="위쪽은 a개의 코인을 b개씩 묶어 몫과 나머지를 보여 주고, 아래쪽은 수직선 위의 실수 x를 정수로 바꾸는 세 가지 방법을 비교하는 그림"></canvas>
+          <figcaption>a와 b로 몫·나머지를, x(수직선의 점은 끌 수도 있어요)로 형변환을 실험해 보세요. <strong>x = −2.7</strong>, 그리고 <strong>2.5와 3.5</strong>를 비교해 보세요.</figcaption>
+        </figure>
+        <div>
+          <p class="eyebrow">연산자 · 형변환</p>
+          <h2>나눗셈과 형변환 실험실</h2>
+          <p class="small">정수끼리 나누면 소수부를 <strong>0 쪽으로 버립니다.</strong> 한쪽만 <code>float</code>여도 실수 나눗셈이 됩니다. <code>%</code>는 나머지이고, 부호는 왼쪽 수를 따릅니다.</p>
+          <div class="controls controls--stack">
+            <label class="ctl"><span>int a</span><input id="lab-a" type="range" min="-20" max="20" step="1" value="7"><output>7</output></label>
+            <label class="ctl"><span>int b</span><input id="lab-b" type="range" min="1" max="9" step="1" value="2"><output>2</output></label>
+            <label class="ctl"><span>float x</span><input id="lab-x" type="range" min="-4.9" max="4.9" step="0.1" value="-2.7"><output>-2.7</output></label>
+          </div>
+          <div class="readout" id="lab-readout" aria-live="polite" style="margin-top:12px"></div>
+          <p class="small muted" style="margin-top:10px"><code>int → float</code>는 정보가 사라지지 않아 <strong>암시적</strong>으로 바뀌지만, <code>float → int</code>는 소수부가 사라지므로 <code>(int)</code>로 <strong>명시적</strong> 형변환(cast)을 써야 합니다.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. 조건 분기 -->
+    <section class="slide" data-title="조건 분기: if와 switch">
+      <div class="cols cols--3-2 cols--center">
+        <figure class="figure">
+          <canvas id="branch" width="640" height="420" aria-label="hp 값에 따라 if-else 사슬의 조건을 위에서부터 검사해 처음으로 참이 된 분기로 가는 흐름도"></canvas>
+          <figcaption>
+            <span class="cap-row">
+              <label class="ctl"><span>hp</span><input id="br-hp" type="range" min="0" max="100" step="1" value="25"><output>25</output></label>
+            </span>
+            <span class="cap-row">
+              <span class="seg" role="radiogroup" aria-label="분기 코드">
+                <label><input type="radio" name="br-mode" value="if" checked><span>if / else if</span></label>
+                <label><input type="radio" name="br-mode" value="wrong"><span>순서를 바꾼 if (버그)</span></label>
+                <label><input type="radio" name="br-mode" value="switch"><span>switch 식</span></label>
+              </span>
+            </span>
+            <span class="hint">hp를 10으로 두고 “순서를 바꾼 if”를 골라 보세요. 위험 분기에 영영 도달하지 못합니다.</span>
+          </figcaption>
+        </figure>
+        <div>
+          <p class="eyebrow">조건문</p>
+          <h2>처음 참인 분기 하나만</h2>
+          <p class="small"><code>else if</code> 사슬은 위에서부터 검사하다 <strong>처음 <code>true</code>인 블록 하나</strong>만 실행하고 나머지는 보지도 않습니다. 조건의 순서가 곧 의미입니다.</p>
+          <pre class="code code-tight mode-code" data-lang="csharp" data-mode="if"><code>
+            string state;
+            if (hp &lt;= 0)
+                state = "사망";
+            else if (hp &lt; 30)
+                state = "위험";
+            else if (hp &lt; 70)
+                state = "부상";
+            else
+                state = "건강";
+          </code></pre>
+          <pre class="code code-tight mode-code" data-lang="csharp" data-mode="wrong" hidden><code>
+            string state;
+            if (hp &lt;= 0)
+                state = "사망";
+            else if (hp &lt; 70)      // 30 미만도 여기서 걸린다
+                state = "부상";
+            else if (hp &lt; 30)      // 도달할 수 없는 분기
+                state = "위험";
+            else
+                state = "건강";
+          </code></pre>
+          <pre class="code code-tight mode-code" data-lang="csharp" data-mode="switch" hidden><code>
+            // switch 식 (C# 9): 위에서부터 첫 패턴 하나
+            string state = hp switch
+            {
+                &lt;= 0 =&gt; "사망",
+                &lt; 30 =&gt; "위험",
+                &lt; 70 =&gt; "부상",
+                _ =&gt; "건강",          // _ : 나머지 전부
+            };
+          </code></pre>
+          <div class="table-wrap" style="margin:0 0 12px">
+            <table class="ops">
+              <thead><tr><th>연산자</th><th>뜻 (결과는 모두 <code>bool</code>)</th></tr></thead>
+              <tbody>
+                <tr><td>== !=</td><td>같다 / 다르다 (대입 <code>=</code>와 다름)</td></tr>
+                <tr><td>&lt; &lt;= &gt; &gt;=</td><td>크기 비교</td></tr>
+                <tr><td>&amp;&amp; || !</td><td>그리고 / 또는 / 아니다</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="callout callout--tip">
+            <span class="callout__title">단락 평가 (short-circuit)</span>
+            <p class="small"><code>&amp;&amp;</code>는 왼쪽이 <code>false</code>면, <code>||</code>는 왼쪽이 <code>true</code>면 오른쪽을 실행하지 않습니다. <code>i &lt; a.Length &amp;&amp; a[i] &gt; 0</code>은 범위 밖을 읽지 않습니다.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. 반복문 추적기 -->
+    <section class="slide" data-title="반복문 한 줄씩 따라가기">
+      <div class="cols cols--2-3">
+        <div>
+          <p class="eyebrow">반복문</p>
+          <h2>반복문 한 줄씩 따라가기</h2>
+          <div class="controls">
+            <span class="seg" role="radiogroup" aria-label="반복문 종류">
+              <label><input type="radio" name="tr-prog" value="for" checked><span>for</span></label>
+              <label><input type="radio" name="tr-prog" value="while"><span>while</span></label>
+              <label><input type="radio" name="tr-prog" value="do"><span>do-while</span></label>
+              <label><input type="radio" name="tr-prog" value="foreach"><span>foreach</span></label>
+            </span>
+            <span class="seg" role="radiogroup" aria-label="while과 do-while의 시작 hp">
+              <label><input type="radio" name="tr-hp" value="50" checked><span>hp = 50</span></label>
+              <label><input type="radio" name="tr-hp" value="0"><span>hp = 0</span></label>
+            </span>
+          </div>
+          <div class="trace" id="tr-code" role="region" aria-label="실행 중인 C# 코드"></div>
+          <p class="small note" id="tr-note" aria-live="polite"></p>
+        </div>
+        <figure class="figure">
+          <canvas id="trace" width="640" height="400" aria-label="반복문을 한 줄씩 실행할 때 변수 값, 반복 회차별 결과, 콘솔 출력이 바뀌는 모습"></canvas>
+          <figcaption>
+            <span class="cap-row">
+              <button class="btn btn--sm btn--primary" id="tr-step" type="button">한 줄 실행</button>
+              <button class="btn btn--sm" id="tr-play" type="button">▶ 자동 재생</button>
+              <button class="btn btn--sm btn--ghost" id="tr-reset" type="button">처음으로</button>
+              <span class="hint" id="tr-count"></span>
+            </span>
+            <span class="hint"><strong>for</strong>에서 <code>continue</code>와 <code>break</code>가 회차를 어떻게 바꾸는지 보고, <strong>hp = 0</strong>일 때 while과 do-while의 실행 횟수를 비교해 보세요.</span>
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- 9. 배열과 List -->
+    <section class="slide" data-title="배열, List, null">
+      <div>
+        <p class="eyebrow">여러 값 담기</p>
+        <h2>배열, <code>List&lt;T&gt;</code>, 그리고 <code>null</code></h2>
+        <div class="cols cols--3-2">
+          <pre class="code" data-lang="csharp" data-highlight="1-4|6-10|12-16"><code>
+            int[] scores = { 90, 75, 60 };       // 길이 3, 고정
+            scores[0] = 95;                      // 인덱스는 0부터
+            Console.WriteLine(scores.Length);    // 3
+            // scores[3] = 1;  → IndexOutOfRangeException
+
+            var inventory = new List&lt;string&gt;();  // 크기가 늘어나는 목록
+            inventory.Add("Potion");
+            inventory.Add("Sword");
+            inventory.Remove("Potion");
+            Console.WriteLine(inventory.Count);  // 1
+
+            string? target = null;               // 아직 대상이 없음
+            int? bestTime = null;                // 기록이 없을 수도 있는 int
+            if (bestTime.HasValue)
+                Console.WriteLine(bestTime.Value);
+            Console.WriteLine(target?.Length ?? 0);  // 0
+          </code></pre>
+          <div class="stack">
+            <div class="card" data-step="1">
+              <h3 class="small">배열 (array)</h3>
+              <p class="small">같은 타입 값을 <strong>정해진 개수</strong>만큼 나란히 담습니다. 칸 번호는 <code>0</code>부터 <code>Length - 1</code>까지. <code>new int[5]</code>로 만들면 모든 칸이 0입니다.</p>
+            </div>
+            <div class="card" data-step="2">
+              <h3 class="small"><code>List&lt;T&gt;</code></h3>
+              <p class="small"><code>T</code> 자리에 담을 타입을 적습니다. <code>Add</code>/<code>Remove</code>로 개수가 바뀌는 인벤토리·적 목록에 씁니다. 개수는 <code>Length</code>가 아니라 <code>Count</code>. (<code>System.Collections.Generic</code>)</p>
+            </div>
+            <div class="card" data-step="3">
+              <h3 class="small"><code>null</code>과 <code>int?</code></h3>
+              <p class="small"><code>null</code>은 “아무것도 가리키지 않음”. <code>int?</code>는 값이 <em>없을 수도</em> 있는 <code>int</code>입니다. <code>?.</code>은 null이면 멈추고, <code>??</code>는 null일 때 쓸 기본값입니다.</p>
+            </div>
+            <p class="small muted">배열과 리스트의 내부 동작은 <span class="concept-ref" data-concept-ref="algorithms/arrays-and-lists">배열과 리스트</span>에서 자세히 다룹니다.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10. 흔한 함정 -->
+    <section class="slide" data-title="흔한 함정">
+      <div>
+        <p class="eyebrow">주의</p>
+        <h2>초보 게임 코드에서 자주 터지는 곳</h2>
+        <div class="cols cols--3-2">
+          <div class="grid-cards pit">
+            <div class="callout callout--bad"><span class="callout__title"><code>if (hp = 0)</code></span><p class="small"><code>=</code>는 대입, 비교는 <code>==</code>. C#은 <code>int</code>를 <code>bool</code>로 바꾸지 않아 컴파일 오류(CS0029)로 막아 줍니다. C/C++에선 조용한 버그입니다.</p></div>
+            <div class="callout callout--bad"><span class="callout__title"><code>i &lt;= arr.Length</code></span><p class="small">마지막 인덱스는 <code>Length - 1</code>. <code>&lt;=</code>로 돌면 마지막 회차에 <code>IndexOutOfRangeException</code>. <code>&lt;</code>나 <code>foreach</code>를 쓰세요.</p></div>
+            <div class="callout callout--warn"><span class="callout__title">실수를 <code>==</code>로 비교</span><p class="small"><code>0.1f</code>를 10번 더하면 <code>1.0000001</code>이라 <code>== 1f</code>는 <code>false</code>. <code>MathF.Abs(a - b) &lt; 0.0001f</code>처럼 오차를 허용하세요.</p></div>
+            <div class="callout callout--warn"><span class="callout__title"><code>Math.Round(2.5)</code>는 2</span><p class="small">기본 반올림은 .5에서 <strong>짝수 쪽</strong>(은행가 반올림). 학교식은 <code>MidpointRounding.AwayFromZero</code>를 넘깁니다.</p></div>
+            <div class="callout callout--warn"><span class="callout__title"><code>case</code> 뒤 <code>break</code> 빠뜨림</span><p class="small">문장이 있는 <code>case</code>는 <code>break</code>(또는 <code>return</code>)로 끝나야 합니다. 다음 case로 흘러내리기는 금지(CS0163).</p></div>
+            <div class="callout callout--warn"><span class="callout__title"><code>b = b + 1;</code> (byte)</span><p class="small"><code>byte + int</code>는 <code>int</code>라 형변환 없이 못 넣습니다(CS0266). <code>b++</code>, <code>b += 1</code>은 되지만 255 다음은 0.</p></div>
+          </div>
+          <div>
+            <pre class="code code-tight" data-lang="csharp" data-highlight="3-5|6-9"><code>
+              switch (weapon)       // 값 하나로 여러 갈래
+              {
+                  case "sword":
+                      damage = 10;
+                      break;        // 빠뜨리면 CS0163
+                  case "bow":
+                  case "crossbow":  // 빈 case는 묶을 수 있다
+                      damage = 7;
+                      break;
+                  default:          // 어느 case도 아니면
+                      damage = 1;
+                      break;
+              }
+            </code></pre>
+            <p class="small muted">값 하나를 여러 상수와 비교할 때는 <code>switch</code> 문이 <code>else if</code> 사슬보다 읽기 쉽습니다. 범위·조건으로 고를 때는 앞 장의 <code>switch</code> 식이 간결합니다.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 11. 확인 문제 -->
+    <section class="slide" data-title="확인 문제">
+      <div>
+        <p class="eyebrow">확인 문제</p>
+        <h2>이해했는지 확인해 볼까요?</h2>
+        <div class="quiz" data-answer="b">
+          <p class="quiz__q">Q1. <code>int a = 7, b = 2; float c = a / b;</code> 이후 <code>c</code>의 값은?</p>
+          <div class="quiz__choices">
+            <button class="quiz__choice" data-choice="a" data-why="대입할 곳이 float라도 오른쪽 a / b는 먼저 int끼리 계산됩니다. 그 결과 3이 float로 바뀔 뿐이에요.">3.5</button>
+            <button class="quiz__choice" data-choice="b" data-why="정답! 7 / 2는 정수 나눗셈이라 3, 그 3이 float 3으로 바뀝니다.">3</button>
+            <button class="quiz__choice" data-choice="c" data-why="정수 나눗셈은 반올림하지 않고 소수부를 버립니다(3.5 → 3).">4</button>
+          </div>
+          <div class="quiz__explain"><p>3.5를 원하면 <code>(float)a / b</code>처럼 계산 <em>전에</em> 한쪽을 실수로 바꿔야 합니다.</p></div>
+        </div>
+        <div class="quiz" data-answer="a">
+          <p class="quiz__q">Q2. <code>int n = (int)-2.7f;</code> 의 결과는?</p>
+          <div class="quiz__choices">
+            <button class="quiz__choice" data-choice="a" data-why="정답! (int) 형변환은 소수부를 버려 0 쪽으로 갑니다.">−2</button>
+            <button class="quiz__choice" data-choice="b" data-why="−3은 MathF.Floor(아래로)나 MathF.Round(가장 가까운 정수)의 결과입니다. 형변환은 0 쪽으로 버립니다.">−3</button>
+            <button class="quiz__choice" data-choice="c" data-why="float → int는 명시적 형변환 (int)을 쓰면 컴파일됩니다. 암시적 변환만 금지돼요.">컴파일 오류</button>
+          </div>
+          <div class="quiz__explain"><p>음수에서 “버림”과 “내림”은 다릅니다: <code>(int)-2.7f == -2</code>, <code>MathF.Floor(-2.7f) == -3</code>.</p></div>
+        </div>
+        <div class="quiz" data-answer="b">
+          <p class="quiz__q">Q3. 아래 코드가 끝난 뒤 <code>count</code>의 값은?</p>
+          <pre class="code code-tight" data-lang="csharp"><code>
+            int count = 0;
+            for (int i = 0; i &lt; 5; i++)
+            {
+                if (i == 1) continue;
+                if (i == 3) break;
+                count++;
+            }
+          </code></pre>
+          <div class="quiz__choices">
+            <button class="quiz__choice" data-choice="a" data-why="continue는 그 회차의 나머지만 건너뛰고 반복은 계속됩니다. i = 0과 i = 2에서 count++가 실행돼요.">1</button>
+            <button class="quiz__choice" data-choice="b" data-why="정답! i = 0에서 1, i = 1은 건너뜀, i = 2에서 2, i = 3에서 break.">2</button>
+            <button class="quiz__choice" data-choice="c" data-why="break는 반복문 전체를 끝냅니다. i = 3, 4 회차는 count++에 도달하지 않아요.">3</button>
+          </div>
+          <div class="quiz__explain"><p><code>continue</code> = 이번 회차만 건너뛰고 증가식으로, <code>break</code> = 반복문을 즉시 탈출.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 12. 정리 -->
+    <section class="slide" data-title="정리">
+      <div>
+        <p class="eyebrow">정리</p>
+        <h2>C# 문법 기초 한눈에 보기</h2>
+        <div class="cols">
+          <ul class="checklist">
+            <li>문은 <code>;</code>로 끝나고 위에서 아래로 실행되며, <code>{ }</code> 블록으로 묶입니다.</li>
+            <li>타입이 상자의 <strong>크기와 범위</strong>를 정합니다. <code>int</code>는 넘치면 조용히 감깁니다.</li>
+            <li>소수 리터럴은 <code>double</code> — <code>float</code>에는 <code>f</code>를 붙입니다.</li>
+            <li><code>int / int</code>는 정수, <code>(int)</code>는 <strong>0 쪽으로 버림</strong>, 반올림은 <code>Math.Round</code>.</li>
+            <li><code>else if</code>와 <code>switch</code> 식은 <strong>처음 맞는 분기 하나</strong>만 실행합니다.</li>
+            <li><code>continue</code>는 회차 건너뛰기, <code>break</code>는 탈출, <code>do-while</code>은 최소 1회.</li>
+            <li>배열은 길이 고정·0부터, <code>List&lt;T&gt;</code>는 늘어나는 목록, <code>int?</code>는 값이 없을 수 있음.</li>
+          </ul>
+          <div class="card card--accent">
+            <h3>한 줄 요약</h3>
+            <p>“컴퓨터는 쓴 대로만 한다 — 타입과 연산 규칙을 알면 HP 바가 0%가 되는 이유가 보인다.”</p>
+            <h3 style="margin-top:1em">다음으로 볼 개념</h3>
+            <div class="next-list">
+              <span class="concept-ref" data-concept-ref="csharp/functions">함수와 메서드</span>
+              <span class="concept-ref" data-concept-ref="algorithms/arrays-and-lists">배열과 리스트</span>
+              <span class="concept-ref" data-concept-ref="game-loop/game-loop">게임 루프</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script data-source="concept.js">
+/*
+ * Game Concept Library — concept page runtime (window.CP).
+ * Inlined into every concept page at build time. No dependencies, no network.
+ *
+ * Responsibilities
+ *   - slide deck: chrome (top bar, progress, nav, table of contents), keyboard,
+ *     swipe, URL hash deep links, progressive reveal steps, code highlighting
+ *   - quizzes, concept cross references, theme, reading progress
+ *   - a small toolkit for interactive figures: CP.canvas, CP.loop, CP.drag,
+ *     CP.points, CP.bind, CP.colors, CP.draw
+ *
+ * Reference: docs/AUTHORING.md
+ */
+(function () {
+  'use strict';
+
+  if (window.CP) return;
+
+  const doc = document;
+  const root = doc.documentElement;
+  const THEME_KEY = 'gcl-theme';
+  const PROGRESS_KEY = 'gcl-progress';
+
+  /* ───────────────────────── Utilities ───────────────────────── */
+
+  const clamp = (v, lo, hi) => (v < lo ? lo : v > hi ? hi : v);
+  const lerp = (a, b, t) => a + (b - a) * t;
+  const invLerp = (a, b, v) => (a === b ? 0 : (v - a) / (b - a));
+  const remap = (v, a1, b1, a2, b2) => lerp(a2, b2, invLerp(a1, b1, v));
+  const TAU = Math.PI * 2;
+
+  function $(sel, scope) {
+    if (typeof sel !== 'string') return sel || null;
+    return (scope || doc).querySelector(sel);
+  }
+
+  function $$(sel, scope) {
+    if (typeof sel === 'string') return Array.from((scope || doc).querySelectorAll(sel));
+    if (!sel) return [];
+    if (sel instanceof Element) return [sel];
+    return Array.from(sel);
+  }
+
+  function el(tag, attrs, children) {
+    const node = doc.createElement(tag);
+    if (attrs) {
+      for (const [k, v] of Object.entries(attrs)) {
+        if (v === false || v === null || v === undefined) continue;
+        if (k === 'text') node.textContent = v;
+        else if (k === 'html') node.innerHTML = v;
+        else node.setAttribute(k, v === true ? '' : String(v));
+      }
+    }
+    for (const child of children || []) node.append(child);
+    return node;
+  }
+
+  const storage = {
+    get(key) {
+      try {
+        return window.localStorage.getItem(key);
+      } catch {
+        return null;
+      }
+    },
+    set(key, value) {
+      try {
+        window.localStorage.setItem(key, value);
+        return true;
+      } catch {
+        return false;
+      }
+    },
+  };
+
+  /** Seeded PRNG (mulberry32) so demos can be reproducible. */
+  function rng(seed) {
+    let s = (Number(seed) >>> 0) || 0x9e3779b9;
+    const next = () => {
+      s = (s + 0x6d2b79f5) >>> 0;
+      let t = s;
+      t = Math.imul(t ^ (t >>> 15), t | 1);
+      t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+    next.range = (lo, hi) => lo + (hi - lo) * next();
+    next.int = (lo, hi) => Math.floor(lo + (hi - lo + 1) * next());
+    next.pick = (arr) => arr[Math.floor(next() * arr.length)];
+    return next;
+  }
+
+  /* ───────────────────────── Events ───────────────────────── */
+
+  const listeners = new Map();
+
+  function on(name, fn) {
+    if (!listeners.has(name)) listeners.set(name, new Set());
+    listeners.get(name).add(fn);
+    return () => listeners.get(name).delete(fn);
+  }
+
+  function emit(name, detail) {
+    for (const fn of Array.from(listeners.get(name) || [])) {
+      try {
+        fn(detail);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+  }
+
+  /* ───────────────────────── Theme & colors ───────────────────────── */
+
+  const lightQuery = window.matchMedia ? window.matchMedia('(prefers-color-scheme: light)') : null;
+  const motionQuery = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
+
+  function storedTheme() {
+    const t = storage.get(THEME_KEY);
+    return t === 'light' || t === 'dark' ? t : null;
+  }
+
+  function effectiveTheme() {
+    return root.dataset.theme || (lightQuery && lightQuery.matches ? 'light' : 'dark');
+  }
+
+  const initialTheme = storedTheme();
+  if (initialTheme) root.dataset.theme = initialTheme;
+
+  const colors = { viz: [] };
+  const fonts = { sans: 'system-ui, sans-serif', mono: 'monospace' };
+  let colorsReady = false;
+  let probe = null;
+  let pixel = null;
+
+  const COLOR_VARS = {
+    fg: '--fg',
+    muted: '--fg-muted',
+    subtle: '--fg-subtle',
+    line: '--line',
+    lineStrong: '--line-strong',
+    bg: '--bg',
+    elev: '--bg-elev',
+    soft: '--bg-soft',
+    sunken: '--bg-sunken',
+    accent: '--accent',
+    accentInk: '--accent-ink',
+    good: '--good',
+    bad: '--bad',
+    warn: '--warn',
+  };
+
+  /** Resolve any CSS color (including var() and color-mix()) to an rgb()/rgba() string. */
+  function resolveColor(value) {
+    if (!probe) {
+      probe = el('span', { 'aria-hidden': 'true' });
+      probe.style.cssText = 'position:absolute;width:0;height:0;overflow:hidden;visibility:hidden;pointer-events:none';
+    }
+    if (!probe.isConnected) (doc.body || root).appendChild(probe);
+    probe.style.color = '';
+    probe.style.color = value;
+    const computed = getComputedStyle(probe).color;
+    if (!pixel) {
+      const c = doc.createElement('canvas');
+      c.width = 1;
+      c.height = 1;
+      pixel = c.getContext('2d', { willReadFrequently: true });
+    }
+    if (!pixel) return computed;
+    pixel.clearRect(0, 0, 1, 1);
+    pixel.fillStyle = '#000';
+    pixel.fillStyle = computed;
+    pixel.fillRect(0, 0, 1, 1);
+    const [r, g, b, a] = pixel.getImageData(0, 0, 1, 1).data;
+    return a === 255 ? `rgb(${r}, ${g}, ${b})` : `rgba(${r}, ${g}, ${b}, ${(a / 255).toFixed(3)})`;
+  }
+
+  function refreshColors() {
+    for (const [key, cssVar] of Object.entries(COLOR_VARS)) colors[key] = resolveColor(`var(${cssVar})`);
+    colors.viz = [1, 2, 3, 4, 5, 6].map((i) => resolveColor(`var(--viz-${i})`));
+    const cs = getComputedStyle(root);
+    fonts.sans = cs.getPropertyValue('--font-sans').trim() || fonts.sans;
+    fonts.mono = cs.getPropertyValue('--font-mono').trim() || fonts.mono;
+    colorsReady = true;
+  }
+
+  function ensureColors() {
+    if (!colorsReady) refreshColors();
+    return colors;
+  }
+
+  function parseRgb(color) {
+    const hex = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(String(color).trim());
+    if (hex) {
+      let h = hex[1];
+      if (h.length === 3) h = h.replace(/./g, (c) => c + c);
+      return [parseInt(h.slice(0, 2), 16), parseInt(h.slice(2, 4), 16), parseInt(h.slice(4, 6), 16), 1];
+    }
+    const m = /rgba?\(([^)]+)\)/i.exec(String(color));
+    if (!m) return null;
+    const parts = m[1].split(/[\s,/]+/).filter(Boolean).map(parseFloat);
+    return [parts[0], parts[1], parts[2], parts.length > 3 ? parts[3] : 1];
+  }
+
+  /** Same color with a new alpha: CP.alpha(CP.colors.accent, 0.3). */
+  function alpha(color, a) {
+    const rgb = parseRgb(color);
+    if (!rgb) return color;
+    return `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, ${clamp(a, 0, 1)})`;
+  }
+
+  /** Linear blend of two colors in sRGB: CP.mix(a, b, 0.5). */
+  function mix(c1, c2, t) {
+    const a = parseRgb(c1);
+    const b = parseRgb(c2);
+    if (!a || !b) return c1;
+    const k = clamp(t, 0, 1);
+    const ch = (i) => Math.round(lerp(a[i], b[i], k));
+    return `rgba(${ch(0)}, ${ch(1)}, ${ch(2)}, ${lerp(a[3], b[3], k).toFixed(3)})`;
+  }
+
+  function font(size = 14, weight = 500, family = 'sans') {
+    ensureColors();
+    return `${weight} ${size}px ${family === 'mono' ? fonts.mono : fonts.sans}`;
+  }
+
+  const views = new Set();
+
+  function themeChanged() {
+    refreshColors();
+    for (const v of views) v.redraw();
+    updateThemeButton();
+    emit('theme', { theme: effectiveTheme() });
+  }
+
+  function setTheme(theme) {
+    if (theme === 'light' || theme === 'dark') {
+      root.dataset.theme = theme;
+      storage.set(THEME_KEY, theme);
+    } else {
+      delete root.dataset.theme;
+      storage.set(THEME_KEY, '');
+    }
+    themeChanged();
+  }
+
+  function toggleTheme() {
+    setTheme(effectiveTheme() === 'dark' ? 'light' : 'dark');
+  }
+
+  if (lightQuery) {
+    const onScheme = () => {
+      if (!root.dataset.theme) themeChanged();
+    };
+    if (lightQuery.addEventListener) lightQuery.addEventListener('change', onScheme);
+    else if (lightQuery.addListener) lightQuery.addListener(onScheme);
+  }
+
+  /* ───────────────────────── Canvas views ───────────────────────── */
+
+  /**
+   * Make a crisp, responsive canvas with a fixed logical coordinate system.
+   * The logical size defaults to the canvas width/height attributes; drawing
+   * always happens in those units no matter how large the canvas is shown.
+   *
+   *   const view = CP.canvas('#c', (ctx, v) => { ... v.w, v.h ... });
+   *   view.redraw();      // schedule a repaint (coalesced, next frame)
+   *   view.paint();       // repaint now (use inside CP.loop ticks)
+   *   view.toLocal(evt);  // pointer event → logical {x, y}
+   */
+  function canvas(target, options) {
+    const node = $(target);
+    if (!node || node.tagName !== 'CANVAS') throw new Error(`CP.canvas: canvas 요소를 찾을 수 없습니다 (${target})`);
+    const opts = typeof options === 'function' ? { draw: options } : options || {};
+    const lw = Number(opts.width) || Number(node.getAttribute('width')) || 800;
+    const lh = Number(opts.height) || Number(node.getAttribute('height')) || 450;
+    node.style.width = '100%';
+    node.style.height = 'auto';
+    node.style.display = 'block';
+    node.style.aspectRatio = `${lw} / ${lh}`;
+    const ctx = node.getContext('2d');
+
+    const view = {
+      el: node,
+      ctx,
+      w: lw,
+      h: lh,
+      scale: 1,
+      ox: 0,
+      oy: 0,
+      dpr: 1,
+      draw: opts.draw || null,
+      pending: 0,
+    };
+
+    function measure() {
+      const cssW = node.clientWidth;
+      const cssH = node.clientHeight;
+      if (!cssW || !cssH) return false;
+      const dpr = clamp(window.devicePixelRatio || 1, 1, 3);
+      const bw = Math.max(1, Math.round(cssW * dpr));
+      const bh = Math.max(1, Math.round(cssH * dpr));
+      if (node.width !== bw) node.width = bw;
+      if (node.height !== bh) node.height = bh;
+      view.dpr = dpr;
+      view.scale = Math.min(cssW / lw, cssH / lh);
+      view.ox = (cssW - lw * view.scale) / 2;
+      view.oy = (cssH - lh * view.scale) / 2;
+      return true;
+    }
+
+    view.paint = () => {
+      if (view.pending) {
+        cancelAnimationFrame(view.pending);
+        view.pending = 0;
+      }
+      if (!measure() || !ctx) return;
+      ensureColors();
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.clearRect(0, 0, node.width, node.height);
+      const s = view.dpr * view.scale;
+      ctx.setTransform(s, 0, 0, s, view.dpr * view.ox, view.dpr * view.oy);
+      if (view.ox > 0.5 || view.oy > 0.5) {
+        ctx.save();
+        ctx.beginPath();
+        ctx.rect(0, 0, lw, lh);
+        ctx.clip();
+      }
+      try {
+        if (view.draw) view.draw(ctx, view);
+      } catch (err) {
+        console.error(err);
+      }
+      if (view.ox > 0.5 || view.oy > 0.5) ctx.restore();
+    };
+
+    view.redraw = () => {
+      if (view.pending) return;
+      view.pending = requestAnimationFrame(() => {
+        view.pending = 0;
+        view.paint();
+      });
+    };
+
+    view.toLocal = (evt) => {
+      const r = node.getBoundingClientRect();
+      return {
+        x: (evt.clientX - r.left - view.ox) / view.scale,
+        y: (evt.clientY - r.top - view.oy) / view.scale,
+      };
+    };
+
+    if (typeof ResizeObserver === 'function') {
+      new ResizeObserver(() => view.paint()).observe(node);
+    }
+    views.add(view);
+    view.paint();
+    return view;
+  }
+
+  window.addEventListener('resize', () => {
+    for (const v of views) v.redraw();
+  });
+
+  /* ───────────────────────── Pointer interaction ───────────────────────── */
+
+  /**
+   * Pointer dragging on a canvas view, in logical coordinates.
+   *   CP.drag(view, { hit(p) → target|null, start(p, t), move(p, t), end(p, t), hover(p, t) })
+   * When `hit` is omitted every press starts a drag.
+   */
+  function drag(view, handlers) {
+    const node = view.el;
+    const h = handlers || {};
+    let active = null;
+    node.classList.add('is-draggable');
+
+    const hitAt = (p, e) => (h.hit ? h.hit(p, e) : true);
+
+    node.addEventListener('pointerdown', (e) => {
+      if (e.button !== 0 && e.pointerType === 'mouse') return;
+      // Even a miss must not start a text selection that spills over the slide.
+      if (e.pointerType === 'mouse') e.preventDefault();
+      const p = view.toLocal(e);
+      const target = hitAt(p, e);
+      if (target === null || target === undefined || target === false) return;
+      active = { target, id: e.pointerId };
+      try {
+        node.setPointerCapture(e.pointerId);
+      } catch {
+        /* capture is best effort */
+      }
+      node.style.cursor = 'grabbing';
+      if (h.start) h.start(p, target, e);
+      e.preventDefault();
+    });
+
+    node.addEventListener('pointermove', (e) => {
+      const p = view.toLocal(e);
+      if (active && e.pointerId === active.id) {
+        if (h.move) h.move(p, active.target, e);
+        return;
+      }
+      if (e.pointerType === 'mouse') {
+        const target = h.hit ? h.hit(p, e) : null;
+        node.style.cursor = target !== null && target !== undefined && target !== false ? 'grab' : '';
+        if (h.hover) h.hover(p, target, e);
+      }
+    });
+
+    const finish = (e) => {
+      if (!active || e.pointerId !== active.id) return;
+      const done = active;
+      active = null;
+      node.style.cursor = '';
+      if (h.end) h.end(view.toLocal(e), done.target, e);
+    };
+    node.addEventListener('pointerup', finish);
+    node.addEventListener('pointercancel', finish);
+    node.addEventListener('pointerleave', (e) => {
+      if (!active && e.pointerType === 'mouse' && h.hover) h.hover(null, null, e);
+    });
+    return { get active() { return active ? active.target : null; } };
+  }
+
+  /**
+   * Draggable handles: CP.points(view, [{x, y}, ...], { radius, onChange, constrain }).
+   * Points are mutated in place; `constrain(point, index)` may clamp them.
+   */
+  function points(view, list, options) {
+    const opts = options || {};
+    const radius = opts.radius || 14;
+    let hoverIndex = -1;
+    const api = { points: list, hover: -1, dragging: -1 };
+    drag(view, {
+      hit(p, e) {
+        const touch = e && e.pointerType && e.pointerType !== 'mouse';
+        const r = Math.max(radius, (touch ? 24 : 10) / view.scale);
+        let best = -1;
+        let bestD = r * r;
+        list.forEach((pt, i) => {
+          if (pt.locked) return;
+          const d = (pt.x - p.x) ** 2 + (pt.y - p.y) ** 2;
+          if (d <= bestD) {
+            best = i;
+            bestD = d;
+          }
+        });
+        return best === -1 ? null : best;
+      },
+      start(p, i) {
+        api.dragging = i;
+        view.redraw();
+      },
+      move(p, i) {
+        const pt = list[i];
+        pt.x = clamp(p.x, 0, view.w);
+        pt.y = clamp(p.y, 0, view.h);
+        if (opts.constrain) opts.constrain(pt, i);
+        if (opts.onChange) opts.onChange(pt, i);
+        view.redraw();
+      },
+      end() {
+        api.dragging = -1;
+        view.redraw();
+      },
+      hover(p, i) {
+        const next = i === null || i === undefined ? -1 : i;
+        if (next !== hoverIndex) {
+          hoverIndex = next;
+          api.hover = next;
+          view.redraw();
+        }
+      },
+    });
+    return api;
+  }
+
+  /* ───────────────────────── Animation loops ───────────────────────── */
+
+  const loops = new Set();
+
+  /**
+   * requestAnimationFrame loop that only runs while its slide is visible.
+   *   const loop = CP.loop(view.el, (dt, t) => { ...; view.paint(); });
+   *   loop.stop(); loop.start(); loop.toggle(); loop.reset();
+   * dt is in seconds and clamped to 0.1 s (tab switches, breakpoints).
+   */
+  function loop(anchor, tick, options) {
+    const node = $(anchor);
+    const opts = options || {};
+    const L = {
+      slide: node && node.closest ? node.closest('.slide') : null,
+      tick,
+      wanted: opts.autostart !== false,
+      running: false,
+      raf: 0,
+      last: 0,
+      t: 0,
+      maxDt: opts.maxDt || 0.1,
+    };
+    L.start = () => {
+      L.wanted = true;
+      syncLoop(L);
+      return L;
+    };
+    L.stop = () => {
+      L.wanted = false;
+      syncLoop(L);
+      return L;
+    };
+    L.toggle = () => (L.wanted ? L.stop() : L.start());
+    L.reset = () => {
+      L.t = 0;
+      return L;
+    };
+    loops.add(L);
+    syncLoop(L);
+    return L;
+  }
+
+  function syncLoop(L) {
+    const visible = !doc.hidden && (!L.slide || L.slide.classList.contains('is-active') || !state.ready);
+    const should = L.wanted && visible;
+    if (should && !L.running) {
+      L.running = true;
+      L.last = performance.now();
+      const frame = (now) => {
+        if (!L.running) return;
+        const raw = Math.max(0, (now - L.last) / 1000);
+        L.last = now;
+        const dt = Math.min(raw, L.maxDt);
+        L.t += dt;
+        try {
+          L.tick(dt, L.t, raw);
+        } catch (err) {
+          console.error(err);
+          L.running = false;
+          L.wanted = false;
+          return;
+        }
+        if (L.running) L.raf = requestAnimationFrame(frame);
+      };
+      L.raf = requestAnimationFrame(frame);
+    } else if (!should && L.running) {
+      L.running = false;
+      cancelAnimationFrame(L.raf);
+    }
+  }
+
+  function syncLoops() {
+    for (const L of loops) syncLoop(L);
+  }
+
+  doc.addEventListener('visibilitychange', syncLoops);
+
+  /* ───────────────────────── Form controls ───────────────────────── */
+
+  function decimalsOf(input) {
+    const step = input.getAttribute('step');
+    if (!step || step === 'any') return 2;
+    const dot = step.indexOf('.');
+    return dot === -1 ? 0 : step.length - dot - 1;
+  }
+
+  function outputFor(input) {
+    if (input.id) {
+      const out = doc.querySelector(`output[for~="${CSS.escape(input.id)}"]`);
+      if (out) return out;
+    }
+    const ctl = input.closest('.ctl, label');
+    return ctl ? ctl.querySelector('output') : null;
+  }
+
+  function readValue(input, group) {
+    if (input.type === 'checkbox') return input.checked;
+    if (input.type === 'radio') {
+      const checked = group.find((r) => r.checked);
+      return checked ? checked.value : null;
+    }
+    if (input.type === 'range' || input.type === 'number') return Number(input.value);
+    return input.value;
+  }
+
+  /**
+   * Wire a control (range, number, checkbox, select, or a radio group selector)
+   * to a callback, keeping its <output> in sync.
+   *   CP.bind('#speed', (v) => { speed = v; view.redraw(); }, { format: (v) => v + 'x' });
+   * The callback runs once immediately with the initial value unless
+   * { immediate: false } is passed.
+   */
+  function bind(target, fn, options) {
+    const opts = options || {};
+    const inputs = $$(target);
+    if (inputs.length === 0) throw new Error(`CP.bind: 요소를 찾을 수 없습니다 (${target})`);
+    const isGroup = inputs.every((i) => i.type === 'radio');
+    const update = (source) => {
+      const value = readValue(source, inputs);
+      if (!isGroup) {
+        const out = outputFor(source);
+        if (out) {
+          out.textContent = opts.format
+            ? opts.format(value)
+            : typeof value === 'number'
+              ? value.toFixed(decimalsOf(source))
+              : String(value);
+        }
+      }
+      if (fn) fn(value, source);
+    };
+    for (const input of inputs) {
+      const evt = input.type === 'checkbox' || input.type === 'radio' || input.tagName === 'SELECT' ? 'change' : 'input';
+      input.addEventListener(evt, () => update(input));
+    }
+    if (opts.immediate !== false) update(isGroup ? inputs.find((r) => r.checked) || inputs[0] : inputs[0]);
+    return {
+      inputs,
+      update: () => update(isGroup ? inputs.find((r) => r.checked) || inputs[0] : inputs[0]),
+      /**
+       * Set the control from code (e.g. when a canvas drag changes the same
+       * value) and refresh its <output>. The callback is skipped unless
+       * { notify: true } — the caller usually already applied the value.
+       */
+      set(value, setOpts) {
+        const notify = Boolean(setOpts && setOpts.notify);
+        let source = inputs[0];
+        if (isGroup) {
+          source = inputs.find((r) => r.value === String(value)) || inputs[0];
+          for (const r of inputs) r.checked = r === source;
+        } else if (source.type === 'checkbox') {
+          source.checked = Boolean(value);
+        } else {
+          source.value = String(value);
+        }
+        const keep = fn;
+        if (!notify) fn = null;
+        try {
+          update(source);
+        } finally {
+          fn = keep;
+        }
+      },
+    };
+  }
+
+  /* ───────────────────────── Drawing helpers ───────────────────────── */
+
+  function strokeStyle(ctx, color, width, dash) {
+    ctx.strokeStyle = color || ensureColors().fg;
+    ctx.lineWidth = width || 2;
+    ctx.setLineDash(dash || []);
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+  }
+
+  const draw = {
+    line(ctx, x1, y1, x2, y2, o) {
+      const opt = o || {};
+      ctx.save();
+      strokeStyle(ctx, opt.color, opt.width, opt.dash);
+      ctx.beginPath();
+      ctx.moveTo(x1, y1);
+      ctx.lineTo(x2, y2);
+      ctx.stroke();
+      ctx.restore();
+    },
+    arrow(ctx, x1, y1, x2, y2, o) {
+      const opt = o || {};
+      const head = opt.head || 10;
+      const ang = Math.atan2(y2 - y1, x2 - x1);
+      const len = Math.hypot(x2 - x1, y2 - y1);
+      if (len < 0.5) return;
+      const hl = Math.min(head, len * 0.6);
+      const bx = x2 - Math.cos(ang) * hl * 0.8;
+      const by = y2 - Math.sin(ang) * hl * 0.8;
+      ctx.save();
+      strokeStyle(ctx, opt.color, opt.width, opt.dash);
+      ctx.beginPath();
+      ctx.moveTo(x1, y1);
+      ctx.lineTo(bx, by);
+      ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.fillStyle = opt.color || ensureColors().fg;
+      ctx.beginPath();
+      ctx.moveTo(x2, y2);
+      ctx.lineTo(x2 - Math.cos(ang - 0.42) * hl, y2 - Math.sin(ang - 0.42) * hl);
+      ctx.lineTo(x2 - Math.cos(ang + 0.42) * hl, y2 - Math.sin(ang + 0.42) * hl);
+      ctx.closePath();
+      ctx.fill();
+      ctx.restore();
+    },
+    circle(ctx, x, y, r, o) {
+      const opt = o || {};
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(x, y, Math.max(0, r), 0, TAU);
+      if (opt.fill) {
+        ctx.fillStyle = opt.fill;
+        ctx.fill();
+      }
+      if (opt.stroke) {
+        strokeStyle(ctx, opt.stroke, opt.width, opt.dash);
+        ctx.stroke();
+      }
+      ctx.restore();
+    },
+    dot(ctx, x, y, r, color) {
+      draw.circle(ctx, x, y, r === undefined ? 5 : r, { fill: color || ensureColors().accent });
+    },
+    handle(ctx, x, y, o) {
+      const opt = o || {};
+      const c = ensureColors();
+      const r = opt.r || 8;
+      if (opt.active || opt.hover) draw.circle(ctx, x, y, r + 7, { fill: alpha(opt.color || c.accent, opt.active ? 0.3 : 0.18) });
+      draw.circle(ctx, x, y, r, { fill: opt.color || c.accent, stroke: c.bg, width: 2.5 });
+    },
+    rect(ctx, x, y, w, h, o) {
+      const opt = o || {};
+      ctx.save();
+      ctx.beginPath();
+      if (opt.radius && ctx.roundRect) ctx.roundRect(x, y, w, h, opt.radius);
+      else ctx.rect(x, y, w, h);
+      if (opt.fill) {
+        ctx.fillStyle = opt.fill;
+        ctx.fill();
+      }
+      if (opt.stroke) {
+        strokeStyle(ctx, opt.stroke, opt.width, opt.dash);
+        ctx.stroke();
+      }
+      ctx.restore();
+    },
+    poly(ctx, pts, o) {
+      const opt = o || {};
+      if (!pts || pts.length === 0) return;
+      ctx.save();
+      ctx.beginPath();
+      ctx.moveTo(pts[0].x, pts[0].y);
+      for (let i = 1; i < pts.length; i += 1) ctx.lineTo(pts[i].x, pts[i].y);
+      if (opt.close) ctx.closePath();
+      if (opt.fill) {
+        ctx.fillStyle = opt.fill;
+        ctx.fill();
+      }
+      if (opt.stroke || !opt.fill) {
+        strokeStyle(ctx, opt.stroke || opt.color, opt.width, opt.dash);
+        ctx.stroke();
+      }
+      ctx.restore();
+    },
+    text(ctx, str, x, y, o) {
+      const opt = o || {};
+      const c = ensureColors();
+      ctx.save();
+      ctx.font = font(opt.size || 14, opt.weight || 500, opt.mono ? 'mono' : 'sans');
+      ctx.textAlign = opt.align || 'left';
+      ctx.textBaseline = opt.baseline || 'middle';
+      const s = String(str);
+      if (opt.bg) {
+        const pad = opt.pad === undefined ? 4 : opt.pad;
+        const m = ctx.measureText(s);
+        const size = opt.size || 14;
+        let left = x;
+        if (ctx.textAlign === 'center') left = x - m.width / 2;
+        else if (ctx.textAlign === 'right' || ctx.textAlign === 'end') left = x - m.width;
+        let top = y - size / 2;
+        if (ctx.textBaseline === 'top') top = y;
+        else if (ctx.textBaseline === 'bottom' || ctx.textBaseline === 'alphabetic') top = y - size;
+        ctx.fillStyle = opt.bg;
+        ctx.beginPath();
+        if (ctx.roundRect) ctx.roundRect(left - pad, top - pad * 0.6, m.width + pad * 2, size + pad * 1.2, 4);
+        else ctx.rect(left - pad, top - pad * 0.6, m.width + pad * 2, size + pad * 1.2);
+        ctx.fill();
+      }
+      ctx.fillStyle = opt.color || c.fg;
+      ctx.fillText(s, x, y);
+      ctx.restore();
+    },
+    grid(ctx, w, h, step, o) {
+      const opt = o || {};
+      const c = ensureColors();
+      const x0 = opt.x0 || 0;
+      const y0 = opt.y0 || 0;
+      ctx.save();
+      ctx.strokeStyle = opt.color || alpha(c.line, 0.9);
+      ctx.lineWidth = opt.width || 1;
+      ctx.beginPath();
+      const startX = x0 - Math.floor(x0 / step) * step;
+      const startY = y0 - Math.floor(y0 / step) * step;
+      for (let x = startX; x <= w + 0.01; x += step) {
+        ctx.moveTo(Math.round(x) + 0.5, 0);
+        ctx.lineTo(Math.round(x) + 0.5, h);
+      }
+      for (let y = startY; y <= h + 0.01; y += step) {
+        ctx.moveTo(0, Math.round(y) + 0.5);
+        ctx.lineTo(w, Math.round(y) + 0.5);
+      }
+      ctx.stroke();
+      ctx.restore();
+    },
+  };
+
+  /* ───────────────────────── Code highlighting ───────────────────────── */
+
+  const KEYWORDS = new Set(
+    (
+      'if else for while do return break continue switch case default new delete true false null undefined this ' +
+      'const let var function class extends implements interface import export from struct enum public private ' +
+      'protected internal static readonly virtual override abstract sealed using namespace typeof instanceof in of ' +
+      'async await yield try catch finally throw sizeof template typename auto inline constexpr uniform varying ' +
+      'attribute out inout layout precision highp mediump lowp discard def elif lambda pass None True False and ' +
+      'or not is with as self local then end nil func fn mut impl pub match loop where foreach get set ref ' +
+      // C#
+      'base delegate event params partial lock checked unchecked fixed unsafe stackalloc nameof operator implicit ' +
+      'explicit extern goto volatile record init required when global add remove'
+    ).split(' '),
+  );
+  const TYPES = new Set(
+    (
+      'int float double bool char byte short long unsigned signed string number boolean void uint ' +
+      'decimal object sbyte ushort ulong nint nuint dynamic ' +
+      'vec2 vec3 vec4 ivec2 ivec3 ivec4 uvec2 bvec2 mat2 mat3 mat4 sampler2D samplerCube float2 float3 float4 ' +
+      'float3x3 float4x4 half half3 half4 u8 u16 u32 u64 i8 i16 i32 i64 f32 f64 usize isize'
+    ).split(' '),
+  );
+
+  /** Label shown in the corner of a code block. */
+  const LANG_LABELS = {
+    csharp: 'C#',
+    cs: 'C#',
+    hlsl: 'HLSL',
+    glsl: 'GLSL',
+    json: 'JSON',
+    js: 'JS',
+    ts: 'TS',
+    text: '',
+    txt: '',
+    plain: '',
+  };
+
+  function tokenize(src, lang) {
+    const hashComments = /^(py|python|gd|gdscript|sh|bash|ruby|yaml)$/.test(lang);
+    const dashComments = lang === 'lua';
+    const cLike = !hashComments && !dashComments;
+    const tokens = [];
+    let i = 0;
+    const push = (type, text) => {
+      const last = tokens[tokens.length - 1];
+      if (last && last.type === type && !type) last.text += text;
+      else tokens.push({ type, text });
+    };
+    const rest = () => src.slice(i);
+    while (i < src.length) {
+      const s = rest();
+      let m;
+      if ((cLike && (m = /^\/\/[^\n]*/.exec(s))) || (hashComments && (m = /^#[^\n]*/.exec(s))) || (dashComments && (m = /^--[^\n]*/.exec(s)))) {
+        push('c', m[0]);
+      } else if (cLike && (m = /^\/\*[\s\S]*?(?:\*\/|$)/.exec(s))) {
+        push('c', m[0]);
+      } else if (cLike && (m = /^#[ \t]*[a-z]+/.exec(s)) && (i === 0 || src[i - 1] === '\n' || /^[ \t]*$/.test(src.slice(src.lastIndexOf('\n', i - 1) + 1, i)))) {
+        push('k', m[0]);
+      } else if ((m = /^(?:\$@|@\$|@)"(?:""|[^"\n])*"?/.exec(s))) {
+        // C# verbatim string: backslashes are literal, "" is an escaped quote
+        push('s', m[0]);
+      } else if ((m = /^\$?(?:"(?:\\.|[^"\\\n])*"?|'(?:\\.|[^'\\\n])*'?|`(?:\\[\s\S]|[^`\\])*`?)/.exec(s))) {
+        // $"..." is a C# interpolated string
+        push('s', m[0]);
+      } else if ((m = /^(?:0[xX][\da-fA-F_]+|0[bB][01_]+|(?:\d[\d_]*\.?\d*|\.\d+)(?:[eE][+-]?\d+)?)[fFuUlLdDmM]?/.exec(s)) && !/[\w$]/.test(src[i - 1] || '')) {
+        push('n', m[0]);
+      } else if ((m = /^[A-Za-z_$][\w$]*/.exec(s))) {
+        const word = m[0];
+        const after = src.slice(i + word.length).match(/^\s*(\(|<[\w\s,]*>\s*\()/);
+        if (KEYWORDS.has(word)) push('k', word);
+        else if (TYPES.has(word)) push('t', word);
+        else if (after) push('f', word);
+        else if (/^[A-Z][a-z0-9]/.test(word) || /^[A-Z]$/.test(word)) push('t', word);
+        else push('', word);
+      } else if ((m = /^[^\w\s"'`/#\-$.]+|^[\s\S]/.exec(s))) {
+        push('', m[0]);
+      }
+      i += m[0].length;
+    }
+    return tokens;
+  }
+
+  function escapeText(s) {
+    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  function dedent(text) {
+    const lines = text.replace(/\r\n?/g, '\n').replace(/\t/g, '    ').split('\n');
+    while (lines.length && lines[0].trim() === '') lines.shift();
+    while (lines.length && lines[lines.length - 1].trim() === '') lines.pop();
+    const indents = lines.filter((l) => l.trim()).map((l) => l.match(/^ */)[0].length);
+    const cut = indents.length ? Math.min(...indents) : 0;
+    return lines.map((l) => l.slice(cut)).join('\n');
+  }
+
+  function highlightCode(pre) {
+    if (pre.dataset.cpHighlighted) return;
+    const codeEl = pre.querySelector('code') || pre;
+    const lang = (pre.dataset.lang || '').toLowerCase();
+    const src = dedent(codeEl.textContent);
+    const lines = [''];
+    const plain = lang === 'text' || lang === 'txt' || lang === 'plain';
+    const tokens = plain ? [{ type: '', text: src }] : tokenize(src, lang);
+    for (const tok of tokens) {
+      const parts = tok.text.split('\n');
+      parts.forEach((part, idx) => {
+        if (idx > 0) lines.push('');
+        if (!part) return;
+        const html = escapeText(part);
+        lines[lines.length - 1] += tok.type ? `<span class="tok-${tok.type}">${html}</span>` : html;
+      });
+    }
+    codeEl.innerHTML = lines.map((l, idx) => `<span class="line" data-line="${idx + 1}">${l || ' '}</span>`).join('');
+    pre.dataset.cpHighlighted = 'true';
+    pre.dataset.label = Object.prototype.hasOwnProperty.call(LANG_LABELS, lang) ? LANG_LABELS[lang] : lang.toUpperCase();
+    if (!pre.hasAttribute('tabindex')) pre.tabIndex = 0;
+  }
+
+  function parseLineSpec(spec) {
+    const set = new Set();
+    for (const part of String(spec || '').split(',')) {
+      const m = /^\s*(\d+)\s*(?:-\s*(\d+))?\s*$/.exec(part);
+      if (!m) continue;
+      const a = Number(m[1]);
+      const b = m[2] ? Number(m[2]) : a;
+      for (let n = Math.min(a, b); n <= Math.max(a, b); n += 1) set.add(n);
+    }
+    return set;
+  }
+
+  function highlightEntries(pre) {
+    const spec = pre.getAttribute('data-highlight');
+    return spec ? spec.split('|') : [];
+  }
+
+  function applyHighlight(pre, step) {
+    const entries = highlightEntries(pre);
+    const active = step >= 1 && step <= entries.length ? parseLineSpec(entries[step - 1]) : new Set();
+    let any = false;
+    for (const line of pre.querySelectorAll('.line')) {
+      const on = active.has(Number(line.dataset.line));
+      line.classList.toggle('is-active', on);
+      if (on) any = true;
+    }
+    pre.classList.toggle('has-active', any);
+  }
+
+  /* ───────────────────────── Quizzes ───────────────────────── */
+
+  function initQuiz(quiz) {
+    if (quiz.dataset.cpQuiz) return;
+    quiz.dataset.cpQuiz = 'true';
+    const answer = (quiz.getAttribute('data-answer') || '').trim().toLowerCase();
+    const choices = Array.from(quiz.querySelectorAll('.quiz__choice'));
+    choices.forEach((choice, i) => {
+      if (!choice.dataset.choice) choice.dataset.choice = 'abcdefgh'[i] || String(i + 1);
+      if (choice.tagName === 'BUTTON' && !choice.getAttribute('type')) choice.type = 'button';
+    });
+    let feedback = quiz.querySelector('.quiz__feedback');
+    if (!feedback) {
+      feedback = el('p', { class: 'quiz__feedback', 'aria-live': 'polite' });
+      const explain = quiz.querySelector('.quiz__explain');
+      if (explain) explain.before(feedback);
+      else quiz.append(feedback);
+    }
+    quiz.addEventListener('click', (e) => {
+      const choice = e.target.closest('.quiz__choice');
+      if (!choice || !quiz.contains(choice) || choice.disabled || quiz.classList.contains('is-solved')) return;
+      const value = choice.dataset.choice.toLowerCase();
+      if (value === answer) {
+        choice.classList.add('is-correct');
+        quiz.classList.add('is-solved');
+        for (const c of choices) {
+          c.disabled = true;
+          c.setAttribute('aria-disabled', 'true');
+        }
+        feedback.className = 'quiz__feedback is-correct';
+        feedback.textContent = choice.dataset.why || '정답입니다!';
+        emit('quiz', { quiz, correct: true, choice: value });
+      } else {
+        choice.classList.add('is-wrong');
+        choice.disabled = true;
+        choice.setAttribute('aria-disabled', 'true');
+        feedback.className = 'quiz__feedback is-wrong';
+        feedback.textContent = choice.dataset.why || '아니에요 — 다시 생각해 보세요.';
+        emit('quiz', { quiz, correct: false, choice: value });
+      }
+    });
+  }
+
+  /* ───────────────────────── Deck ───────────────────────── */
+
+  const state = {
+    ready: false,
+    deck: null,
+    slides: [],
+    index: -1,
+    steps: [],
+    maxSteps: [],
+    library: null,
+    ui: {},
+  };
+
+  const ICONS = {
+    prev: '<path d="M15 18l-6-6 6-6"/>',
+    next: '<path d="M9 18l6-6-6-6"/>',
+    toc: '<path d="M9 6h12M9 12h12M9 18h12M4 6h.01M4 12h.01M4 18h.01"/>',
+    moon: '<path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>',
+    sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
+    expand: '<path d="M8 3H5a2 2 0 0 0-2 2v3M21 8V5a2 2 0 0 0-2-2h-3M16 21h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>',
+    close: '<path d="M18 6L6 18M6 6l12 12"/>',
+    library: '<path d="M15 18l-6-6 6-6"/>',
+  };
+
+  const svg = (name) => `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">${ICONS[name]}</svg>`;
+
+  function stepNumber(node) {
+    const n = parseInt(node.getAttribute('data-step'), 10);
+    return Number.isFinite(n) && n >= 1 ? n : 1;
+  }
+
+  function countSteps(slide) {
+    let max = parseInt(slide.getAttribute('data-steps'), 10) || 0;
+    for (const node of slide.querySelectorAll('[data-step]')) max = Math.max(max, stepNumber(node));
+    for (const pre of slide.querySelectorAll('pre.code[data-highlight]')) max = Math.max(max, highlightEntries(pre).length);
+    return max;
+  }
+
+  function readLibrary() {
+    const node = doc.getElementById('cp-library');
+    if (!node) return null;
+    try {
+      const data = JSON.parse(node.textContent);
+      if (data && typeof data.href === 'string' && data.concepts && typeof data.concepts === 'object') return data;
+    } catch {
+      /* ignore malformed data */
+    }
+    return null;
+  }
+
+  function linkConceptRefs(scope) {
+    for (const ref of Array.from(scope.querySelectorAll('[data-concept-ref]'))) {
+      if (ref.tagName === 'A') continue;
+      const id = ref.getAttribute('data-concept-ref');
+      if (!state.library) {
+        if (!ref.title) ref.title = '라이브러리에서 볼 수 있는 관련 개념';
+        continue;
+      }
+      const known = Object.prototype.hasOwnProperty.call(state.library.concepts, id) ? state.library.concepts[id] : null;
+      const a = doc.createElement('a');
+      for (const attr of Array.from(ref.attributes)) a.setAttribute(attr.name, attr.value);
+      a.href = known || `${state.library.href}#concept=${encodeURIComponent(id)}`;
+      if (!known) {
+        a.classList.add('is-planned');
+        a.title = '아직 준비 중인 개념 — 라이브러리에서 보기';
+      }
+      a.append(...Array.from(ref.childNodes));
+      ref.replaceWith(a);
+    }
+  }
+
+  function buildChrome(deck) {
+    const ui = state.ui;
+    const conceptTitle = deck.getAttribute('data-title') || (state.slides[0] && state.slides[0].getAttribute('data-title')) || doc.title;
+    const categoryTitle = deck.getAttribute('data-category') || '';
+
+    ui.progress = el('div', { class: 'cp-progress', 'aria-hidden': 'true' }, [el('div', { class: 'cp-progress__fill' })]);
+
+    ui.top = el('header', { class: 'cp-topbar' });
+    if (state.library) {
+      ui.lib = el('a', { class: 'cp-lib', href: state.library.href, html: `${svg('library')}<span>라이브러리</span>` });
+      ui.top.append(ui.lib);
+    }
+    const crumb = el('div', { class: 'cp-crumb' });
+    if (categoryTitle) {
+      crumb.append(el('span', { class: 'cp-crumb__cat', text: categoryTitle }), el('span', { class: 'cp-crumb__sep', 'aria-hidden': 'true', text: '/' }));
+    }
+    crumb.append(el('span', { class: 'cp-crumb__title', text: conceptTitle }));
+    ui.top.append(crumb);
+    ui.theme = el('button', { class: 'cp-icon-btn cp-theme', type: 'button' });
+    ui.theme.addEventListener('click', toggleTheme);
+    ui.top.append(ui.theme);
+
+    ui.nav = el('nav', { class: 'cp-nav', 'aria-label': '슬라이드 이동' });
+    const left = el('div', { class: 'cp-nav__group' });
+    ui.tocBtn = el('button', { class: 'cp-icon-btn', type: 'button', 'aria-label': '목차 (T)', title: '목차 (T)', 'aria-haspopup': 'dialog', html: svg('toc') });
+    ui.tocBtn.addEventListener('click', openToc);
+    left.append(ui.tocBtn);
+    if (doc.fullscreenEnabled && root.requestFullscreen) {
+      ui.fsBtn = el('button', { class: 'cp-icon-btn', type: 'button', 'aria-label': '전체 화면 (F)', title: '전체 화면 (F)', html: svg('expand') });
+      ui.fsBtn.addEventListener('click', toggleFullscreen);
+      left.append(ui.fsBtn);
+    }
+    const status = el('div', { class: 'cp-nav__status' });
+    ui.navTitle = el('span', { class: 'cp-nav__title' });
+    ui.count = el('span', { class: 'cp-nav__count' });
+    ui.pips = el('span', { class: 'cp-steps', 'aria-hidden': 'true' });
+    status.append(ui.navTitle, ui.count, ui.pips);
+    const right = el('div', { class: 'cp-nav__group' });
+    ui.prev = el('button', { class: 'cp-icon-btn', type: 'button', 'aria-label': '이전', title: '이전 (←)', html: svg('prev') });
+    ui.next = el('button', { class: 'cp-icon-btn cp-icon-btn--primary', type: 'button', 'aria-label': '다음', title: '다음 (→)', html: svg('next') });
+    ui.prev.addEventListener('click', prev);
+    ui.next.addEventListener('click', next);
+    right.append(ui.prev, ui.next);
+    ui.nav.append(left, status, right);
+
+    ui.toc = el('dialog', { class: 'cp-toc', 'aria-labelledby': 'cp-toc-title' });
+    const head = el('div', { class: 'cp-toc__head' }, [el('h2', { id: 'cp-toc-title', text: '목차' })]);
+    const close = el('button', { class: 'cp-icon-btn', type: 'button', 'aria-label': '닫기', html: svg('close') });
+    close.addEventListener('click', closeToc);
+    head.append(close);
+    ui.tocList = el('ol', { class: 'cp-toc__list' });
+    state.slides.forEach((slide, i) => {
+      const b = el('button', { type: 'button', 'data-index': i, text: slide.getAttribute('data-title') || `슬라이드 ${i + 1}` });
+      b.addEventListener('click', () => {
+        closeToc();
+        go(i, { steps: 0 });
+      });
+      ui.tocList.append(el('li', null, [b]));
+    });
+    ui.toc.append(head, ui.tocList);
+    ui.toc.addEventListener('click', (e) => {
+      if (e.target === ui.toc) closeToc();
+    });
+
+    ui.live = el('div', { class: 'cp-sr-only', 'aria-live': 'polite', 'aria-atomic': 'true' });
+
+    doc.body.prepend(ui.progress, ui.top);
+    doc.body.append(ui.nav, ui.toc, ui.live);
+    updateThemeButton();
+  }
+
+  function updateThemeButton() {
+    const btn = state.ui.theme;
+    if (!btn) return;
+    const dark = effectiveTheme() === 'dark';
+    btn.innerHTML = svg(dark ? 'sun' : 'moon');
+    const label = dark ? '밝은 테마로 전환' : '어두운 테마로 전환';
+    btn.setAttribute('aria-label', label);
+    btn.title = label;
+  }
+
+  function updateChrome() {
+    const ui = state.ui;
+    if (!ui.nav) return;
+    const n = state.slides.length;
+    const i = state.index;
+    const slide = state.slides[i];
+    const max = state.maxSteps[i];
+    const step = state.steps[i];
+    ui.progress.firstChild.style.width = `${(((i + (max ? step / (max + 1) : 0)) + 1) / n) * 100}%`;
+    ui.navTitle.textContent = slide.getAttribute('data-title') || '';
+    ui.count.textContent = `${String(i + 1).padStart(2, '0')} / ${String(n).padStart(2, '0')}`;
+    ui.pips.replaceChildren();
+    if (max > 0) {
+      for (let k = 1; k <= max; k += 1) ui.pips.append(el('span', { class: k <= step ? 'is-on' : '' }));
+    }
+    const pending = step < max;
+    ui.prev.disabled = i === 0 && step === 0;
+    ui.next.disabled = i === n - 1 && !pending;
+    ui.next.classList.toggle('has-steps', pending);
+    ui.next.setAttribute('aria-label', pending ? `다음 단계 보기 (${step + 1}/${max})` : '다음 슬라이드');
+    for (const b of ui.tocList.querySelectorAll('button')) {
+      if (Number(b.dataset.index) === i) b.setAttribute('aria-current', 'step');
+      else b.removeAttribute('aria-current');
+    }
+  }
+
+  function setStep(i, k) {
+    const slide = state.slides[i];
+    const max = state.maxSteps[i];
+    const step = clamp(k, 0, max);
+    const before = state.steps[i];
+    state.steps[i] = step;
+    let newest = null;
+    for (const node of slide.querySelectorAll('[data-step]')) {
+      const s = stepNumber(node);
+      const shown = s <= step;
+      node.classList.toggle('is-shown', shown);
+      node.classList.toggle('is-current', s === step);
+      node.inert = !shown;
+      if (s === step && step > before) newest = newest || node;
+    }
+    for (const pre of slide.querySelectorAll('pre.code[data-highlight]')) {
+      applyHighlight(pre, step);
+      if (step > before) {
+        const line = pre.querySelector('.line.is-active');
+        if (line && !newest) newest = line;
+      }
+    }
+    if (newest && i === state.index) {
+      newest.scrollIntoView({ block: 'nearest', behavior: motionQuery && motionQuery.matches ? 'auto' : 'smooth' });
+    }
+    slide.dispatchEvent(new CustomEvent('cp:step', { detail: { step, max, index: i } }));
+    emit('step', { slide, index: i, step, max });
+    updateChrome();
+  }
+
+  function go(target, opts) {
+    const options = opts || {};
+    const n = state.slides.length;
+    if (!n) return;
+    const i = clamp(Math.trunc(Number(target)) || 0, 0, n - 1);
+    const previous = state.index;
+    const prevSlide = state.slides[previous];
+    const slide = state.slides[i];
+    const focusWasInside = Boolean(prevSlide && prevSlide.contains(doc.activeElement));
+
+    if (i !== previous) {
+      state.slides.forEach((s, k) => {
+        const active = k === i;
+        s.classList.toggle('is-active', active);
+        s.classList.toggle('is-past', k < i);
+        s.inert = !active;
+        s.setAttribute('aria-hidden', active ? 'false' : 'true');
+      });
+      state.index = i;
+      if (previous !== -1 && i > previous) slide.scrollTop = 0;
+      if (prevSlide) prevSlide.dispatchEvent(new CustomEvent('cp:leave', { detail: { index: previous } }));
+    }
+
+    const steps = options.steps === 'all' ? state.maxSteps[i] : Number(options.steps) || 0;
+    setStep(i, steps);
+
+    if (i !== previous) {
+      slide.dispatchEvent(new CustomEvent('cp:enter', { detail: { index: i, previous } }));
+      emit('slide', { slide, index: i, previous });
+      syncLoops();
+      updateHash(i, previous === -1);
+      saveProgress(i);
+      if (state.ui.live) state.ui.live.textContent = `슬라이드 ${i + 1} / ${n}: ${slide.getAttribute('data-title') || ''}`;
+      if (focusWasInside) slide.focus({ preventScroll: true });
+    }
+  }
+
+  function next() {
+    const i = state.index;
+    if (i < 0) return;
+    if (state.steps[i] < state.maxSteps[i]) setStep(i, state.steps[i] + 1);
+    else if (i < state.slides.length - 1) go(i + 1, { steps: 0 });
+  }
+
+  function prev() {
+    const i = state.index;
+    if (i < 0) return;
+    if (state.steps[i] > 0) setStep(i, state.steps[i] - 1);
+    else if (i > 0) go(i - 1, { steps: 'all' });
+  }
+
+  function indexFromHash() {
+    const m = /^#(\d+)$/.exec(window.location.hash);
+    if (!m) return null;
+    const n = Number(m[1]);
+    return n >= 1 && n <= state.slides.length ? n - 1 : null;
+  }
+
+  function updateHash(i, initial) {
+    if (initial && !window.location.hash) return;
+    const hash = `#${i + 1}`;
+    if (window.location.hash === hash) return;
+    try {
+      window.history.replaceState(window.history.state, '', hash);
+    } catch {
+      /* some embedded contexts forbid history access */
+    }
+  }
+
+  function saveProgress(i) {
+    const id = root.getAttribute('data-concept');
+    if (!id) return;
+    let all = {};
+    try {
+      all = JSON.parse(storage.get(PROGRESS_KEY) || '{}');
+    } catch {
+      all = {};
+    }
+    if (!all || typeof all !== 'object' || Array.isArray(all)) all = {};
+    const n = state.slides.length;
+    const before = all[id] && typeof all[id] === 'object' ? all[id] : {};
+    all[id] = {
+      slide: i + 1,
+      total: n,
+      max: Math.max(Number(before.max) || 0, i + 1),
+      done: Boolean(before.done) || i === n - 1,
+      at: Date.now(),
+    };
+    storage.set(PROGRESS_KEY, JSON.stringify(all));
+  }
+
+  function openToc() {
+    const dlg = state.ui.toc;
+    if (!dlg || dlg.open) return;
+    if (typeof dlg.showModal === 'function') dlg.showModal();
+    else dlg.setAttribute('open', '');
+    const current = dlg.querySelector('[aria-current="step"]');
+    if (current) current.focus();
+  }
+
+  function closeToc() {
+    const dlg = state.ui.toc;
+    if (!dlg || !dlg.open) return;
+    if (typeof dlg.close === 'function') dlg.close();
+    else dlg.removeAttribute('open');
+  }
+
+  function toggleFullscreen() {
+    if (!doc.fullscreenEnabled) return;
+    if (doc.fullscreenElement) doc.exitFullscreen().catch(() => {});
+    else root.requestFullscreen().catch(() => {});
+  }
+
+  const KEY_EXEMPT = 'input, textarea, select, [contenteditable=""], [contenteditable="true"], [data-keys]';
+
+  function onKeydown(e) {
+    if (e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey) return;
+    if (state.ui.toc && state.ui.toc.open) return;
+    const t = e.target instanceof Element ? e.target : null;
+    if (t && t.closest(KEY_EXEMPT)) return;
+    const onButton = Boolean(t && t.closest('button, a, summary, [role="button"]'));
+    switch (e.key) {
+      case 'ArrowRight':
+      case 'PageDown':
+        next();
+        break;
+      case ' ':
+      case 'Spacebar':
+        if (onButton) return;
+        if (e.shiftKey) prev();
+        else next();
+        break;
+      case 'ArrowLeft':
+      case 'PageUp':
+        prev();
+        break;
+      case 'Home':
+        go(0, { steps: 0 });
+        break;
+      case 'End':
+        go(state.slides.length - 1, { steps: 0 });
+        break;
+      case 't':
+      case 'T':
+        openToc();
+        break;
+      case 'f':
+      case 'F':
+        toggleFullscreen();
+        break;
+      default:
+        return;
+    }
+    e.preventDefault();
+  }
+
+  const SWIPE_EXEMPT = 'input, textarea, select, canvas, pre, button, a, [data-keys], [data-no-swipe], .table-wrap, .formula';
+
+  function bindSwipe(deck) {
+    let start = null;
+    deck.addEventListener(
+      'touchstart',
+      (e) => {
+        if (e.touches.length !== 1) {
+          start = null;
+          return;
+        }
+        const t = e.target instanceof Element ? e.target : null;
+        if (t && t.closest(SWIPE_EXEMPT)) {
+          start = null;
+          return;
+        }
+        start = { x: e.touches[0].clientX, y: e.touches[0].clientY, at: performance.now() };
+      },
+      { passive: true },
+    );
+    deck.addEventListener(
+      'touchend',
+      (e) => {
+        if (!start || e.changedTouches.length !== 1) return;
+        const dx = e.changedTouches[0].clientX - start.x;
+        const dy = e.changedTouches[0].clientY - start.y;
+        const quick = performance.now() - start.at < 700;
+        start = null;
+        if (!quick || Math.abs(dx) < 60 || Math.abs(dx) < Math.abs(dy) * 1.5) return;
+        if (dx < 0) next();
+        else prev();
+      },
+      { passive: true },
+    );
+    deck.addEventListener('touchcancel', () => {
+      start = null;
+    });
+  }
+
+  function setup(deck) {
+    state.deck = deck;
+    state.slides = Array.from(deck.children).filter((node) => node.matches('section.slide'));
+    if (state.slides.length === 0) return;
+    root.classList.add('cp-js');
+    state.library = readLibrary();
+    refreshColors();
+    for (const pre of deck.querySelectorAll('pre.code')) highlightCode(pre);
+    const n = state.slides.length;
+    state.slides.forEach((slide, i) => {
+      slide.setAttribute('role', 'group');
+      slide.setAttribute('aria-roledescription', '슬라이드');
+      slide.setAttribute('aria-label', `${i + 1} / ${n}: ${slide.getAttribute('data-title') || ''}`);
+      slide.tabIndex = -1;
+      state.maxSteps[i] = countSteps(slide);
+      state.steps[i] = 0;
+    });
+    linkConceptRefs(doc.body);
+    for (const quiz of deck.querySelectorAll('.quiz')) initQuiz(quiz);
+    buildChrome(deck);
+    doc.addEventListener('keydown', onKeydown);
+    bindSwipe(deck);
+    // Fallback for browsers without `overflow: clip` (see concept.css): the deck itself must never scroll.
+    deck.addEventListener('scroll', () => {
+      if (deck.scrollLeft !== 0 || deck.scrollTop !== 0) {
+        deck.scrollLeft = 0;
+        deck.scrollTop = 0;
+      }
+    });
+    window.addEventListener('hashchange', () => {
+      const i = indexFromHash();
+      if (i !== null && i !== state.index) go(i, { steps: 0 });
+    });
+    state.ready = true;
+    const startAt = indexFromHash();
+    go(startAt === null ? 0 : startAt, { steps: 0 });
+  }
+
+  function init() {
+    if (state.deck) return;
+    const deck = doc.querySelector('main.deck');
+    if (!deck) {
+      root.classList.remove('cp-js');
+      return;
+    }
+    try {
+      setup(deck);
+    } catch (err) {
+      // Fall back to the readable, stacked no-JS layout rather than a blank page.
+      root.classList.remove('cp-js');
+      console.error('[CP] 슬라이드 초기화 실패', err);
+    }
+  }
+
+  /**
+   * Run callbacks when the slide containing `anchor` is entered/left or its
+   * reveal step changes. `enter` runs immediately when it is already active.
+   *   CP.onSlide('#demo', { enter() {}, leave() {}, step(n) {} })
+   */
+  function onSlide(anchor, handlers) {
+    const node = $(anchor);
+    const slide = node ? (node.matches('.slide') ? node : node.closest('.slide')) : null;
+    if (!slide) throw new Error(`CP.onSlide: 슬라이드를 찾을 수 없습니다 (${anchor})`);
+    const h = handlers || {};
+    if (h.enter) slide.addEventListener('cp:enter', (e) => h.enter(e.detail));
+    if (h.leave) slide.addEventListener('cp:leave', (e) => h.leave(e.detail));
+    if (h.step) slide.addEventListener('cp:step', (e) => h.step(e.detail.step, e.detail));
+    if (slide.classList.contains('is-active')) {
+      const i = state.slides.indexOf(slide);
+      if (h.enter) h.enter({ index: i, previous: -1 });
+      if (h.step) h.step(state.steps[i] || 0, { step: state.steps[i] || 0, max: state.maxSteps[i] || 0, index: i });
+    }
+  }
+
+  window.CP = Object.freeze({
+    version: 1,
+    $,
+    $$,
+    el,
+    clamp,
+    lerp,
+    invLerp,
+    remap,
+    TAU,
+    rng,
+    on,
+    onSlide,
+    canvas,
+    drag,
+    points,
+    loop,
+    bind,
+    draw,
+    alpha,
+    mix,
+    font,
+    resolveColor,
+    get colors() {
+      return ensureColors();
+    },
+    get theme() {
+      return effectiveTheme();
+    },
+    setTheme,
+    toggleTheme,
+    get reducedMotion() {
+      return Boolean(motionQuery && motionQuery.matches);
+    },
+    get index() {
+      return state.index;
+    },
+    get count() {
+      return state.slides.length;
+    },
+    step(i) {
+      return state.steps[i === undefined ? state.index : i] || 0;
+    },
+    go: (i, opts) => go(i, opts),
+    next: () => next(),
+    prev: () => prev(),
+    highlight: highlightCode,
+  });
+
+  if (doc.querySelector('main.deck')) init();
+  else doc.addEventListener('DOMContentLoaded', init, { once: true });
+})();
+
+</script>
+  <script>
+    (() => {
+      const { draw, alpha } = CP;
+      const C = CP.colors; // 테마가 바뀌면 같은 객체의 값이 갱신된다
+
+      /** 값이 float로 저장됐을 때 C#이 출력하는 가장 짧은 표기 */
+      function csFloat(v) {
+        const f = Math.fround(v);
+        if (f === 0) return '0';
+        for (let p = 1; p <= 9; p++) {
+          const s = Number(f.toPrecision(p));
+          if (Math.fround(s) === f) return String(s);
+        }
+        return String(f);
+      }
+      const noNegZero = (n) => (n === 0 ? 0 : n);
+      /** C# Math.Round 기본값: .5에서 짝수 쪽 (MidpointRounding.ToEven) */
+      function roundHalfEven(v) {
+        const fl = Math.floor(v);
+        const diff = v - fl;
+        if (diff < 0.5) return noNegZero(fl);
+        if (diff > 0.5) return noNegZero(fl + 1);
+        return noNegZero(fl % 2 === 0 ? fl : fl + 1);
+      }
+      const commas = (n) => n.toLocaleString('en-US');
+      /** 고정폭 글꼴의 합자(<= → ≤)를 꺼서 C# 연산자가 그대로 보이게 한다 */
+      const noLig = (ctx) => { if ('textRendering' in ctx) ctx.textRendering = 'optimizeSpeed'; };
+
+      function bar(ctx, x, y, w, h, ratio, color, label) {
+        draw.rect(ctx, x, y, w, h, { fill: C.soft, stroke: C.lineStrong, width: 1.5, radius: 8 });
+        const r = CP.clamp(ratio, 0, 1);
+        if (r > 0) draw.rect(ctx, x + 3, y + 3, Math.max(0, (w - 6) * r), h - 6, { fill: color, radius: 6 });
+        if (label) draw.text(ctx, label, x + w - 12, y + h / 2, { size: 20, weight: 800, mono: true, align: 'right', color: C.fg, bg: alpha(C.elev, 0.8) });
+      }
+
+      /* ── 2. HP 바 ── */
+      {
+        const MAX = 120;
+        let hp = 75, formula = 'div';
+        const view = CP.canvas('#hpbar', (ctx, v) => {
+          noLig(ctx);
+          const x = 40, w = v.w - 80;
+          const truePct = (hp / MAX) * 100;
+          let pct, chain;
+          if (formula === 'div') {
+            const q = Math.trunc(hp / MAX);
+            pct = q * 100;
+            chain = [`hp / maxHp * 100`, `${hp} / ${MAX} * 100`, `${q} * 100`, `${pct}`];
+          } else if (formula === 'mul') {
+            pct = Math.trunc((hp * 100) / MAX);
+            chain = [`hp * 100 / maxHp`, `${hp * 100} / ${MAX}`, `${pct}`];
+          } else {
+            const ratio = Math.fround(hp / MAX);
+            pct = ratio * 100;
+            chain = [`(float)hp / maxHp`, `(float)${hp} / ${MAX}`, `${csFloat(ratio)}`, `→ ${(ratio * 100).toFixed(1)}%`];
+          }
+          draw.text(ctx, '의도한 HP 바', x, 34, { size: 18, weight: 700, color: C.muted });
+          draw.text(ctx, `maxHp = ${MAX}`, x + w, 34, { size: 16, mono: true, align: 'right', color: C.subtle });
+          bar(ctx, x, 54, w, 50, truePct / 100, alpha(C.good, 0.85), `${(Math.round(truePct * 10) / 10)}%`);
+          draw.text(ctx, '코드가 계산한 HP 바', x, 148, { size: 18, weight: 700, color: C.muted });
+          const ok = Math.abs(pct - truePct) < 1;
+          bar(ctx, x, 168, w, 50, pct / 100, ok ? alpha(C.good, 0.85) : alpha(C.bad, 0.85), formula === 'float' ? `${pct.toFixed(1)}%` : `${pct}%`);
+          // 계산 과정
+          draw.rect(ctx, x, 252, w, 100, { fill: C.elev, stroke: C.line, width: 1, radius: 10 });
+          draw.text(ctx, '계산 과정', x + 16, 274, { size: 15, weight: 700, color: C.subtle });
+          let cx = x + 16;
+          ctx.save();
+          ctx.font = CP.font(17, 600, 'mono');
+          chain.forEach((s, i) => {
+            const txt = i === 0 ? s : (s.startsWith('→') ? ` ${s}` : ` → ${s}`);
+            const wd = ctx.measureText(txt).width;
+            ctx.fillStyle = i === chain.length - 1 ? (ok ? C.good : C.bad) : (i === 0 ? C.accentInk : C.fg);
+            ctx.textBaseline = 'middle';
+            ctx.fillText(txt, cx, 314);
+            cx += wd;
+          });
+          ctx.restore();
+          if (formula === 'div' && hp > 0 && hp < MAX) draw.text(ctx, `${hp} / ${MAX}는 1보다 작으니 정수로는 0`, x + 16, 340, { size: 14, color: C.bad });
+          else if (formula === 'mul') draw.text(ctx, '곱셈을 먼저 하면 버려지는 건 소수부(최대 1%)뿐', x + 16, 340, { size: 14, color: C.muted });
+          else if (formula === 'float') draw.text(ctx, '한쪽이 float이면 나눗셈 전체가 실수 나눗셈', x + 16, 340, { size: 14, color: C.muted });
+        });
+        CP.bind('#hp-val', (val) => { hp = val; view.redraw(); });
+        CP.bind('input[name="hp-formula"]', (val) => { formula = val; view.redraw(); });
+      }
+
+      /* ── 4. 크기가 정해진 상자 ── */
+      {
+        const TYPES = {
+          byte: { bits: 8, min: 0, max: 255, name: 'level', signed: false },
+          short: { bits: 16, min: -32768, max: 32767, name: 'ammo', signed: true },
+          int: { bits: 32, min: -2147483648, max: 2147483647, name: 'score', signed: true },
+        };
+        let type = 'int', delta = 1, checkedMode = false;
+        let value = 2147483600, prev = null, lastOp = null, event = null;
+        let flash = 0;
+        const T = () => TYPES[type];
+        const span = (t) => 2 ** t.bits;
+        const toUnsigned = (v, t) => (v < 0 ? v + span(t) : v);
+        const view = CP.canvas('#box', (ctx, v) => {
+          noLig(ctx);
+          const t = T();
+          // 제목
+          draw.text(ctx, `${type} ${t.name}`, 24, 28, { size: 20, weight: 800, mono: true, color: C.accentInk });
+          draw.text(ctx, `${t.bits}비트 · ${t.bits / 8}바이트 · 칸 하나 = 비트 하나`, 24 + 150, 28, { size: 15, color: C.muted });
+          // 비트 칸
+          const bits = toUnsigned(value, t).toString(2).padStart(t.bits, '0');
+          const perRow = Math.min(16, t.bits);
+          const rows = t.bits / perRow;
+          const gap = 3, byteGap = 10;
+          const cell = Math.min(52, (v.w - 48 - (perRow - 1) * gap - (perRow / 8 - 1) * byteGap) / perRow);
+          const rowW = perRow * cell + (perRow - 1) * gap + (perRow / 8 - 1) * byteGap;
+          const x0 = (v.w - rowW) / 2;
+          for (let i = 0; i < t.bits; i++) {
+            const r = Math.floor(i / perRow), c = i % perRow;
+            const x = x0 + c * (cell + gap) + Math.floor(c / 8) * byteGap;
+            const y = 50 + r * (cell + 8);
+            const on = bits[i] === '1';
+            const isSign = t.signed && i === 0;
+            draw.rect(ctx, x, y, cell, cell, { fill: on ? alpha(isSign ? C.warn : C.accent, 0.85) : C.soft, stroke: isSign ? C.warn : C.line, width: isSign ? 2 : 1, radius: 4 });
+            draw.text(ctx, bits[i], x + cell / 2, y + cell / 2 + 1, { size: Math.min(18, cell * 0.55), weight: 700, mono: true, align: 'center', color: on ? C.bg : C.subtle });
+          }
+          const bitsBottom = 50 + rows * (cell + 8);
+          if (t.signed) draw.text(ctx, '첫 칸(주황) = 부호 비트, 1이면 음수', x0 + rowW, bitsBottom + 6, { size: 13, align: 'right', color: C.warn });
+          // 값의 원
+          const cx = 165, cy = bitsBottom + 150, R = 108;
+          const ang = (val) => -Math.PI / 2 + ((val - t.min) / span(t)) * CP.TAU;
+          ctx.save();
+          ctx.beginPath();
+          ctx.arc(cx, cy, R, 0, CP.TAU);
+          ctx.strokeStyle = alpha(C.lineStrong, 1);
+          ctx.lineWidth = 10;
+          ctx.stroke();
+          ctx.restore();
+          // 경계 (최댓값과 최솟값이 맞닿는 곳)
+          draw.line(ctx, cx, cy - R - 16, cx, cy - R + 16, { color: C.bad, width: 3 });
+          draw.text(ctx, 'Max', cx - 8, cy - R - 26, { size: 13, weight: 700, align: 'right', color: C.muted });
+          draw.text(ctx, 'Min', cx + 8, cy - R - 26, { size: 13, weight: 700, color: C.muted });
+          if (t.signed) {
+            draw.dot(ctx, cx, cy + R, 4, C.subtle);
+            draw.text(ctx, '0', cx, cy + R + 20, { size: 13, weight: 700, align: 'center', color: C.muted });
+          }
+          // 이동 화살표 (이전 값 → 현재 값, 시계 방향 = 증가)
+          if (prev !== null && lastOp && event !== 'exception') {
+            const a0 = ang(prev);
+            let a1 = ang(value);
+            const inc = lastOp === 'add';
+            if (inc && a1 < a0) a1 += CP.TAU;
+            if (!inc && a1 > a0) a1 -= CP.TAU;
+            if (Math.abs(a1 - a0) > 0.01) {
+              ctx.save();
+              ctx.beginPath();
+              ctx.arc(cx, cy, R, a0, a1, !inc);
+              ctx.strokeStyle = event === 'wrap' ? C.bad : C.accent;
+              ctx.lineWidth = 10;
+              ctx.stroke();
+              ctx.restore();
+            }
+          }
+          const a = ang(value);
+          draw.handle(ctx, cx + Math.cos(a) * R, cy + Math.sin(a) * R, { r: 11, color: event === 'wrap' ? C.bad : C.accent });
+          // 오른쪽 텍스트
+          const tx = 320;
+          draw.text(ctx, `${t.name} =`, tx, cy - 72, { size: 18, mono: true, color: C.muted });
+          draw.text(ctx, commas(value), tx, cy - 36, { size: 34, weight: 800, mono: true, color: event === 'wrap' ? C.bad : C.fg });
+          const opTxt = lastOp ? `${t.name} ${lastOp === 'add' ? '+=' : '-='} ${delta};` : `${t.name} = ${value};`;
+          draw.text(ctx, opTxt, tx, cy + 6, { size: 17, mono: true, color: C.accentInk });
+          if (event === 'wrap') {
+            draw.text(ctx, '감쌈(wraparound)! 경계를 넘어', tx, cy + 40, { size: 16, weight: 700, color: C.bad, bg: alpha(C.bad, 0.12 + 0.25 * flash) });
+            draw.text(ctx, '반대편 끝에서 이어집니다', tx, cy + 64, { size: 16, weight: 700, color: C.bad });
+          } else if (event === 'exception') {
+            draw.text(ctx, 'OverflowException 발생!', tx, cy + 40, { size: 16, weight: 700, color: C.warn, bg: alpha(C.warn, 0.12 + 0.25 * flash) });
+            draw.text(ctx, 'checked 블록은 넘침을 예외로 알립니다', tx, cy + 64, { size: 14, color: C.muted });
+          } else {
+            draw.text(ctx, '범위 안: 문제없음', tx, cy + 40, { size: 15, color: C.muted });
+          }
+          draw.text(ctx, `MinValue ${commas(t.min)}`, tx, cy + 104, { size: 14, mono: true, color: C.subtle });
+          draw.text(ctx, `MaxValue ${commas(t.max)}`, tx, cy + 126, { size: 14, mono: true, color: C.subtle });
+        });
+        const loop = CP.loop(view.el, (dt) => {
+          flash = Math.max(0, flash - dt * 1.5);
+          view.paint();
+          if (flash <= 0) loop.stop();
+        }, { autostart: false });
+        function apply(op) {
+          const t = T();
+          const raw = value + (op === 'add' ? delta : -delta);
+          prev = value;
+          lastOp = op;
+          if (raw > t.max || raw < t.min) {
+            if (checkedMode) {
+              event = 'exception';
+            } else {
+              event = 'wrap';
+              value = (((raw - t.min) % span(t)) + span(t)) % span(t) + t.min;
+            }
+            flash = 1;
+            loop.start();
+          } else {
+            event = null;
+            value = raw;
+          }
+          view.redraw();
+        }
+        function set(v) { value = v; prev = null; lastOp = null; event = null; view.redraw(); }
+        CP.$('#box-add').addEventListener('click', () => apply('add'));
+        CP.$('#box-sub').addEventListener('click', () => apply('sub'));
+        CP.$('#box-max').addEventListener('click', () => set(T().max));
+        CP.$('#box-zero').addEventListener('click', () => set(0));
+        CP.bind('input[name="box-type"]', (val) => {
+          type = val;
+          set(CP.clamp(value, T().min, T().max) === value ? value : T().max - 5);
+        });
+        CP.bind('#box-delta', (val) => { delta = val; if (lastOp) { lastOp = null; prev = null; event = null; } view.redraw(); });
+        CP.bind('#box-checked', (on) => { checkedMode = on; view.redraw(); });
+      }
+
+      /* ── 6. 나눗셈과 형변환 실험실 ── */
+      {
+        let a = 7, b = 2, x = -2.7;
+        const readout = CP.$('#lab-readout');
+        const LINE = { y: 345, x0: 40, x1: 680, lo: -5, hi: 5 };
+        const sx = (val) => CP.remap(val, LINE.lo, LINE.hi, LINE.x0, LINE.x1);
+        const handle = [{ x: sx(x), y: LINE.y }];
+        let api = null, xBind = null;
+        const view = CP.canvas('#lab', (ctx, v) => {
+          noLig(ctx);
+          // ── 위: 코인 묶기 ──
+          const n = Math.abs(a), q = Math.trunc(a / b), r = a % b;
+          draw.text(ctx, `코인 ${n}개를 ${b}개씩 묶기${a < 0 ? ' (a가 음수)' : ''}`, 24, 24, { size: 16, weight: 700, color: C.muted });
+          const R = 10, pitch = 24, gGap = 14, maxW = v.w - 48;
+          let px = 24, py = 64;
+          const groups = [];
+          for (let g = 0; g < Math.floor(n / b); g++) groups.push({ count: b, full: true });
+          if (n % b) groups.push({ count: n % b, full: false });
+          groups.forEach((grp) => {
+            const gw = grp.count * pitch + 8;
+            if (px + gw > 24 + maxW) { px = 24; py += 50; }
+            draw.rect(ctx, px, py - 18, gw, 36, { fill: grp.full ? alpha(C.accent, 0.12) : alpha(C.warn, 0.12), stroke: grp.full ? C.accent : C.warn, width: 1.5, dash: grp.full ? null : [5, 4], radius: 8 });
+            for (let k = 0; k < grp.count; k++) {
+              const cx = px + 4 + pitch / 2 + k * pitch;
+              draw.circle(ctx, cx, py, R, { fill: a < 0 ? alpha(C.bad, 0.55) : alpha(C.warn, 0.75), stroke: C.bg, width: 1.5 });
+              if (a < 0) draw.text(ctx, '−', cx, py, { size: 14, weight: 800, align: 'center', color: C.fg });
+            }
+            px += gw + gGap;
+          });
+          if (n === 0) draw.text(ctx, '코인이 없음 → 몫 0, 나머지 0', 24, py, { size: 15, color: C.subtle });
+          const ty = Math.max(py + 46, 150);
+          draw.text(ctx, `a / b = ${q}`, 24, ty, { size: 20, weight: 800, mono: true, color: C.accentInk });
+          draw.text(ctx, `(묶음 ${Math.floor(n / b)}개${a < 0 && n >= b ? ', 부호 −' : ''})`, 190, ty, { size: 14, color: C.muted });
+          draw.text(ctx, `a % b = ${noNegZero(r)}`, 380, ty, { size: 20, weight: 800, mono: true, color: C.warn });
+          draw.text(ctx, '(남은 코인)', 540, ty, { size: 14, color: C.muted });
+          draw.text(ctx, `(float)a / b = ${csFloat(a / b)}`, 24, ty + 30, { size: 16, mono: true, color: C.muted });
+          draw.line(ctx, 16, 238, v.w - 16, 238, { color: C.line, width: 1, dash: [4, 6] });
+
+          // ── 아래: 수직선 ──
+          draw.text(ctx, 'float x를 int로 바꾸는 세 가지 방법', 24, 258, { size: 16, weight: 700, color: C.muted });
+          draw.line(ctx, LINE.x0 - 10, LINE.y, LINE.x1 + 10, LINE.y, { color: C.lineStrong, width: 2 });
+          for (let k = LINE.lo; k <= LINE.hi; k++) {
+            draw.line(ctx, sx(k), LINE.y - 7, sx(k), LINE.y + 7, { color: C.lineStrong, width: 2 });
+            draw.text(ctx, String(k), sx(k), LINE.y + 22, { size: 14, mono: true, align: 'center', color: k === 0 ? C.fg : C.subtle });
+          }
+          const f = Math.fround(x);
+          const cast = noNegZero(Math.trunc(f)), floor = Math.floor(f), round = roundHalfEven(f);
+          // 각 방법마다 한 줄: x에서 결과 정수까지 가로 화살표 + 이름표
+          const marks = [
+            { val: cast, label: `(int)x → ${cast}`, hint: '0 쪽으로 버림', color: C.accentInk, y: 300, up: true },
+            { val: floor, label: `MathF.Floor → ${floor}`, hint: '항상 아래로', color: C.viz[1] || C.good, y: 398 },
+            { val: round, label: `MathF.Round → ${round}`, hint: '가장 가까운 정수', color: C.viz[2] || C.warn, y: 436 },
+          ];
+          const fx = sx(f);
+          for (const m of marks) {
+            const mx = sx(m.val);
+            draw.line(ctx, mx, LINE.y, mx, m.y, { color: alpha(m.color, 0.45), width: 1.5, dash: [3, 4] });
+            draw.line(ctx, fx, LINE.y, fx, m.y, { color: alpha(C.fg, 0.18), width: 1, dash: [2, 4] });
+            if (Math.abs(mx - fx) > 2) draw.arrow(ctx, fx, m.y, mx, m.y, { color: m.color, width: 2.5, head: 9 });
+            draw.dot(ctx, mx, m.y, 4, m.color);
+            draw.dot(ctx, mx, LINE.y, 5, m.color);
+            // 이름표는 화살표가 끝나는 쪽 바깥에 둔다
+            const goLeft = m.val < f;
+            ctx.save();
+            ctx.font = CP.font(15, 700, 'mono');
+            const lw = ctx.measureText(m.label).width;
+            ctx.restore();
+            let lx = goLeft ? mx - 10 - lw : mx + 10;
+            lx = CP.clamp(lx, 8, v.w - 8 - lw);
+            draw.text(ctx, m.label, lx, m.y, { size: 15, weight: 700, mono: true, color: m.color, bg: alpha(C.sunken, 0.85) });
+            draw.text(ctx, m.hint, lx, m.y + (m.up ? -18 : 17), { size: 12, color: C.subtle });
+          }
+          draw.handle(ctx, handle[0].x, LINE.y, { r: 10, color: C.fg, hover: api && api.hover === 0, active: api && api.dragging === 0 });
+          const right = handle[0].x < v.w - 120;
+          draw.text(ctx, `x = ${x.toFixed(1)}`, handle[0].x + (right ? 16 : -16), LINE.y - 20, { size: 14, weight: 800, mono: true, align: right ? 'left' : 'right', color: C.fg, bg: alpha(C.sunken, 0.85) });
+          readout.innerHTML =
+            `a / b            = <b>${q}</b>\n` +
+            `a % b            = <b>${noNegZero(r)}</b>\n` +
+            `(float)a / b     = <b>${csFloat(a / b)}</b>\n` +
+            `(int)x           = <b>${cast}</b>\n` +
+            `MathF.Floor(x)   = <b>${floor}</b>\n` +
+            `MathF.Round(x)   = <b>${round}</b>`;
+        });
+        api = CP.points(view, handle, {
+          constrain: (p) => {
+            p.y = LINE.y;
+            const val = Math.round(CP.clamp(CP.remap(p.x, LINE.x0, LINE.x1, LINE.lo, LINE.hi), -4.9, 4.9) * 10) / 10;
+            p.x = sx(val);
+          },
+          onChange: (p) => {
+            x = Math.round(CP.remap(p.x, LINE.x0, LINE.x1, LINE.lo, LINE.hi) * 10) / 10;
+            if (xBind) xBind.set(x);
+            view.redraw();
+          },
+        });
+        CP.bind('#lab-a', (val) => { a = val; view.redraw(); });
+        CP.bind('#lab-b', (val) => { b = val; view.redraw(); });
+        xBind = CP.bind('#lab-x', (val) => { x = val; handle[0].x = sx(val); view.redraw(); }, { format: (val) => val.toFixed(1) });
+      }
+
+      /* ── 7. 조건 분기 흐름도 ── */
+      {
+        let hp = 25, mode = 'if';
+        const ROWS = {
+          if: [
+            { cond: 'hp <= 0', test: (h) => h <= 0, out: '사망' },
+            { cond: 'hp < 30', test: (h) => h < 30, out: '위험' },
+            { cond: 'hp < 70', test: (h) => h < 70, out: '부상' },
+            { cond: 'else', test: () => true, out: '건강' },
+          ],
+          wrong: [
+            { cond: 'hp <= 0', test: (h) => h <= 0, out: '사망' },
+            { cond: 'hp < 70', test: (h) => h < 70, out: '부상' },
+            { cond: 'hp < 30', test: (h) => h < 30, out: '위험', dead: true },
+            { cond: 'else', test: () => true, out: '건강' },
+          ],
+          switch: [
+            { cond: '<= 0 =>', test: (h) => h <= 0, out: '사망' },
+            { cond: '< 30 =>', test: (h) => h < 30, out: '위험' },
+            { cond: '< 70 =>', test: (h) => h < 70, out: '부상' },
+            { cond: '_ =>', test: () => true, out: '건강' },
+          ],
+        };
+        const view = CP.canvas('#branch', (ctx, v) => {
+          noLig(ctx);
+          const rows = ROWS[mode];
+          let hit = rows.findIndex((r) => r.test(hp));
+          draw.text(ctx, `hp = ${hp}`, 30, 32, { size: 22, weight: 800, mono: true, color: C.fg });
+          draw.text(ctx, mode === 'switch' ? 'hp switch { ... }' : '위에서부터 차례로 검사', 170, 32, { size: 15, color: C.muted, mono: mode === 'switch' });
+          const bx = 40, bw = 230, bh = 54, ox = 420, ow = 180;
+          const rowY = (i) => 72 + i * 84;
+          rows.forEach((r, i) => {
+            const y = rowY(i);
+            const state = i < hit ? 'false' : i === hit ? 'true' : 'skip';
+            const col = state === 'true' ? C.good : state === 'false' ? C.subtle : alpha(C.subtle, 0.45);
+            draw.rect(ctx, bx, y, bw, bh, { fill: state === 'true' ? alpha(C.good, 0.16) : C.elev, stroke: col, width: state === 'true' ? 2.5 : 1.5, radius: 10, dash: state === 'skip' ? [5, 5] : null });
+            draw.text(ctx, r.cond, bx + 16, y + bh / 2, { size: 19, weight: 700, mono: true, color: state === 'skip' ? C.subtle : C.fg });
+            const tag = state === 'true' ? (r.cond === 'else' || r.cond === '_ =>' ? '나머지' : 'true') : state === 'false' ? 'false' : '검사 안 함';
+            draw.text(ctx, tag, bx + bw - 12, y + bh / 2, { size: 14, weight: 700, align: 'right', color: col });
+            // 다음 조건으로 (false 경로)
+            if (i < rows.length - 1) {
+              draw.arrow(ctx, bx + 40, y + bh, bx + 40, rowY(i + 1) - 2, { color: state === 'false' ? C.fg : alpha(C.subtle, 0.5), width: state === 'false' ? 2.5 : 1.5, head: 9 });
+            }
+            // 결과로 (true 경로)
+            const on = state === 'true';
+            draw.arrow(ctx, bx + bw, y + bh / 2, ox - 4, y + bh / 2, { color: on ? C.good : alpha(C.subtle, 0.35), width: on ? 3 : 1.5, head: 10, dash: on ? null : [4, 5] });
+            draw.rect(ctx, ox, y + 4, ow, bh - 8, { fill: on ? alpha(C.accent, 0.85) : C.soft, stroke: r.dead ? C.bad : on ? C.accent : C.line, width: r.dead ? 2 : 1.5, radius: 10, dash: r.dead ? [6, 4] : null });
+            draw.text(ctx, `"${r.out}"`, ox + ow / 2, y + bh / 2, { size: 19, weight: 800, align: 'center', color: on ? C.bg : C.muted });
+            if (r.dead) draw.text(ctx, '도달 불가!', ox + ow / 2, y + bh + 10, { size: 13, weight: 700, align: 'center', color: C.bad });
+          });
+          const res = rows[hit].out;
+          const wrongHere = mode === 'wrong' && hp > 0 && hp < 30;
+          draw.text(ctx, `state = "${res}"${wrongHere ? '  ← 원래는 "위험"이어야 함' : ''}`, 30, v.h - 22, { size: 17, weight: 700, mono: true, color: wrongHere ? C.bad : C.accentInk });
+        });
+        CP.bind('#br-hp', (val) => { hp = val; view.redraw(); });
+        const codes = CP.$$('.mode-code');
+        CP.bind('input[name="br-mode"]', (val) => {
+          mode = val;
+          for (const el of codes) el.hidden = el.dataset.mode !== val;
+          view.redraw();
+        });
+      }
+
+      /* ── 8. 반복문 추적기 ── */
+      {
+        const codeBox = CP.$('#tr-code'), note = CP.$('#tr-note'), count = CP.$('#tr-count'), playBtn = CP.$('#tr-play');
+        let prog = 'for', hp0 = 50, steps = [], cur = 0, acc = 0;
+
+        /** 각 프로그램을 직접 실행하며 한 단계마다 상태 스냅숏을 남긴다 */
+        function build() {
+          const out = [];
+          let lines;
+          const snap = (line, vars, iters, console, msg) => out.push({ line, vars: vars.map((x) => ({ ...x })), iters: iters.map((x) => ({ ...x })), console, note: msg });
+          if (prog === 'for') {
+            lines = [
+              'int gold = 0;',
+              'for (int wave = 1; wave <= 6; wave++)',
+              '{',
+              '    if (wave % 2 == 0) continue;',
+              '    if (wave > 4) break;',
+              '    gold += wave * 10;',
+              '}',
+              'Console.WriteLine($"gold = {gold}");',
+            ];
+            const iters = [1, 2, 3, 4, 5, 6].map((k) => ({ label: `wave ${k}`, status: 'pending', text: '' }));
+            let gold = 0, wave = 1;
+            const vars = () => [{ name: 'gold', type: 'int', value: String(gold) }, { name: 'wave', type: 'int', value: wave === null ? null : String(wave) }];
+            wave = null;
+            snap(0, vars(), iters, '', 'gold라는 int 상자를 만들고 0을 넣습니다.');
+            wave = 1;
+            snap(1, vars(), iters, '', '초기화: wave = 1. 이 부분은 맨 처음 한 번만 실행됩니다.');
+            for (;;) {
+              const ok = wave <= 6;
+              snap(1, vars(), iters, '', `조건 검사: ${wave} <= 6 → ${ok}${ok ? ', 본문으로 들어갑니다.' : ', 반복을 끝냅니다.'}`);
+              if (!ok) break;
+              const it = iters[wave - 1];
+              it.status = 'run';
+              const even = wave % 2 === 0;
+              if (even) {
+                it.status = 'continue'; it.text = 'continue';
+                snap(3, vars(), iters, '', `${wave} % 2 == 0 → true → continue: 아래 줄을 건너뛰고 바로 증가식(wave++)으로 갑니다.`);
+              } else {
+                snap(3, vars(), iters, '', `${wave} % 2 == 0 → false, 다음 줄로.`);
+                if (wave > 4) {
+                  it.status = 'break'; it.text = 'break';
+                  for (let k = wave; k < 6; k++) iters[k].status = 'never';
+                  snap(4, vars(), iters, '', `${wave} > 4 → true → break: 반복문을 즉시 빠져나갑니다. 증가식도 실행되지 않아요.`);
+                  break;
+                }
+                snap(4, vars(), iters, '', `${wave} > 4 → false, 다음 줄로.`);
+                gold += wave * 10;
+                it.status = 'done'; it.text = `+${wave * 10}`;
+                snap(5, vars(), iters, '', `gold += ${wave} * 10 → gold = ${gold}`);
+              }
+              wave++;
+              snap(1, vars(), iters, '', `증가식: wave++ → wave = ${wave}`);
+            }
+            wave = null;
+            snap(7, vars(), iters, `gold = ${gold}`, '반복문이 끝나면 wave는 사라집니다(for 안에서 만든 변수라서). gold만 남아 출력됩니다.');
+          } else if (prog === 'while' || prog === 'do') {
+            const isDo = prog === 'do';
+            lines = isDo
+              ? [`int hp = ${hp0};`, 'int turn = 0;', 'do', '{', '    hp -= 20;', '    turn++;', '} while (hp > 0);', 'Console.WriteLine($"{turn}턴, hp = {hp}");']
+              : [`int hp = ${hp0};`, 'int turn = 0;', 'while (hp > 0)', '{', '    hp -= 20;', '    turn++;', '}', 'Console.WriteLine($"{turn}턴, hp = {hp}");'];
+            let hp = hp0, turn = null;
+            const iters = [];
+            const vars = () => [{ name: 'hp', type: 'int', value: String(hp) }, { name: 'turn', type: 'int', value: turn === null ? '—' : String(turn) }];
+            snap(0, vars(), iters, '', `hp에 ${hp0}을 넣습니다. 매 턴 독 피해 20을 받습니다.`);
+            turn = 0;
+            snap(1, vars(), iters, '', 'turn = 0');
+            const condLine = isDo ? 6 : 2;
+            if (isDo) snap(2, vars(), iters, '', 'do: 조건을 보지 않고 일단 본문부터 실행합니다.');
+            for (;;) {
+              if (!isDo) {
+                const ok = hp > 0;
+                snap(condLine, vars(), iters, '', `조건 검사: ${hp} > 0 → ${ok}${ok ? ', 본문 실행.' : ', 반복 끝.'}`);
+                if (!ok) { iters.push({ label: '조건', status: 'stop', text: 'false' }); break; }
+              }
+              iters.push({ label: `${iters.length + 1}회`, status: 'run', text: '' });
+              hp -= 20;
+              snap(4, vars(), iters, '', `hp -= 20 → hp = ${hp}`);
+              turn++;
+              const it = iters[iters.length - 1];
+              it.status = 'done'; it.text = `hp ${hp}`;
+              snap(5, vars(), iters, '', `turn++ → turn = ${turn}`);
+              if (isDo) {
+                const ok = hp > 0;
+                snap(condLine, vars(), iters, '', `본문 뒤 조건 검사: ${hp} > 0 → ${ok}${ok ? ', 다시 본문으로.' : ', 반복 끝.'}`);
+                if (!ok) { iters.push({ label: '조건', status: 'stop', text: 'false' }); break; }
+              }
+            }
+            snap(7, vars(), iters, `${turn}턴, hp = ${hp}`, isDo
+              ? `do-while은 본문을 먼저 실행하므로 최소 1번은 돕니다. (${turn}회 실행)`
+              : `while은 조건을 먼저 보므로 처음부터 false면 0번 돕니다. (${turn}회 실행)`);
+          } else {
+            lines = ['int[] loot = { 5, 0, 12, 3 };', 'int sum = 0;', 'foreach (int coin in loot)', '{', '    sum += coin;', '}', 'Console.WriteLine($"sum = {sum}");'];
+            const loot = [5, 0, 12, 3];
+            let sum = null, coin = null;
+            const iters = loot.map((c, k) => ({ label: `loot[${k}]`, status: 'pending', text: String(c) }));
+            const vars = () => [
+              { name: 'loot', type: 'int[]', value: '{5,0,12,3}' },
+              { name: 'sum', type: 'int', value: sum === null ? '—' : String(sum) },
+              { name: 'coin', type: 'int', value: coin === null ? null : String(coin) },
+            ];
+            snap(0, vars(), iters, '', '배열 loot에 값 4개를 담습니다.');
+            sum = 0;
+            snap(1, vars(), iters, '', 'sum = 0');
+            loot.forEach((c, k) => {
+              coin = c;
+              iters[k].status = 'run';
+              snap(2, vars(), iters, '', `다음 원소를 꺼냅니다: loot[${k}] → coin = ${c}`);
+              sum += c;
+              iters[k].status = 'done'; iters[k].text = `+${c}`;
+              snap(4, vars(), iters, '', `sum += ${c} → sum = ${sum}`);
+            });
+            snap(2, vars(), iters, '', '더 꺼낼 원소가 없으므로 반복을 끝냅니다. 인덱스를 직접 다루지 않으니 범위 실수가 없습니다.');
+            coin = null;
+            snap(6, vars(), iters, `sum = ${sum}`, 'foreach가 끝나면 coin은 사라지고 sum이 출력됩니다.');
+          }
+          return { lines, steps: out };
+        }
+
+        const KW = /^(int|for|if|continue|break|while|do|foreach|in|var|string|float|bool|else)$/;
+        function lineHtml(src) {
+          const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+          return src.replace(/(\$?"[^"]*")|(\b\d+\b)|([A-Za-z_][\w]*)|([^\w"$]+|\$)/g, (m, str, num, word) => {
+            if (str) return `<span class="tok-s">${esc(str)}</span>`;
+            if (num) return `<span class="tok-n">${m}</span>`;
+            if (word) {
+              if (KW.test(word)) return `<span class="tok-k">${word}</span>`;
+              if (/^[A-Z]/.test(word)) return `<span class="tok-t">${word}</span>`;
+              return word;
+            }
+            return esc(m);
+          });
+        }
+
+        let program = null;
+        function renderCode() {
+          codeBox.innerHTML = program.lines.map((l, i) => `<span class="tl" data-i="${i}"><span class="tl__n">${i + 1}</span>${lineHtml(l)}</span>`).join('');
+        }
+        function update() {
+          const s = steps[cur];
+          for (const el of codeBox.querySelectorAll('.tl')) el.classList.toggle('is-cur', Number(el.dataset.i) === s.line);
+          note.textContent = s.note;
+          count.textContent = `${cur + 1} / ${steps.length}`;
+          view.redraw();
+        }
+        function reset() {
+          program = build();
+          steps = program.steps;
+          cur = 0; acc = 0;
+          renderCode();
+          update();
+        }
+
+        function varBox(ctx, x, y, w, vb, changed) {
+          const gone = vb.value === null;
+          draw.rect(ctx, x, y, w, 76, { fill: gone ? 'transparent' : C.elev, stroke: changed ? C.warn : C.line, width: changed ? 2.5 : 1.5, radius: 10, dash: gone ? [5, 5] : null });
+          draw.text(ctx, `${vb.type} ${vb.name}`, x + 12, y + 19, { size: 16, mono: true, color: C.muted });
+          draw.text(ctx, gone ? '(범위 밖)' : vb.value, x + 12, y + 52, { size: gone ? 17 : vb.value.length > 8 ? 20 : 28, weight: 800, mono: !gone, color: gone ? C.subtle : changed ? C.warn : C.fg });
+        }
+
+        const view = CP.canvas('#trace', (ctx, v) => {
+          noLig(ctx);
+          if (!steps.length) return;
+          const s = steps[cur], p = cur > 0 ? steps[cur - 1] : null;
+          draw.text(ctx, '변수 (watch)', 20, 22, { size: 16, weight: 700, color: C.subtle });
+          const n = s.vars.length, gap = 12, w = (v.w - 40 - gap * (n - 1)) / n;
+          s.vars.forEach((vb, i) => {
+            const before = p ? p.vars.find((q) => q.name === vb.name) : null;
+            const changed = !!before && before.value !== vb.value && vb.value !== null;
+            varBox(ctx, 20 + i * (w + gap), 38, w, vb, changed);
+          });
+          draw.text(ctx, '반복 회차', 20, 150, { size: 16, weight: 700, color: C.subtle });
+          const it = s.iters;
+          if (!it.length) draw.text(ctx, '아직 본문이 한 번도 실행되지 않았습니다', 20, 196, { size: 15, color: C.subtle });
+          const slots = Math.max(it.length, 6), sw = Math.min(96, (v.w - 40 - 8 * (slots - 1)) / slots);
+          it.forEach((c, i) => {
+            const x = 20 + i * (sw + 8), y = 166;
+            const map = {
+              pending: [C.soft, C.line, C.subtle],
+              run: [alpha(C.accent, 0.2), C.accent, C.fg],
+              done: [alpha(C.good, 0.18), C.good, C.good],
+              continue: [alpha(C.warn, 0.14), C.warn, C.warn],
+              break: [alpha(C.bad, 0.16), C.bad, C.bad],
+              never: ['transparent', alpha(C.subtle, 0.5), C.subtle],
+              stop: [alpha(C.bad, 0.1), C.bad, C.bad],
+            };
+            const [fill, stroke, ink] = map[c.status];
+            draw.rect(ctx, x, y, sw, 64, { fill, stroke, width: 1.5, radius: 8, dash: c.status === 'never' ? [4, 4] : null });
+            draw.text(ctx, c.label, x + sw / 2, y + 18, { size: 14, mono: true, align: 'center', color: C.muted });
+            const txt = c.status === 'never' ? '도달 안 함' : c.status === 'pending' ? (prog === 'foreach' ? c.text : '') : c.text;
+            draw.text(ctx, txt, x + sw / 2, y + 44, { size: txt.length > 6 ? 14 : 18, weight: 800, mono: c.status !== 'never', align: 'center', color: ink });
+          });
+          draw.text(ctx, '콘솔 출력', 20, 268, { size: 16, weight: 700, color: C.subtle });
+          draw.rect(ctx, 20, 284, v.w - 40, 56, { fill: C.bg, stroke: C.line, width: 1.5, radius: 8 });
+          draw.text(ctx, s.console ? `> ${s.console}` : '>', 36, 312, { size: 20, weight: 700, mono: true, color: s.console ? C.good : C.subtle });
+          const done = cur === steps.length - 1;
+          draw.text(ctx, done ? '프로그램 끝 — “처음으로”를 눌러 다시 보세요' : `다음: ${program.lines[steps[cur + 1].line].trim()}`, 20, 372, { size: 16, mono: !done, color: C.muted });
+        });
+
+        const loop = CP.loop(view.el, (dt) => {
+          acc += dt;
+          if (acc >= 0.75) {
+            acc = 0;
+            if (cur < steps.length - 1) { cur++; update(); }
+            if (cur >= steps.length - 1) { loop.stop(); playBtn.textContent = '▶ 자동 재생'; }
+          }
+        }, { autostart: false });
+        CP.$('#tr-step').addEventListener('click', () => { if (cur < steps.length - 1) { cur++; update(); } });
+        playBtn.addEventListener('click', () => {
+          if (cur >= steps.length - 1) { cur = 0; update(); }
+          loop.toggle();
+          playBtn.textContent = loop.wanted ? '❚❚ 일시정지' : '▶ 자동 재생';
+        });
+        CP.$('#tr-reset').addEventListener('click', () => { loop.stop(); playBtn.textContent = '▶ 자동 재생'; cur = 0; acc = 0; update(); });
+        CP.bind('input[name="tr-prog"]', (val) => { prog = val; loop.stop(); playBtn.textContent = '▶ 자동 재생'; reset(); });
+        CP.bind('input[name="tr-hp"]', (val) => { hp0 = Number(val); if (prog === 'while' || prog === 'do') { loop.stop(); playBtn.textContent = '▶ 자동 재생'; reset(); } });
+      }
+    })();
+  </script>
+<script>(()=>{const es=new EventSource('/__livereload');es.onmessage=()=>location.reload();es.addEventListener('build-error',(e)=>console.error('[build] '+JSON.parse(e.data)));})();</script></body>
+</html>
