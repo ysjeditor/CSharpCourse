@@ -1,0 +1,39 @@
+﻿using System;
+
+// 1. 사물함 (참조 타입: class)
+class Bag
+{
+    public string Item;
+}
+
+// 2. 종이 명함 (값 타입: struct)
+struct PlayerInfo
+{
+    public int Level;   // 값 타입 (숫자 자체)
+    public Bag MyBag;   // 참조 타입 (사물함 번호)
+}
+
+class Program
+{
+    static void Main()
+    {
+        // 원본 명함 생성
+        PlayerInfo original = new PlayerInfo();
+        original.Level = 10;
+        original.MyBag = new Bag { Item = "빨간 물약" };
+
+        // 명함 복사! (struct 복사)
+        PlayerInfo copy = original;
+
+        // 복사본 명함의 내용 수정
+        copy.Level = 99;               // 숫자(값) 수정 -> copy만 바뀜
+        copy.MyBag.Item = "빈 병";     // 사물함 안의 물건 수정 -> 둘 다 바뀜!
+
+        // 결과 출력
+        Console.WriteLine($"원본 레벨: {original.Level}");       // 10 (안 바뀜!)
+        Console.WriteLine($"복사본 레벨: {copy.Level}");         // 99
+
+        Console.WriteLine($"원본 가방: {original.MyBag.Item}");  // 빈 병 (같이 바뀜!)
+        Console.WriteLine($"복사본 가방: {copy.MyBag.Item}");    // 빈 병
+    }
+}
