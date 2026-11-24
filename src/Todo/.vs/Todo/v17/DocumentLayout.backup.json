@@ -1,37 +1,12 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "D:\\\uC724\uC131\uC9C4\uACC4\uC88C\uC81C\\CSharpCourse\\src\\Todo\\",
-  "Documents": [
-    {
-      "AbsoluteMoniker": "D:0:0:{49BEB3FF-A2AD-44D5-AA95-8E7DC5996F01}|Todo.csproj|d:\\\uC724\uC131\uC9C4\uACC4\uC88C\uC81C\\csharpcourse\\src\\todo\\ref\uC2E4\uC2B5.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{49BEB3FF-A2AD-44D5-AA95-8E7DC5996F01}|Todo.csproj|solutionrelative:ref\uC2E4\uC2B5.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    }
-  ],
+  "Documents": [],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": [
-        {
-          "DockedWidth": 200,
-          "SelectedChildIndex": 0,
-          "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "ref\uC2E4\uC2B5.cs",
-              "DocumentMoniker": "D:\\\uC724\uC131\uC9C4\uACC4\uC88C\uC81C\\CSharpCourse\\src\\Todo\\ref\uC2E4\uC2B5.cs",
-              "RelativeDocumentMoniker": "ref\uC2E4\uC2B5.cs",
-              "ToolTip": "D:\\\uC724\uC131\uC9C4\uACC4\uC88C\uC81C\\CSharpCourse\\src\\Todo\\ref\uC2E4\uC2B5.cs",
-              "RelativeToolTip": "ref\uC2E4\uC2B5.cs",
-              "ViewState": "AgIAAA0AAAAAAAAAAAAQwCcAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-11-24T06:04:56.813Z",
-              "EditorCaption": ""
-            }
-          ]
-        }
-      ]
+      "DocumentGroups": []
     }
   ]
 }
