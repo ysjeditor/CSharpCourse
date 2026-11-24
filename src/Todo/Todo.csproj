@@ -15,6 +15,9 @@
 
   <ItemGroup>
     <Compile Remove="02-1-1\02-1-1-csharp_basic.cs" />
+    <Compile Remove="FpsGame.cs" />
+    <Compile Remove="FpsGameRun.cs" />
+    <Compile Remove="FpsGame최종수정본.cs" />
     <Compile Remove="Game.cs" />
     <Compile Remove="Program.cs" />
     <Compile Remove="ref실습.cs" />
@@ -25,10 +28,12 @@
     <Compile Remove="입문웹교재03.cs" />
     <Compile Remove="클래스.cs" />
     <Compile Remove="ref.cs" />
+    <Compile Remove="클래스와객체.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <None Remove="02-1-1\02-1-1-csharp_basic.md" />
+    <None Remove="FpsGame_Project.md" />
   </ItemGroup>
 
 </Project>
