@@ -26,7 +26,7 @@ public class Class1
         //    Console.WriteLine($"평균값 : {result}");
         //}
 
-        foreach (int value in scores2) in collection)
+        foreach (int value in scores2)
         {
             {
                 Console.WriteLine($"value : {value}");
