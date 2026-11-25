@@ -1,7 +1,16 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\\uC724\uC131\uC9C4\uACC4\uC88C\uC81C\uC218\uC5C5\\CSharpCourse\\src\\Todo\\",
-  "Documents": [],
+  "WorkspaceRootPath": "D:\\\uC724\uC131\uC9C4\uAC8C\uC784\uAC1C\uBC1C\uACC4\uC88C\uC81C\\CSharpCourse\\src\\Todo\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{49BEB3FF-A2AD-44D5-AA95-8E7DC5996F01}|Todo.csproj|d:\\\uC724\uC131\uC9C4\uAC8C\uC784\uAC1C\uBC1C\uACC4\uC88C\uC81C\\csharpcourse\\src\\todo\\\uC785\uBB38\uC6F9\uAD50\uC7AC07.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{49BEB3FF-A2AD-44D5-AA95-8E7DC5996F01}|Todo.csproj|solutionrelative:\uC785\uBB38\uC6F9\uAD50\uC7AC07.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{49BEB3FF-A2AD-44D5-AA95-8E7DC5996F01}|Todo.csproj|d:\\\uC724\uC131\uC9C4\uAC8C\uC784\uAC1C\uBC1C\uACC4\uC88C\uC81C\\csharpcourse\\src\\todo\\todo.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{49BEB3FF-A2AD-44D5-AA95-8E7DC5996F01}|Todo.csproj|solutionrelative:todo.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -9,11 +18,32 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 1,
           "Children": [
             {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Todo.csproj",
+              "DocumentMoniker": "D:\\\uC724\uC131\uC9C4\uAC8C\uC784\uAC1C\uBC1C\uACC4\uC88C\uC81C\\CSharpCourse\\src\\Todo\\Todo.csproj",
+              "RelativeDocumentMoniker": "Todo.csproj",
+              "ToolTip": "D:\\\uC724\uC131\uC9C4\uAC8C\uC784\uAC1C\uBC1C\uACC4\uC88C\uC81C\\CSharpCourse\\src\\Todo\\Todo.csproj",
+              "RelativeToolTip": "Todo.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-11-25T11:32:00.207Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "\uC785\uBB38\uC6F9\uAD50\uC7AC07.cs",
+              "DocumentMoniker": "D:\\\uC724\uC131\uC9C4\uAC8C\uC784\uAC1C\uBC1C\uACC4\uC88C\uC81C\\CSharpCourse\\src\\Todo\\\uC785\uBB38\uC6F9\uAD50\uC7AC07.cs",
+              "RelativeDocumentMoniker": "\uC785\uBB38\uC6F9\uAD50\uC7AC07.cs",
+              "ToolTip": "D:\\\uC724\uC131\uC9C4\uAC8C\uC784\uAC1C\uBC1C\uACC4\uC88C\uC81C\\CSharpCourse\\src\\Todo\\\uC785\uBB38\uC6F9\uAD50\uC7AC07.cs",
+              "RelativeToolTip": "\uC785\uBB38\uC6F9\uAD50\uC7AC07.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABwAAAAmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-25T11:19:26.328Z",
+              "EditorCaption": ""
             }
           ]
         }
