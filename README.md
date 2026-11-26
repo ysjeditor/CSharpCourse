@@ -12,13 +12,13 @@
 | 날짜 | 한 일 | 작성 문서 | PR |
 |---|---|---|---|
 | 2026-11-17 | 깃을 통한 프로젝트 관리 | [TIL](./docs/TodayILearn/261117TIL.md) |
-| 2026-11-18 | 변수 | [TIL](./docs/TodayILearn/20261118프로그래밍언어란무엇인가.md) |
-| 2026-11-19 | 프로그래밍 용어 정리 | [TIL](./docs/TodayILearn/20261119내가모르는프로그래밍용어.md)
+| 2026-11-18 | 변수 | [TIL](./docs/TodayILearn/20261118프로그래밍언어란무엇인가TIL.md) |
+| 2026-11-19 | 프로그래밍 용어 정리 | [TIL](./docs/TodayILearn/20261119내가모르는프로그래밍용어TIL.md)
 | 2026-11-20 | 업그레이드 게임 만들어보기 | [TIL](./src/Day4/UpgradeLoop.cs) |
-| 2026-11-23 | Class 학습 및 AI로 콘솔게임 만들어보기 | [TIL](./docs/TodayILearn/20261123.md) |
-| 2026-11-24 | 값타입과 참조타입, ref 복습 및 실습 | [TIL](./docs/TodayILearn/20261124.md) |
+| 2026-11-23 | Class 학습 및 AI로 콘솔게임 만들어보기 | [TIL](./docs/TodayILearn/20261123TIL.md) |
+| 2026-11-24 | 값타입과 참조타입, ref 복습 및 실습 | [TIL](./docs/TodayILearn/20261124TIL.md) |
 | 2026-11-24 | Pullrequest 실습 | [FpsGame실습](./docs/게임개발개념라이브러리/게임루프&아키텍처/게임루프/FpsGame/FpsGame_Project.md) |
-| 2026-11-25 | 내가 모르는 프로그래밍 용어 | [TIL](./docs/TodayILearn/20261125내가모르는프로그래밍용어.md) |
+| 2026-11-25 | 내가 모르는 프로그래밍 용어 | [TIL](./docs/TodayILearn/20261125내가모르는프로그래밍용어TIL.md) |
 | 2026-11-25 | 배열과 foreach문 학습 | [TIL](./docs/TodayILearn/20261125TIL.md) |
 
 ## 바로가기
