@@ -1,0 +1,92 @@
+{
+  "version": 3,
+  "targets": {
+    "net10.0": {
+      "ConsoleEngine/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v10.0",
+        "compile": {
+          "bin/placeholder/ConsoleEngine.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/ConsoleEngine.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "ConsoleEngine/1.0.0": {
+      "type": "project",
+      "path": "../ConsoleEngine/ConsoleEngine.csproj",
+      "msbuildProject": "../ConsoleEngine/ConsoleEngine.csproj"
+    }
+  },
+  "projectFileDependencyGroups": {
+    "net10.0": [
+      "ConsoleEngine >= 1.0.0"
+    ]
+  },
+  "packageFolders": {
+    "C:\\Users\\Administrator\\.nuget\\packages\\": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "C:\\윤성진게임개발계좌제\\CSharpCourse\\참조용\\ConsoleEngine\\beginner\\MyGame\\MyGame.csproj",
+      "projectName": "MyGame",
+      "projectPath": "C:\\윤성진게임개발계좌제\\CSharpCourse\\참조용\\ConsoleEngine\\beginner\\MyGame\\MyGame.csproj",
+      "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
+      "outputPath": "C:\\윤성진게임개발계좌제\\CSharpCourse\\참조용\\ConsoleEngine\\beginner\\MyGame\\obj\\",
+      "projectStyle": "PackageReference",
+      "configFilePaths": [
+        "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+      ],
+      "originalTargetFrameworks": [
+        "net10.0"
+      ],
+      "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "net10.0": {
+          "targetAlias": "net10.0",
+          "projectReferences": {
+            "C:\\윤성진게임개발계좌제\\CSharpCourse\\참조용\\ConsoleEngine\\beginner\\ConsoleEngine\\ConsoleEngine.csproj": {
+              "projectPath": "C:\\윤성진게임개발계좌제\\CSharpCourse\\참조용\\ConsoleEngine\\beginner\\ConsoleEngine\\ConsoleEngine.csproj"
+            }
+          }
+        }
+      },
+      "warningProperties": {
+        "warnAsError": [
+          "NU1605"
+        ]
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "all"
+      },
+      "SdkAnalysisLevel": "9.0.300"
+    },
+    "frameworks": {
+      "net10.0": {
+        "targetAlias": "net10.0",
+        "imports": [
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48",
+          "net481"
+        ],
+        "assetTargetFallback": true,
+        "warn": true,
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.315/PortableRuntimeIdentifierGraph.json"
+      }
+    }
+  }
+}

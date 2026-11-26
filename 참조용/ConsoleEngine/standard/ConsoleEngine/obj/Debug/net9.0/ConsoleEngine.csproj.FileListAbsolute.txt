@@ -1,0 +1,12 @@
+C:\윤성진게임개발계좌제\CSharpCourse\참조용\ConsoleEngine\standard\ConsoleEngine\bin\Debug\net9.0\ConsoleEngine.deps.json
+C:\윤성진게임개발계좌제\CSharpCourse\참조용\ConsoleEngine\standard\ConsoleEngine\bin\Debug\net9.0\ConsoleEngine.dll
+C:\윤성진게임개발계좌제\CSharpCourse\참조용\ConsoleEngine\standard\ConsoleEngine\bin\Debug\net9.0\ConsoleEngine.pdb
+C:\윤성진게임개발계좌제\CSharpCourse\참조용\ConsoleEngine\standard\ConsoleEngine\obj\Debug\net9.0\ConsoleEngine.GeneratedMSBuildEditorConfig.editorconfig
+C:\윤성진게임개발계좌제\CSharpCourse\참조용\ConsoleEngine\standard\ConsoleEngine\obj\Debug\net9.0\ConsoleEngine.AssemblyInfoInputs.cache
+C:\윤성진게임개발계좌제\CSharpCourse\참조용\ConsoleEngine\standard\ConsoleEngine\obj\Debug\net9.0\ConsoleEngine.AssemblyInfo.cs
+C:\윤성진게임개발계좌제\CSharpCourse\참조용\ConsoleEngine\standard\ConsoleEngine\obj\Debug\net9.0\ConsoleEngine.csproj.CoreCompileInputs.cache
+C:\윤성진게임개발계좌제\CSharpCourse\참조용\ConsoleEngine\standard\ConsoleEngine\obj\Debug\net9.0\ConsoleEngine.sourcelink.json
+C:\윤성진게임개발계좌제\CSharpCourse\참조용\ConsoleEngine\standard\ConsoleEngine\obj\Debug\net9.0\ConsoleEngine.dll
+C:\윤성진게임개발계좌제\CSharpCourse\참조용\ConsoleEngine\standard\ConsoleEngine\obj\Debug\net9.0\refint\ConsoleEngine.dll
+C:\윤성진게임개발계좌제\CSharpCourse\참조용\ConsoleEngine\standard\ConsoleEngine\obj\Debug\net9.0\ConsoleEngine.pdb
+C:\윤성진게임개발계좌제\CSharpCourse\참조용\ConsoleEngine\standard\ConsoleEngine\obj\Debug\net9.0\ref\ConsoleEngine.dll

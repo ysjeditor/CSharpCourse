@@ -1,0 +1,173 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\\uC724\uC131\uC9C4\uAC8C\uC784\uAC1C\uBC1C\uACC4\uC88C\uC81C\\CSharpCourse\\\uCC38\uC870\uC6A9\\ConsoleEngine\\standard\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{BEB6E50F-2830-4F45-A04C-E3E85E191C7F}|ConsoleEngine\\ConsoleEngine.csproj|c:\\\uC724\uC131\uC9C4\uAC8C\uC784\uAC1C\uBC1C\uACC4\uC88C\uC81C\\csharpcourse\\\uCC38\uC870\uC6A9\\consoleengine\\standard\\consoleengine\\gamebase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BEB6E50F-2830-4F45-A04C-E3E85E191C7F}|ConsoleEngine\\ConsoleEngine.csproj|solutionrelative:consoleengine\\gamebase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BEB6E50F-2830-4F45-A04C-E3E85E191C7F}|ConsoleEngine\\ConsoleEngine.csproj|c:\\\uC724\uC131\uC9C4\uAC8C\uC784\uAC1C\uBC1C\uACC4\uC88C\uC81C\\csharpcourse\\\uCC38\uC870\uC6A9\\consoleengine\\standard\\consoleengine\\screen.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BEB6E50F-2830-4F45-A04C-E3E85E191C7F}|ConsoleEngine\\ConsoleEngine.csproj|solutionrelative:consoleengine\\screen.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5874E9B1-63A0-472C-9A05-6D16190C7D2F}|DodgeGame\\DodgeGame.csproj|c:\\\uC724\uC131\uC9C4\uAC8C\uC784\uAC1C\uBC1C\uACC4\uC88C\uC81C\\csharpcourse\\\uCC38\uC870\uC6A9\\consoleengine\\standard\\dodgegame\\dodgegame.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5874E9B1-63A0-472C-9A05-6D16190C7D2F}|DodgeGame\\DodgeGame.csproj|solutionrelative:dodgegame\\dodgegame.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5874E9B1-63A0-472C-9A05-6D16190C7D2F}|DodgeGame\\DodgeGame.csproj|c:\\\uC724\uC131\uC9C4\uAC8C\uC784\uAC1C\uBC1C\uACC4\uC88C\uC81C\\csharpcourse\\\uCC38\uC870\uC6A9\\consoleengine\\standard\\dodgegame\\dodgegame.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{5874E9B1-63A0-472C-9A05-6D16190C7D2F}|DodgeGame\\DodgeGame.csproj|solutionrelative:dodgegame\\dodgegame.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5874E9B1-63A0-472C-9A05-6D16190C7D2F}|DodgeGame\\DodgeGame.csproj|c:\\\uC724\uC131\uC9C4\uAC8C\uC784\uAC1C\uBC1C\uACC4\uC88C\uC81C\\csharpcourse\\\uCC38\uC870\uC6A9\\consoleengine\\standard\\dodgegame\\rock.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5874E9B1-63A0-472C-9A05-6D16190C7D2F}|DodgeGame\\DodgeGame.csproj|solutionrelative:dodgegame\\rock.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{509777C3-5255-4480-BB15-70EC715D17DA}|MyGame\\MyGame.csproj|c:\\\uC724\uC131\uC9C4\uAC8C\uC784\uAC1C\uBC1C\uACC4\uC88C\uC81C\\csharpcourse\\\uCC38\uC870\uC6A9\\consoleengine\\standard\\mygame\\mygame.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{509777C3-5255-4480-BB15-70EC715D17DA}|MyGame\\MyGame.csproj|solutionrelative:mygame\\mygame.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BEB6E50F-2830-4F45-A04C-E3E85E191C7F}|ConsoleEngine\\ConsoleEngine.csproj|c:\\\uC724\uC131\uC9C4\uAC8C\uC784\uAC1C\uBC1C\uACC4\uC88C\uC81C\\csharpcourse\\\uCC38\uC870\uC6A9\\consoleengine\\standard\\consoleengine\\consoleengine.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{BEB6E50F-2830-4F45-A04C-E3E85E191C7F}|ConsoleEngine\\ConsoleEngine.csproj|solutionrelative:consoleengine\\consoleengine.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5874E9B1-63A0-472C-9A05-6D16190C7D2F}|DodgeGame\\DodgeGame.csproj|c:\\\uC724\uC131\uC9C4\uAC8C\uC784\uAC1C\uBC1C\uACC4\uC88C\uC81C\\csharpcourse\\\uCC38\uC870\uC6A9\\consoleengine\\standard\\dodgegame\\gamestate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5874E9B1-63A0-472C-9A05-6D16190C7D2F}|DodgeGame\\DodgeGame.csproj|solutionrelative:dodgegame\\gamestate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5874E9B1-63A0-472C-9A05-6D16190C7D2F}|DodgeGame\\DodgeGame.csproj|c:\\\uC724\uC131\uC9C4\uAC8C\uC784\uAC1C\uBC1C\uACC4\uC88C\uC81C\\csharpcourse\\\uCC38\uC870\uC6A9\\consoleengine\\standard\\dodgegame\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5874E9B1-63A0-472C-9A05-6D16190C7D2F}|DodgeGame\\DodgeGame.csproj|solutionrelative:dodgegame\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 8,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "MyGame",
+              "DocumentMoniker": "C:\\\uC724\uC131\uC9C4\uAC8C\uC784\uAC1C\uBC1C\uACC4\uC88C\uC81C\\CSharpCourse\\\uCC38\uC870\uC6A9\\ConsoleEngine\\standard\\MyGame\\MyGame.csproj",
+              "RelativeDocumentMoniker": "MyGame\\MyGame.csproj",
+              "ToolTip": "C:\\\uC724\uC131\uC9C4\uAC8C\uC784\uAC1C\uBC1C\uACC4\uC88C\uC81C\\CSharpCourse\\\uCC38\uC870\uC6A9\\ConsoleEngine\\standard\\MyGame\\MyGame.csproj",
+              "RelativeToolTip": "MyGame\\MyGame.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAADwvwgAAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-11-25T09:40:51.745Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "ConsoleEngine",
+              "DocumentMoniker": "C:\\\uC724\uC131\uC9C4\uAC8C\uC784\uAC1C\uBC1C\uACC4\uC88C\uC81C\\CSharpCourse\\\uCC38\uC870\uC6A9\\ConsoleEngine\\standard\\ConsoleEngine\\ConsoleEngine.csproj",
+              "RelativeDocumentMoniker": "ConsoleEngine\\ConsoleEngine.csproj",
+              "ToolTip": "C:\\\uC724\uC131\uC9C4\uAC8C\uC784\uAC1C\uBC1C\uACC4\uC88C\uC81C\\CSharpCourse\\\uCC38\uC870\uC6A9\\ConsoleEngine\\standard\\ConsoleEngine\\ConsoleEngine.csproj",
+              "RelativeToolTip": "ConsoleEngine\\ConsoleEngine.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAADwvwMAAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-11-25T09:40:39.4Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "DodgeGame",
+              "DocumentMoniker": "C:\\\uC724\uC131\uC9C4\uAC8C\uC784\uAC1C\uBC1C\uACC4\uC88C\uC81C\\CSharpCourse\\\uCC38\uC870\uC6A9\\ConsoleEngine\\standard\\DodgeGame\\DodgeGame.csproj",
+              "RelativeDocumentMoniker": "DodgeGame\\DodgeGame.csproj",
+              "ToolTip": "C:\\\uC724\uC131\uC9C4\uAC8C\uC784\uAC1C\uBC1C\uACC4\uC88C\uC81C\\CSharpCourse\\\uCC38\uC870\uC6A9\\ConsoleEngine\\standard\\DodgeGame\\DodgeGame.csproj",
+              "RelativeToolTip": "DodgeGame\\DodgeGame.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAADwvw4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-11-25T09:40:21.432Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Rock.cs",
+              "DocumentMoniker": "C:\\\uC724\uC131\uC9C4\uAC8C\uC784\uAC1C\uBC1C\uACC4\uC88C\uC81C\\CSharpCourse\\\uCC38\uC870\uC6A9\\ConsoleEngine\\standard\\DodgeGame\\Rock.cs",
+              "RelativeDocumentMoniker": "DodgeGame\\Rock.cs",
+              "ToolTip": "C:\\\uC724\uC131\uC9C4\uAC8C\uC784\uAC1C\uBC1C\uACC4\uC88C\uC81C\\CSharpCourse\\\uCC38\uC870\uC6A9\\ConsoleEngine\\standard\\DodgeGame\\Rock.cs",
+              "RelativeToolTip": "DodgeGame\\Rock.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAADwvwAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-25T09:36:14.211Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\\uC724\uC131\uC9C4\uAC8C\uC784\uAC1C\uBC1C\uACC4\uC88C\uC81C\\CSharpCourse\\\uCC38\uC870\uC6A9\\ConsoleEngine\\standard\\DodgeGame\\Program.cs",
+              "RelativeDocumentMoniker": "DodgeGame\\Program.cs",
+              "ToolTip": "C:\\\uC724\uC131\uC9C4\uAC8C\uC784\uAC1C\uBC1C\uACC4\uC88C\uC81C\\CSharpCourse\\\uCC38\uC870\uC6A9\\ConsoleEngine\\standard\\DodgeGame\\Program.cs",
+              "RelativeToolTip": "DodgeGame\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-25T09:36:11.227Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "GameState.cs",
+              "DocumentMoniker": "C:\\\uC724\uC131\uC9C4\uAC8C\uC784\uAC1C\uBC1C\uACC4\uC88C\uC81C\\CSharpCourse\\\uCC38\uC870\uC6A9\\ConsoleEngine\\standard\\DodgeGame\\GameState.cs",
+              "RelativeDocumentMoniker": "DodgeGame\\GameState.cs",
+              "ToolTip": "C:\\\uC724\uC131\uC9C4\uAC8C\uC784\uAC1C\uBC1C\uACC4\uC88C\uC81C\\CSharpCourse\\\uCC38\uC870\uC6A9\\ConsoleEngine\\standard\\DodgeGame\\GameState.cs",
+              "RelativeToolTip": "DodgeGame\\GameState.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-25T09:36:05.315Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Screen.cs",
+              "DocumentMoniker": "C:\\\uC724\uC131\uC9C4\uAC8C\uC784\uAC1C\uBC1C\uACC4\uC88C\uC81C\\CSharpCourse\\\uCC38\uC870\uC6A9\\ConsoleEngine\\standard\\ConsoleEngine\\Screen.cs",
+              "RelativeDocumentMoniker": "ConsoleEngine\\Screen.cs",
+              "ToolTip": "C:\\\uC724\uC131\uC9C4\uAC8C\uC784\uAC1C\uBC1C\uACC4\uC88C\uC81C\\CSharpCourse\\\uCC38\uC870\uC6A9\\ConsoleEngine\\standard\\ConsoleEngine\\Screen.cs",
+              "RelativeToolTip": "ConsoleEngine\\Screen.cs",
+              "ViewState": "AgIAAB0AAAAAAAAAAAAUwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-25T09:35:52.755Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "DodgeGame.cs",
+              "DocumentMoniker": "C:\\\uC724\uC131\uC9C4\uAC8C\uC784\uAC1C\uBC1C\uACC4\uC88C\uC81C\\CSharpCourse\\\uCC38\uC870\uC6A9\\ConsoleEngine\\standard\\DodgeGame\\DodgeGame.cs",
+              "RelativeDocumentMoniker": "DodgeGame\\DodgeGame.cs",
+              "ToolTip": "C:\\\uC724\uC131\uC9C4\uAC8C\uC784\uAC1C\uBC1C\uACC4\uC88C\uC81C\\CSharpCourse\\\uCC38\uC870\uC6A9\\ConsoleEngine\\standard\\DodgeGame\\DodgeGame.cs",
+              "RelativeToolTip": "DodgeGame\\DodgeGame.cs",
+              "ViewState": "AgIAABUAAAAAAAAAAAAIwCgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-25T09:32:15.072Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "GameBase.cs",
+              "DocumentMoniker": "C:\\\uC724\uC131\uC9C4\uAC8C\uC784\uAC1C\uBC1C\uACC4\uC88C\uC81C\\CSharpCourse\\\uCC38\uC870\uC6A9\\ConsoleEngine\\standard\\ConsoleEngine\\GameBase.cs",
+              "RelativeDocumentMoniker": "ConsoleEngine\\GameBase.cs",
+              "ToolTip": "C:\\\uC724\uC131\uC9C4\uAC8C\uC784\uAC1C\uBC1C\uACC4\uC88C\uC81C\\CSharpCourse\\\uCC38\uC870\uC6A9\\ConsoleEngine\\standard\\ConsoleEngine\\GameBase.cs",
+              "RelativeToolTip": "ConsoleEngine\\GameBase.cs",
+              "ViewState": "AgIAACEAAAAAAAAAAAAIwDAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-25T09:23:06.996Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

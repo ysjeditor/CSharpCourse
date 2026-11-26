@@ -1,0 +1,71 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\\uC724\uC131\uC9C4\uAC8C\uC784\uAC1C\uBC1C\uACC4\uC88C\uC81C\\CSharpCourse\\\uCC38\uC870\uC6A9\\ConsoleEngine\\beginner\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{15BBC394-7B6F-4268-8B3E-3C909F736781}|DodgeGame\\DodgeGame.csproj|c:\\\uC724\uC131\uC9C4\uAC8C\uC784\uAC1C\uBC1C\uACC4\uC88C\uC81C\\csharpcourse\\\uCC38\uC870\uC6A9\\consoleengine\\beginner\\dodgegame\\dodgegame.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{15BBC394-7B6F-4268-8B3E-3C909F736781}|DodgeGame\\DodgeGame.csproj|solutionrelative:dodgegame\\dodgegame.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{15BBC394-7B6F-4268-8B3E-3C909F736781}|DodgeGame\\DodgeGame.csproj|c:\\\uC724\uC131\uC9C4\uAC8C\uC784\uAC1C\uBC1C\uACC4\uC88C\uC81C\\csharpcourse\\\uCC38\uC870\uC6A9\\consoleengine\\beginner\\dodgegame\\dodgegame.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{15BBC394-7B6F-4268-8B3E-3C909F736781}|DodgeGame\\DodgeGame.csproj|solutionrelative:dodgegame\\dodgegame.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E04E9666-F150-4782-926B-C440E1620769}|ConsoleEngine\\ConsoleEngine.csproj|c:\\\uC724\uC131\uC9C4\uAC8C\uC784\uAC1C\uBC1C\uACC4\uC88C\uC81C\\csharpcourse\\\uCC38\uC870\uC6A9\\consoleengine\\beginner\\consoleengine\\consoleengine.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{E04E9666-F150-4782-926B-C440E1620769}|ConsoleEngine\\ConsoleEngine.csproj|solutionrelative:consoleengine\\consoleengine.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "DodgeGame.cs",
+              "DocumentMoniker": "C:\\\uC724\uC131\uC9C4\uAC8C\uC784\uAC1C\uBC1C\uACC4\uC88C\uC81C\\CSharpCourse\\\uCC38\uC870\uC6A9\\ConsoleEngine\\beginner\\DodgeGame\\DodgeGame.cs",
+              "RelativeDocumentMoniker": "DodgeGame\\DodgeGame.cs",
+              "ToolTip": "C:\\\uC724\uC131\uC9C4\uAC8C\uC784\uAC1C\uBC1C\uACC4\uC88C\uC81C\\CSharpCourse\\\uCC38\uC870\uC6A9\\ConsoleEngine\\beginner\\DodgeGame\\DodgeGame.cs",
+              "RelativeToolTip": "DodgeGame\\DodgeGame.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAADwvwoAAAA6AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-25T08:33:03.336Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "DodgeGame",
+              "DocumentMoniker": "C:\\\uC724\uC131\uC9C4\uAC8C\uC784\uAC1C\uBC1C\uACC4\uC88C\uC81C\\CSharpCourse\\\uCC38\uC870\uC6A9\\ConsoleEngine\\beginner\\DodgeGame\\DodgeGame.csproj",
+              "RelativeDocumentMoniker": "DodgeGame\\DodgeGame.csproj",
+              "ToolTip": "C:\\\uC724\uC131\uC9C4\uAC8C\uC784\uAC1C\uBC1C\uACC4\uC88C\uC81C\\CSharpCourse\\\uCC38\uC870\uC6A9\\ConsoleEngine\\beginner\\DodgeGame\\DodgeGame.csproj",
+              "RelativeToolTip": "DodgeGame\\DodgeGame.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAADwvwAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-11-25T08:33:02.402Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ConsoleEngine",
+              "DocumentMoniker": "C:\\\uC724\uC131\uC9C4\uAC8C\uC784\uAC1C\uBC1C\uACC4\uC88C\uC81C\\CSharpCourse\\\uCC38\uC870\uC6A9\\ConsoleEngine\\beginner\\ConsoleEngine\\ConsoleEngine.csproj",
+              "RelativeDocumentMoniker": "ConsoleEngine\\ConsoleEngine.csproj",
+              "ToolTip": "C:\\\uC724\uC131\uC9C4\uAC8C\uC784\uAC1C\uBC1C\uACC4\uC88C\uC81C\\CSharpCourse\\\uCC38\uC870\uC6A9\\ConsoleEngine\\beginner\\ConsoleEngine\\ConsoleEngine.csproj",
+              "RelativeToolTip": "ConsoleEngine\\ConsoleEngine.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAADwvwgAAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-11-25T08:29:26.825Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
