@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>우주 슈팅 게임 - OOP 설계 실습</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background-color: #0b0e17;
+    color: #e2e8f0;
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+  }
+  .header {
+    text-align: center;
+    margin-bottom: 16px;
+  }
+  .header h1 {
+    font-size: 24px;
+    color: #38bdf8;
+    margin-bottom: 6px;
+  }
+  .header p {
+    font-size: 13px;
+    color: #94a3b8;
+  }
+  .main-container {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+  }
+  .canvas-wrapper {
+    position: relative;
+    border: 2px solid #334155;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+    background: #050811;
+  }
+  canvas {
+    display: block;
+  }
+  .overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(11, 14, 23, 0.85);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+  }
+  .overlay.hidden { display: none; }
+  .overlay h2 { font-size: 28px; color: #f8fafc; margin-bottom: 10px; }
+  .overlay p { font-size: 14px; color: #cbd5e1; margin-bottom: 20px; line-height: 1.5; }
+  .btn {
+    background: #38bdf8;
+    color: #0f172a;
+    border: none;
+    padding: 12px 28px;
+    font-size: 16px;
+    font-weight: 700;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+  }
+  .btn:hover { background: #7dd3fc; transform: translateY(-1px); }
+  .hud {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 16px;
+    background: #1e293b;
+    border-bottom: 1px solid #334155;
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .hud span b { color: #38bdf8; }
+  .sidebar {
+    width: 340px;
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 10px;
+    padding: 16px;
+    font-size: 13px;
+  }
+  .sidebar h3 {
+    font-size: 15px;
+    color: #f8fafc;
+    margin-bottom: 10px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #334155;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    padding: 6px 8px;
+    background: #0f172a;
+    border-radius: 6px;
+  }
+  .badge-group { display: flex; gap: 4px; flex-wrap: wrap; justify-content: flex-end; }
+  .badge {
+    font-size: 10px;
+    padding: 2px 5px;
+    border-radius: 4px;
+    font-weight: 600;
+  }
+  .b-dmg { background: #7f1d1d; color: #fecaca; }
+  .b-sht { background: #14532d; color: #bbf7d0; }
+  .b-pck { background: #78350f; color: #fde68a; }
+  .b-val { background: #312e81; color: #c7d2fe; }
+  .code-preview {
+    margin-top: 12px;
+    background: #090d16;
+    padding: 10px;
+    border-radius: 6px;
+    font-family: Consolas, monospace;
+    font-size: 11px;
+    color: #94a3b8;
+    line-height: 1.45;
+    white-space: pre-wrap;
+    border: 1px solid #1e293b;
+  }
+  .controls-tip {
+    margin-top: 12px;
+    font-size: 12px;
+    color: #cbd5e1;
+    background: #0f172a;
+    padding: 10px;
+    border-radius: 6px;
+    line-height: 1.5;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>🚀 우주 슈팅 게임 (OOP 설계 적용판)</h1>
+  <p>설계 시트의 공통 부모(Entity), 갈래(Enemy), 값 변형, 인터페이스(IDamageable, IShooter, IPickup) 구조를 그대로 구현했습니다.</p>
+</div>
+
+<div class="main-container">
+  <div class="canvas-wrapper">
+    <div class="hud">
+      <span>HP: <b id="hud-hp">100</b></span>
+      <span>무기 Lv: <b id="hud-weapon">1</b></span>
+      <span>점수: <b id="hud-score">0</b></span>
+    </div>
+    <canvas id="gameCanvas" width="480" height="620"></canvas>
+    <div id="overlay" class="overlay">
+      <h2 id="overlay-title">우주 슈팅 디펜스</h2>
+      <p id="overlay-desc">
+        방향키 / WASD : 기체 이동<br>
+        Space : 레이저 발사 (자동 연사 가능)<br>
+        운석은 피하고, 적기와 포탑을 격추하며 파워업을 획득하세요!
+      </p>
+      <button class="btn" id="start-btn">게임 시작</button>
+    </div>
+  </div>
+
+  <div class="sidebar">
+    <h3>📐 적용된 클래스 & 인터페이스 구조</h3>
+    <div class="legend-item">
+      <span>🚀 <b>플레이어 기체</b> (Entity)</span>
+      <div class="badge-group">
+        <span class="badge b-dmg">IDamageable</span>
+        <span class="badge b-sht">IShooter</span>
+      </div>
+    </div>
+    <div class="legend-item">
+      <span>👾 <b>소형 / 중형 적기</b> (Enemy)</span>
+      <div class="badge-group">
+        <span class="badge b-val">값만 다름</span>
+        <span class="badge b-dmg">IDamageable</span>
+        <span class="badge b-sht">IShooter</span>
+      </div>
+    </div>
+    <div class="legend-item">
+      <span>🗼 <b>레이저 포탑</b> (Enemy 자식)</span>
+      <div class="badge-group">
+        <span class="badge b-dmg">IDamageable</span>
+        <span class="badge b-sht">IShooter</span>
+      </div>
+    </div>
+    <div class="legend-item">
+      <span>☄️ <b>운석</b> (Entity)</span>
+      <div class="badge-group">
+        <span class="badge b-dmg">IDamageable</span>
+      </div>
+    </div>
+    <div class="legend-item">
+      <span>⚡ <b>파워업</b> (Entity)</span>
+      <div class="badge-group">
+        <span class="badge b-pck">IPickup</span>
+      </div>
+    </div>
+
+    <div class="code-preview">abstract class Entity { update(); render(); }
+class Enemy extends Entity { /* IDamageable, IShooter */ }
+class LaserTurret extends Enemy { /* 조준 사격 행동 */ }
+class PlayerShip extends Entity { /* IDamageable, IShooter */ }
+class Meteor extends Entity { /* IDamageable (사격 불가) */ }
+class PowerUp extends Entity { /* IPickup (피격 불가) */ }
+// 값만 다름: new Enemy({ hp: 20, speed: 3 }) vs ({ hp: 60, speed: 1.5 })</div>
+
+    <div class="controls-tip">
+      <b>💡 설계 포인트 확인하기</b><br>
+      • <b>운석</b>은 사격하지 않고 체력만 가집니다(IDamageable).<br>
+      • <b>파워업</b>은 총알에 맞지 않고 플레이어가 닿아야 획득됩니다(IPickup).<br>
+      • <b>소형/중형 적기</b>는 같은 Enemy 클래스에 숫자 값만 다릅니다.<br>
+      • <b>레이저 포탑</b>은 Enemy를 상속받아 플레이어를 향해 조준 사격합니다.
+    </div>
+  </div>
+</div>
+
+<script>
+// =========================================================
+// 1. 인터페이스 규약 (능력 표)
+// =========================================================
+const Interfaces = {
+  IDamageable: ['takeDamage'],
+  IShooter: ['shoot'],
+  IPickup: ['onPickup']
+};
+
+function implementInterfaces(targetClass, ...interfaceNames) {
+  targetClass.prototype._interfaces = new Set(interfaceNames);
+  for (const name of interfaceNames) {
+    for (const method of Interfaces[name]) {
+      if (typeof targetClass.prototype[method] !== 'function') {
+        throw new Error(`${targetClass.name}는 ${name}의 ${method}()를 구현해야 합니다.`);
+      }
+    }
+  }
+}
+
+function hasCapability(obj, interfaceName) {
+  return obj && obj._interfaces && obj._interfaces.has(interfaceName);
+}
+
+// =========================================================
+// 2. 공통 부모: abstract class Entity
+// =========================================================
+class Entity {
+  constructor(x, y, radius, vx = 0, vy = 0) {
+    if (new.target === Entity) {
+      throw new Error("추상 클래스 Entity는 직접 인스턴스화할 수 없습니다.");
+    }
+    this.x = x;
+    this.y = y;
+    this.radius = radius;
+    this.vx = vx;
+    this.vy = vy;
+    this.alive = true;
+  }
+
+  update(dt, game) {
+    this.x += this.vx * dt;
+    this.y += this.vy * dt;
+  }
+
+  render(ctx) {
+    throw new Error("자식 클래스에서 render()를 구현해야 합니다.");
+  }
+
+  isOutOfBounds(width, height) {
+    return this.x < -60 || this.x > width + 60 || this.y < -60 || this.y > height + 60;
+  }
+}
+
+// =========================================================
+// 3. 투사체 (독립 Entity)
+// =========================================================
+class Bullet extends Entity {
+  constructor(x, y, vx, vy, damage, isPlayerBullet, color) {
+    super(x, y, 4, vx, vy);
+    this.damage = damage;
+    this.isPlayerBullet = isPlayerBullet;
+    this.color = color;
+  }
+
+  render(ctx) {
+    ctx.save();
+    ctx.fillStyle = this.color;
+    ctx.shadowBlur = 8;
+    ctx.shadowColor = this.color;
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+  }
+}
+
+// =========================================================
+// 4. 갈래 1: Enemy (IDamageable, IShooter)
+//    - 소형 적기와 중형 적기는 같은 클래스에 '값만 다름'으로 생성
+// =========================================================
+class Enemy extends Entity {
+  constructor(x, y, config) {
+    super(x, y, config.radius, config.vx || 0, config.vy);
+    this.name = config.name;
+    this.hp = config.hp;
+    this.maxHp = config.hp;
+    this.scoreValue = config.score;
+    this.color = config.color;
+    this.fireInterval = config.fireInterval;
+    this.fireTimer = Math.random() * config.fireInterval;
+  }
+
+  update(dt, game) {
+    super.update(dt, game);
+    this.fireTimer += dt;
+    if (this.fireTimer >= this.fireInterval) {
+      this.fireTimer = 0;
+      this.shoot(game);
+    }
+  }
+
+  takeDamage(amount, game) {
+    this.hp -= amount;
+    if (this.hp <= 0 && this.alive) {
+      this.alive = false;
+      game.addScore(this.scoreValue);
+      game.spawnExplosion(this.x, this.y, this.color);
+      if (Math.random() < 0.25) {
+        game.entities.push(new PowerUp(this.x, this.y));
+      }
+    }
+  }
+
+  shoot(game) {
+    game.entities.push(new Bullet(this.x, this.y + this.radius, 0, 260, 15, false, '#f87171'));
+  }
+
+  render(ctx) {
+    ctx.save();
+    ctx.translate(this.x, this.y);
+    ctx.fillStyle = this.color;
+    ctx.beginPath();
+    ctx.moveTo(0, this.radius);
+    ctx.lineTo(-this.radius, -this.radius * 0.8);
+    ctx.lineTo(this.radius, -this.radius * 0.8);
+    ctx.closePath();
+    ctx.fill();
+
+    // 체력바
+    if (this.hp < this.maxHp) {
+      const w = this.radius * 2;
+      ctx.fillStyle = '#334155';
+      ctx.fillRect(-this.radius, -this.radius - 8, w, 4);
+      ctx.fillStyle = '#ef4444';
+      ctx.fillRect(-this.radius, -this.radius - 8, w * (this.hp / this.maxHp), 4);
+    }
+    ctx.restore();
+  }
+}
+implementInterfaces(Enemy, 'IDamageable', 'IShooter');
+
+// =========================================================
+// 5. Enemy의 자식: LaserTurret (행동이 다름 -> 조준 사격 오버라이드)
+// =========================================================
+class LaserTurret extends Enemy {
+  constructor(x, y) {
+    super(x, y, {
+      name: '레이저 포탑',
+      radius: 18,
+      vy: 65,
+      hp: 45,
+      score: 250,
+      color: '#a855f7',
+      fireInterval: 1.5
+    });
+    this.angle = Math.PI / 2;
+  }
+
+  update(dt, game) {
+    if (game.player && game.player.alive) {
+      this.angle = Math.atan2(game.player.y - this.y, game.player.x - this.x);
+    }
+    super.update(dt, game);
+  }
+
+  // IShooter 행동 오버라이드: 플레이어 방향으로 조준 발사
+  shoot(game) {
+    const speed = 300;
+    const vx = Math.cos(this.angle) * speed;
+    const vy = Math.sin(this.angle) * speed;
+    game.entities.push(new Bullet(this.x, this.y, vx, vy, 20, false, '#e879f9'));
+  }
+
+  render(ctx) {
+    ctx.save();
+    ctx.translate(this.x, this.y);
+    // 포탑 본체
+    ctx.fillStyle = '#581c87';
+    ctx.beginPath();
+    ctx.arc(0, 0, this.radius, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.strokeStyle = '#c084fc';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    // 회전 포신
+    ctx.rotate(this.angle);
+    ctx.fillStyle = '#e879f9';
+    ctx.fillRect(0, -4, this.radius + 6, 8);
+    ctx.restore();
+  }
+}
+
+// =========================================================
+// 6. 플레이어 기체: Entity 상속 + IDamageable, IShooter
+// =========================================================
+class PlayerShip extends Entity {
+  constructor(x, y) {
+    super(x, y, 16, 0, 0);
+    this.hp = 100;
+    this.maxHp = 100;
+    this.speed = 320;
+    this.weaponLevel = 1;
+    this.fireCooldown = 0;
+  }
+
+  update(dt, game) {
+    const keys = game.keys;
+    let dx = 0, dy = 0;
+    if (keys['ArrowLeft'] || keys['KeyA']) dx -= 1;
+    if (keys['ArrowRight'] || keys['KeyD']) dx += 1;
+    if (keys['ArrowUp'] || keys['KeyW']) dy -= 1;
+    if (keys['ArrowDown'] || keys['KeyS']) dy += 1;
+
+    if (dx !== 0 && dy !== 0) {
+      const inv = 1 / Math.SQRT2;
+      dx *= inv;
+      dy *= inv;
+    }
+
+    this.x = Math.max(this.radius + 6, Math.min(game.width - this.radius - 6, this.x + dx * this.speed * dt));
+    this.y = Math.max(this.radius + 6, Math.min(game.height - this.radius - 6, this.y + dy * this.speed * dt));
+
+    this.fireCooldown = Math.max(0, this.fireCooldown - dt);
+    if (keys['Space'] && this.fireCooldown === 0) {
+      this.shoot(game);
+      this.fireCooldown = 0.16;
+    }
+  }
+
+  takeDamage(amount, game) {
+    this.hp = Math.max(0, this.hp - amount);
+    game.spawnExplosion(this.x, this.y, '#38bdf8', 8);
+    if (this.hp <= 0 && this.alive) {
+      this.alive = false;
+      game.gameOver();
+    }
+  }
+
+  shoot(game) {
+    const color = '#38bdf8';
+    if (this.weaponLevel === 1) {
+      game.entities.push(new Bullet(this.x, this.y - 18, 0, -520, 12, true, color));
+    } else if (this.weaponLevel === 2) {
+      game.entities.push(new Bullet(this.x - 8, this.y - 14, 0, -520, 12, true, color));
+      game.entities.push(new Bullet(this.x + 8, this.y - 14, 0, -520, 12, true, color));
+    } else {
+      game.entities.push(new Bullet(this.x, this.y - 18, 0, -540, 14, true, '#22d3ee'));
+      game.entities.push(new Bullet(this.x - 12, this.y - 10, -70, -510, 11, true, color));
+      game.entities.push(new Bullet(this.x + 12, this.y - 10, 70, -510, 11, true, color));
+    }
+  }
+
+  render(ctx) {
+    ctx.save();
+    ctx.translate(this.x, this.y);
+    // 엔진 불꽃
+    ctx.fillStyle = '#f97316';
+    ctx.beginPath();
+    ctx.moveTo(-6, 14);
+    ctx.lineTo(0, 22 + Math.random() * 6);
+    ctx.lineTo(6, 14);
+    ctx.fill();
+
+    // 기체 날개
+    ctx.fillStyle = '#0284c7';
+    ctx.beginPath();
+    ctx.moveTo(0, -18);
+    ctx.lineTo(-18, 14);
+    ctx.lineTo(0, 8);
+    ctx.lineTo(18, 14);
+    ctx.closePath();
+    ctx.fill();
+
+    // 조종석
+    ctx.fillStyle = '#e0f2fe';
+    ctx.beginPath();
+    ctx.arc(0, -2, 4, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+  }
+}
+implementInterfaces(PlayerShip, 'IDamageable', 'IShooter');
+
+// =========================================================
+// 7. 운석: Entity 상속 + IDamageable만 구현 (사격 불가)
+// =========================================================
+class Meteor extends Entity {
+  constructor(x, y) {
+    const r = 16 + Math.random() * 14;
+    super(x, y, r, (Math.random() - 0.5) * 40, 110 + Math.random() * 70);
+    this.hp = Math.round(r * 1.8);
+    this.rot = 0;
+    this.rotSpeed = (Math.random() - 0.5) * 3;
+  }
+
+  update(dt, game) {
+    super.update(dt, game);
+    this.rot += this.rotSpeed * dt;
+  }
+
+  takeDamage(amount, game) {
+    this.hp -= amount;
+    if (this.hp <= 0 && this.alive) {
+      this.alive = false;
+      game.addScore(50);
+      game.spawnExplosion(this.x, this.y, '#94a3b8');
+    }
+  }
+
+  render(ctx) {
+    ctx.save();
+    ctx.translate(this.x, this.y);
+    ctx.rotate(this.rot);
+    ctx.fillStyle = '#64748b';
+    ctx.strokeStyle = '#94a3b8';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    const sides = 7;
+    for (let i = 0; i < sides; i++) {
+      const a = (i / sides) * Math.PI * 2;
+      const dist = this.radius * (i % 2 === 0 ? 1 : 0.82);
+      const px = Math.cos(a) * dist;
+      const py = Math.sin(a) * dist;
+      if (i === 0) ctx.moveTo(px, py);
+      else ctx.lineTo(px, py);
+    }
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+    ctx.restore();
+  }
+}
+implementInterfaces(Meteor, 'IDamageable');
+
+// =========================================================
+// 8. 파워업: Entity 상속 + IPickup만 구현 (총알에 맞지 않음)
+// =========================================================
+class PowerUp extends Entity {
+  constructor(x, y) {
+    super(x, y, 12, 0, 95);
+    this.pulse = 0;
+  }
+
+  update(dt, game) {
+    super.update(dt, game);
+    this.pulse += dt * 6;
+  }
+
+  onPickup(player, game) {
+    if (!this.alive) return;
+    this.alive = false;
+    if (player.weaponLevel < 3) {
+      player.weaponLevel++;
+    } else {
+      player.hp = Math.min(player.maxHp, player.hp + 25);
+    }
+    game.addScore(150);
+  }
+
+  render(ctx) {
+    ctx.save();
+    ctx.translate(this.x, this.y);
+    const scale = 1 + Math.sin(this.pulse) * 0.12;
+    ctx.scale(scale, scale);
+    ctx.fillStyle = '#f59e0b';
+    ctx.beginPath();
+    ctx.arc(0, 0, this.radius, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = '#fffbeb';
+    ctx.font = 'bold 12px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('P', 0, 1);
+    ctx.restore();
+  }
+}
+implementInterfaces(PowerUp, 'IPickup');
+
+// =========================================================
+// 9. 폭발 파티클 연출용
+// =========================================================
+class Particle extends Entity {
+  constructor(x, y, color) {
+    const angle = Math.random() * Math.PI * 2;
+    const speed = 40 + Math.random() * 140;
+    super(x, y, 2.5, Math.cos(angle) * speed, Math.sin(angle) * speed);
+    this.color = color;
+    this.life = 0.35 + Math.random() * 0.25;
+    this.maxLife = this.life;
+  }
+
+  update(dt, game) {
+    super.update(dt, game);
+    this.life -= dt;
+    if (this.life <= 0) this.alive = false;
+  }
+
+  render(ctx) {
+    ctx.save();
+    ctx.globalAlpha = Math.max(0, this.life / this.maxLife);
+    ctx.fillStyle = this.color;
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+  }
+}
+
+// =========================================================
+// 10. 게임 루프 및 다형성 충돌 처리 엔진
+// =========================================================
+class SpaceShooterGame {
+  constructor(canvas) {
+    this.canvas = canvas;
+    this.ctx = canvas.getContext('2d');
+    this.width = canvas.width;
+    this.height = canvas.height;
+    this.keys = {};
+    this.entities = [];
+    this.stars = Array.from({ length: 55 }, () => ({
+      x: Math.random() * this.width,
+      y: Math.random() * this.height,
+      speed: 25 + Math.random() * 75,
+      size: Math.random() * 2 + 0.5
+    }));
+    this.running = false;
+    this.score = 0;
+    this.spawnTimer = 0;
+    this.lastTime = 0;
+
+    window.addEventListener('keydown', e => {
+      this.keys[e.code] = true;
+      if (['Space', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.code)) {
+        e.preventDefault();
+      }
+    });
+    window.addEventListener('keyup', e => {
+      this.keys[e.code] = false;
+    });
+  }
+
+  start() {
+    this.entities = [];
+    this.player = new PlayerShip(this.width / 2, this.height - 70);
+    this.entities.push(this.player);
+    this.score = 0;
+    this.spawnTimer = 0;
+    this.running = true;
+    this.updateHUD();
+    document.getElementById('overlay').classList.add('hidden');
+    this.lastTime = performance.now();
+    requestAnimationFrame(t => this.loop(t));
+  }
+
+  gameOver() {
+    this.running = false;
+    document.getElementById('overlay-title').textContent = '게임 오버';
+    document.getElementById('overlay-desc').innerHTML = `최종 점수: <b>${this.score}점</b><br>다시 도전하여 최고 기록을 세워보세요!`;
+    document.getElementById('start-btn').textContent = '다시 시작';
+    document.getElementById('overlay').classList.remove('hidden');
+  }
+
+  addScore(pts) {
+    this.score += pts;
+    this.updateHUD();
+  }
+
+  updateHUD() {
+    document.getElementById('hud-hp').textContent = this.player ? this.player.hp : 0;
+    document.getElementById('hud-weapon').textContent = this.player ? this.player.weaponLevel : 1;
+    document.getElementById('hud-score').textContent = this.score;
+  }
+
+  spawnExplosion(x, y, color, count = 14) {
+    for (let i = 0; i < count; i++) {
+      this.entities.push(new Particle(x, y, color));
+    }
+  }
+
+  spawnWave() {
+    const x = 35 + Math.random() * (this.width - 70);
+    const roll = Math.random();
+
+    if (roll < 0.42) {
+      // 값만 다름 (1): 소형 적기
+      this.entities.push(new Enemy(x, -25, {
+        name: '소형 적기',
+        radius: 13,
+        vy: 150,
+        hp: 15,
+        score: 100,
+        color: '#f43f5e',
+        fireInterval: 1.8
+      }));
+    } else if (roll < 0.68) {
+      // 값만 다름 (2): 중형 적기 (같은 Enemy 클래스, 숫자만 다름)
+      this.entities.push(new Enemy(x, -30, {
+        name: '중형 적기',
+        radius: 21,
+        vy: 85,
+        hp: 45,
+        score: 220,
+        color: '#fb923c',
+        fireInterval: 1.4
+      }));
+    } else if (roll < 0.84) {
+      // Enemy의 자식 클래스: 레이저 포탑
+      this.entities.push(new LaserTurret(x, -25));
+    } else {
+      // 독립 갈래: 운석 (IDamageable만 보유)
+      this.entities.push(new Meteor(x, -30));
+    }
+  }
+
+  checkCollisions() {
+    const bullets = this.entities.filter(e => e instanceof Bullet && e.alive);
+    const others = this.entities.filter(e => !(e instanceof Bullet) && !(e instanceof Particle) && e.alive);
+
+    // 1. 총알 vs IDamageable 대상 (파워업은 IDamageable이 아니므로 총알이 통과함!)
+    for (const b of bullets) {
+      for (const target of others) {
+        if (!target.alive || !hasCapability(target, 'IDamageable')) continue;
+        if (b.isPlayerBullet && target === this.player) continue;
+        if (!b.isPlayerBullet && target !== this.player) continue;
+
+        const dist = Math.hypot(b.x - target.x, b.y - target.y);
+        if (dist < b.radius + target.radius) {
+          b.alive = false;
+          target.takeDamage(b.damage, this);
+          this.updateHUD();
+          break;
+        }
+      }
+    }
+
+    // 2. 플레이어 vs 적/운석(충돌 피해) 또는 IPickup(아이템 획득)
+    if (this.player && this.player.alive) {
+      for (const target of others) {
+        if (!target.alive || target === this.player) continue;
+        const dist = Math.hypot(this.player.x - target.x, this.player.y - target.y);
+        if (dist < this.player.radius + target.radius) {
+          if (hasCapability(target, 'IPickup')) {
+            target.onPickup(this.player, this);
+            this.updateHUD();
+          } else if (hasCapability(target, 'IDamageable')) {
+            target.takeDamage(999, this);
+            this.player.takeDamage(25, this);
+            this.updateHUD();
+          }
+        }
+      }
+    }
+  }
+
+  loop(now) {
+    if (!this.running) return;
+    const dt = Math.min(0.05, (now - this.lastTime) / 1000);
+    this.lastTime = now;
+
+    // 배경 별 스크롤
+    for (const s of this.stars) {
+      s.y += s.speed * dt;
+      if (s.y > this.height) {
+        s.y = 0;
+        s.x = Math.random() * this.width;
+      }
+    }
+
+    // 적 및 운석 생성
+    this.spawnTimer += dt;
+    if (this.spawnTimer >= 0.85) {
+      this.spawnTimer = 0;
+      this.spawnWave();
+    }
+
+    // 모든 Entity 다형적 갱신
+    for (const entity of this.entities) {
+      if (entity.alive) entity.update(dt, this);
+    }
+
+    // 인터페이스 기반 충돌 판정
+    this.checkCollisions();
+
+    // 화면 밖 및 사망 객체 정리
+    this.entities = this.entities.filter(e => e.alive && !e.isOutOfBounds(this.width, this.height));
+
+    // 렌더링
+    this.ctx.fillStyle = '#050811';
+    this.ctx.fillRect(0, 0, this.width, this.height);
+
+    this.ctx.fillStyle = '#cbd5e1';
+    for (const s of this.stars) {
+      this.ctx.globalAlpha = 0.4 + s.size * 0.25;
+      this.ctx.fillRect(s.x, s.y, s.size, s.size);
+    }
+    this.ctx.globalAlpha = 1;
+
+    for (const entity of this.entities) {
+      entity.render(this.ctx);
+    }
+
+    requestAnimationFrame(t => this.loop(t));
+  }
+}
+
+const game = new SpaceShooterGame(document.getElementById('gameCanvas'));
+document.getElementById('start-btn').addEventListener('click', () => game.start());
+</script>
+</body>
+</html>
