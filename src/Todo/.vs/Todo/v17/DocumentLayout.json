@@ -1,13 +1,25 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\\uC724\uC131\uC9C4\uAC8C\uC784\uAC1C\uBC1C\uACC4\uC88C\uC81C\\CSharpCourse\\src\\Todo\\",
+  "WorkspaceRootPath": "C:\\Users\\Administrator\\Documents\\GitHub\\\uC724\uC131\uC9C4\uAC8C\uC784\uAC1C\uBC1C\uACC4\uC88C\uC81C\\CSharpCourse\\src\\Todo\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\\uC724\uC131\uC9C4\uAC8C\uC784\uAC1C\uBC1C\uACC4\uC88C\uC81C\\CSharpCourse\\src\\Todo\\\uC785\uBB38\uC6F9\uAD50\uC7AC07.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{49BEB3FF-A2AD-44D5-AA95-8E7DC5996F01}|Todo.csproj|c:\\users\\administrator\\documents\\github\\\uC724\uC131\uC9C4\uAC8C\uC784\uAC1C\uBC1C\uACC4\uC88C\uC81C\\csharpcourse\\src\\todo\\prefab\\collision.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{49BEB3FF-A2AD-44D5-AA95-8E7DC5996F01}|Todo.csproj|solutionrelative:prefab\\collision.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{49BEB3FF-A2AD-44D5-AA95-8E7DC5996F01}|Todo.csproj|c:\\\uC724\uC131\uC9C4\uAC8C\uC784\uAC1C\uBC1C\uACC4\uC88C\uC81C\\csharpcourse\\src\\todo\\todo.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "AbsoluteMoniker": "D:0:0:{49BEB3FF-A2AD-44D5-AA95-8E7DC5996F01}|Todo.csproj|c:\\users\\administrator\\documents\\github\\\uC724\uC131\uC9C4\uAC8C\uC784\uAC1C\uBC1C\uACC4\uC88C\uC81C\\csharpcourse\\src\\todo\\prefab\\gamecore.benchmarks.cs||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{49BEB3FF-A2AD-44D5-AA95-8E7DC5996F01}|Todo.csproj|solutionrelative:prefab\\gamecore.benchmarks.cs||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{49BEB3FF-A2AD-44D5-AA95-8E7DC5996F01}|Todo.csproj|c:\\users\\administrator\\documents\\github\\\uC724\uC131\uC9C4\uAC8C\uC784\uAC1C\uBC1C\uACC4\uC88C\uC81C\\csharpcourse\\src\\todo\\prefab\\gamecore.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{49BEB3FF-A2AD-44D5-AA95-8E7DC5996F01}|Todo.csproj|solutionrelative:prefab\\gamecore.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{49BEB3FF-A2AD-44D5-AA95-8E7DC5996F01}|Todo.csproj|c:\\users\\administrator\\documents\\github\\\uC724\uC131\uC9C4\uAC8C\uC784\uAC1C\uBC1C\uACC4\uC88C\uC81C\\csharpcourse\\src\\todo\\todo.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
       "RelativeMoniker": "D:0:0:{49BEB3FF-A2AD-44D5-AA95-8E7DC5996F01}|Todo.csproj|solutionrelative:todo.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\\uC724\uC131\uC9C4\uAC8C\uC784\uAC1C\uBC1C\uACC4\uC88C\uC81C\\CSharpCourse\\src\\Todo\\\uC785\uBB38\uC6F9\uAD50\uC7AC07.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -17,23 +29,63 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Todo.csproj",
-              "DocumentMoniker": "C:\\\uC724\uC131\uC9C4\uAC8C\uC784\uAC1C\uBC1C\uACC4\uC88C\uC81C\\CSharpCourse\\src\\Todo\\Todo.csproj",
-              "RelativeDocumentMoniker": "Todo.csproj",
-              "ToolTip": "C:\\\uC724\uC131\uC9C4\uAC8C\uC784\uAC1C\uBC1C\uACC4\uC88C\uC81C\\CSharpCourse\\src\\Todo\\Todo.csproj",
-              "RelativeToolTip": "Todo.csproj",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2026-11-25T11:32:00.207Z"
+              "DocumentIndex": 0,
+              "Title": "Collision.cs",
+              "DocumentMoniker": "C:\\Users\\Administrator\\Documents\\GitHub\\\uC724\uC131\uC9C4\uAC8C\uC784\uAC1C\uBC1C\uACC4\uC88C\uC81C\\CSharpCourse\\src\\Todo\\Prefab\\Collision.cs",
+              "RelativeDocumentMoniker": "Prefab\\Collision.cs",
+              "ToolTip": "C:\\Users\\Administrator\\Documents\\GitHub\\\uC724\uC131\uC9C4\uAC8C\uC784\uAC1C\uBC1C\uACC4\uC88C\uC81C\\CSharpCourse\\src\\Todo\\Prefab\\Collision.cs",
+              "RelativeToolTip": "Prefab\\Collision.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-27T12:48:21.26Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
+              "Title": "GameCore.Benchmarks.cs",
+              "DocumentMoniker": "C:\\Users\\Administrator\\Documents\\GitHub\\\uC724\uC131\uC9C4\uAC8C\uC784\uAC1C\uBC1C\uACC4\uC88C\uC81C\\CSharpCourse\\src\\Todo\\Prefab\\GameCore.Benchmarks.cs",
+              "RelativeDocumentMoniker": "Prefab\\GameCore.Benchmarks.cs",
+              "ToolTip": "C:\\Users\\Administrator\\Documents\\GitHub\\\uC724\uC131\uC9C4\uAC8C\uC784\uAC1C\uBC1C\uACC4\uC88C\uC81C\\CSharpCourse\\src\\Todo\\Prefab\\GameCore.Benchmarks.cs",
+              "RelativeToolTip": "Prefab\\GameCore.Benchmarks.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-27T12:47:00.474Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "GameCore.cs",
+              "DocumentMoniker": "C:\\Users\\Administrator\\Documents\\GitHub\\\uC724\uC131\uC9C4\uAC8C\uC784\uAC1C\uBC1C\uACC4\uC88C\uC81C\\CSharpCourse\\src\\Todo\\Prefab\\GameCore.cs",
+              "RelativeDocumentMoniker": "Prefab\\GameCore.cs",
+              "ToolTip": "C:\\Users\\Administrator\\Documents\\GitHub\\\uC724\uC131\uC9C4\uAC8C\uC784\uAC1C\uBC1C\uACC4\uC88C\uC81C\\CSharpCourse\\src\\Todo\\Prefab\\GameCore.cs",
+              "RelativeToolTip": "Prefab\\GameCore.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAADwvwAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-27T12:46:44.979Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Todo.csproj",
+              "DocumentMoniker": "C:\\Users\\Administrator\\Documents\\GitHub\\\uC724\uC131\uC9C4\uAC8C\uC784\uAC1C\uBC1C\uACC4\uC88C\uC81C\\CSharpCourse\\src\\Todo\\Todo.csproj",
+              "RelativeDocumentMoniker": "Todo.csproj",
+              "ToolTip": "C:\\Users\\Administrator\\Documents\\GitHub\\\uC724\uC131\uC9C4\uAC8C\uC784\uAC1C\uBC1C\uACC4\uC88C\uC81C\\CSharpCourse\\src\\Todo\\Todo.csproj",
+              "RelativeToolTip": "Todo.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-11-25T11:32:00.207Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "\uC785\uBB38\uC6F9\uAD50\uC7AC07.cs",
               "DocumentMoniker": "D:\\\uC724\uC131\uC9C4\uAC8C\uC784\uAC1C\uBC1C\uACC4\uC88C\uC81C\\CSharpCourse\\src\\Todo\\\uC785\uBB38\uC6F9\uAD50\uC7AC07.cs",
               "ToolTip": "D:\\\uC724\uC131\uC9C4\uAC8C\uC784\uAC1C\uBC1C\uACC4\uC88C\uC81C\\CSharpCourse\\src\\Todo\\\uC785\uBB38\uC6F9\uAD50\uC7AC07.cs",
